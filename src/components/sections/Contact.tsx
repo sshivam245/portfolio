@@ -11,33 +11,18 @@ import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("sending");
-
     const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-    };
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (res.ok) {
-        setStatus("sent");
-        (e.target as HTMLFormElement).reset();
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
+    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+    const body = encodeURIComponent(`Hi Shivam,\n\n${message}\n\nFrom: ${name}\nEmail: ${email}`);
+    window.open(`mailto:${personalInfo.email}?subject=${subject}&body=${body}`, "_self");
+    setStatus("sent");
+    (e.target as HTMLFormElement).reset();
   };
 
   return (
