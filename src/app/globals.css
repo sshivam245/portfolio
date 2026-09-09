@@ -10,20 +10,22 @@
 @layer base {
   :root {
     --paper: #fbfbf9;
-    --ink: #16161a;
-    --ink-muted: #6b6b72;
-    --rule: #e2e1dc;
-    --accent: #b4451f;
-    --accent-dim: #f5ede9;
+    --ink: #101014;
+    --ink-muted: #63636b;
+    --rule: #e0dfda;
+    --accent: #d1400a;
+    --accent-dim: #f7ebe4;
+    --grid: rgba(16, 16, 20, 0.045);
   }
 
   .dark {
-    --paper: #0c0c0e;
-    --ink: #e8e8e3;
-    --ink-muted: #8a8a93;
-    --rule: #26262b;
-    --accent: #e8703a;
-    --accent-dim: #2a1a13;
+    --paper: #08080a;
+    --ink: #f2f2ee;
+    --ink-muted: #8e8e98;
+    --rule: #23232a;
+    --accent: #ff6b35;
+    --accent-dim: #24140c;
+    --grid: rgba(255, 255, 255, 0.035);
   }
 
   * {
@@ -35,8 +37,17 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /*
+   * Engineering-drawing grid. Gives the page depth without adding any
+   * decoration that has to be designed — it reads as graph paper, which is
+   * the right texture for a dossier.
+   */
   body {
-    background: var(--paper);
+    background-color: var(--paper);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 72px 72px;
+    background-position: -1px -1px;
     color: var(--ink);
     font-feature-settings: "kern", "liga";
   }
@@ -127,6 +138,18 @@
   .rise > *:nth-child(3) { animation-delay: 180ms; }
   .rise > *:nth-child(4) { animation-delay: 250ms; }
 
+  /* Continuous ticker. Two identical tracks, translated -50%. */
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .ticker-track {
+    animation: ticker 42s linear infinite;
+  }
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+
   /* Accent rule that draws itself in under a section heading. */
   @keyframes draw {
     from { transform: scaleX(0); }
@@ -149,6 +172,9 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .ticker-track {
+    animation: none !important;
   }
   .reveal,
   .reveal-armed,

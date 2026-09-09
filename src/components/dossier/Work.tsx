@@ -16,7 +16,10 @@ export default function Work() {
     >
       <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
         {caseStudies.map((cs, i) => (
-          <article key={cs.id} className="grid gap-8 py-10 first:pt-0 lg:grid-cols-12 lg:gap-10">
+          <article
+            key={cs.id}
+            className="group grid gap-8 py-10 first:pt-0 lg:grid-cols-12 lg:gap-10"
+          >
             {/* Narrative */}
             <div className="lg:col-span-7">
               <p className="label mb-3">
@@ -27,7 +30,12 @@ export default function Work() {
                 {cs.org}, {cs.timeframe}
               </p>
 
-              <h3 className="font-display text-[2rem] font-normal leading-[1.1] tracking-[-0.015em] sm:text-[2.5rem]">
+              <span
+                aria-hidden
+                className="mb-5 block h-px w-10 bg-accent transition-all duration-300 ease-out group-hover:w-24"
+              />
+
+              <h3 className="font-display text-[2rem] font-normal leading-[1.05] tracking-[-0.02em] sm:text-[2.75rem]">
                 {cs.title}
               </h3>
 
@@ -66,7 +74,7 @@ export default function Work() {
                     className="rule-b flex items-baseline justify-between gap-4 py-3"
                   >
                     <dt className="text-small text-ink-muted">{o.label}</dt>
-                    <dd className="tnum shrink-0 font-mono text-h3 font-medium">
+                    <dd className="tnum shrink-0 font-mono text-[1.5rem] font-medium leading-none text-accent">
                       {o.value}
                     </dd>
                   </div>

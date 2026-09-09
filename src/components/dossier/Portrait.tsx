@@ -8,8 +8,8 @@ import { asset } from "@/lib/basePath";
  * Until then this renders a labelled frame rather than a broken image —
  * same contract as <Figure>.
  *
- * Square crop, no rounded avatar, subtle grayscale that lifts on hover:
- * enough motion to feel alive, not enough to read as a template.
+ * 4:5 crop, hard corners, no rounded avatar. Full colour — a desaturated
+ * headshot was one restraint too many on an already-quiet page.
  */
 export default function Portrait() {
   const [failed, setFailed] = useState(false);
@@ -47,7 +47,7 @@ export default function Portrait() {
         src={asset("/portrait.jpg")}
         alt="Shivam Goel"
         onError={() => setFailed(true)}
-        className="aspect-[4/5] w-full object-cover grayscale transition-all duration-500 ease-out group-hover:scale-[1.02] group-hover:grayscale-0"
+        className="aspect-[4/5] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
       />
     </div>
   );

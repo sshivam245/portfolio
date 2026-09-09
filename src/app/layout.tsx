@@ -58,7 +58,9 @@ export default function RootLayout({
       <body
         className={`${plexSans.variable} ${plexMono.variable} ${instrument.variable} font-sans antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        {/* Dark by default — the design is built for the dark ground and it
+            carries far more contrast. System preference still wins if set. */}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <a
             href="#main"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 focus:text-small"
