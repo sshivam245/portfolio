@@ -42,12 +42,22 @@ If a section feels like it needs a card, it usually needs a **rule** instead.
 
 ## Type
 
-Two families, both free on Google Fonts, deliberately not Inter/Geist.
+Three families, all free on Google Fonts, deliberately not Inter/Geist.
 
 | Role | Family | Notes |
 |---|---|---|
-| Body, headings | **IBM Plex Sans** | Technical heritage, real personality at large sizes |
-| Labels, metrics, meta | **IBM Plex Mono** | All caps, `0.08em` tracking, for anything machine-ish |
+| Display — h1, case-study & post titles, wordmark | **Instrument Serif 400** | The voice of the page. Low weight, tight tracking, italic for emphasis |
+| Body, sub-headings | **IBM Plex Sans** | Technical heritage, recedes behind the display face |
+| Labels, metrics, meta | **IBM Plex Mono** | All caps, `0.12em` tracking, for anything machine-ish |
+
+The serif is doing the same job Syne does on kevinshelly.com and Instrument
+Serif does on abhijeet-patil.com: a dossier built only from a neutral sans
+reads as competent and anonymous. The contrast between a serif display and
+mono labels is what gives it a voice.
+
+**Oversized type is the only ornament.** The `Shivam Goel` wordmark at `15vw`
+in `text-ink/[0.09]` closes the page. At that scale type stops being text and
+becomes graphic — the cheapest way to look designed without adding decoration.
 
 **Scale** (rem, 1rem = 16px):
 
@@ -101,9 +111,24 @@ important metric per section, and section index numbers. Nowhere else.
 
 ## Motion
 
-- Duration `150–200ms`, ease-out. Reveals: `opacity 0→1` + `translateY 6px→0`.
-- One reveal per section, not per element. No stagger beyond 60ms.
-- Respect `prefers-reduced-motion: reduce` — disable all transforms.
+Three pieces, in order of how much they matter:
+
+1. **Masthead entrance** (`.rise`) — CSS keyframes, staggered 40/110/180/250ms,
+   460ms ease. Runs on load, needs no JS.
+2. **Section reveal** (`Reveal.tsx`) — 320ms fade + 14px rise as a section
+   scrolls in.
+3. **Hover states** — accent hairlines that extend, titles that take the accent
+   colour, the portrait desaturating on hover. 150–200ms.
+
+**The reveal must never be able to blank the page.** Two earlier versions of it
+failed this: one hid every section in CSS and waited for hydration (blank for
+~3s, forever if JS failed); one used `animation-timeline`, which is Chromium
+only. The current version renders content visible and arms *only* sections
+already below the fold — measured after `document.fonts.ready`, because before
+the webfonts settle everything measures as above-the-fold — with a 4s failsafe
+that reveals regardless. If you rewrite it, keep that property.
+
+Respect `prefers-reduced-motion: reduce` — it disables all three.
 
 ---
 

@@ -20,6 +20,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-plex-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-plex-mono)", "ui-monospace", "monospace"],
+        display: ["var(--font-instrument)", "Georgia", "serif"],
       },
       fontSize: {
         // Scale from DESIGN.md

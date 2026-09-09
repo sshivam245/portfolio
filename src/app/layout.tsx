@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import {
+  IBM_Plex_Sans,
+  IBM_Plex_Mono,
+  Instrument_Serif,
+} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/dossier/Header";
@@ -16,6 +20,19 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-plex-mono",
+  display: "swap",
+});
+
+/**
+ * The display face. Plex Sans alone read as competent-but-anonymous; a serif
+ * against the mono labels is what gives the page a voice, the same job Syne
+ * does on kevinshelly.com and Instrument Serif does on abhijeet-patil.com.
+ */
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
   display: "swap",
 });
 
@@ -39,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${plexSans.variable} ${plexMono.variable} font-sans antialiased`}
+        className={`${plexSans.variable} ${plexMono.variable} ${instrument.variable} font-sans antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <a

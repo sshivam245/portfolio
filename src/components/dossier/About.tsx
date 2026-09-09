@@ -3,7 +3,7 @@ import { profile, education, publications, beyond } from "@/content/profile";
 
 export function About() {
   return (
-    <Section id="about" index="04" title="About">
+    <Section id="about" index="05" title="About">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-7">
           {profile.about.map((para) => (
@@ -32,7 +32,7 @@ export function About() {
 
 export function Credentials() {
   return (
-    <Section id="credentials" index="05" title="Education & publications">
+    <Section id="credentials" index="06" title="Education & publications">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <h3 className="label rule-b pb-2 text-ink">Education</h3>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { asset } from "@/lib/basePath";
 import type { Figure as FigureData } from "@/content/caseStudies";
 
@@ -13,6 +13,14 @@ import type { Figure as FigureData } from "@/content/caseStudies";
  */
 export default function Figure({ figure }: { figure: FigureData }) {
   const [failed, setFailed] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // A 404 can resolve before hydration, leaving onError unattached — see
+  // the same guard in Portrait.tsx.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth === 0) setFailed(true);
+  }, []);
 
   return (
     <figure className="mt-6">
@@ -27,11 +35,18 @@ export default function Figure({ figure }: { figure: FigureData }) {
           </span>
         </div>
       ) : (
+        /*
+         * Deliberately NOT loading="lazy". With no intrinsic dimensions the
+         * element is 0px tall until it loads, and the browser's lazy-loader
+         * never treats a zero-height box as visible — so the request was never
+         * made, the image never appeared, and onError never fired to show the
+         * placeholder. There are only a handful of small figures on the page.
+         */
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
+          ref={imgRef}
           src={asset(`/figures/${figure.src}`)}
           alt={figure.caption}
-          loading="lazy"
           onError={() => setFailed(true)}
           className="w-full border"
           style={{ borderColor: "var(--rule)" }}

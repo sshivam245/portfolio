@@ -14,7 +14,7 @@ export default function Contact() {
   ];
 
   return (
-    <Section id="contact" index="06" title="Contact">
+    <Section id="contact" index="07" title="Contact">
       <div className="grid gap-x-10 gap-y-8 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <p className="max-w-prose text-body">

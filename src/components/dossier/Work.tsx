@@ -27,7 +27,9 @@ export default function Work() {
                 {cs.org}, {cs.timeframe}
               </p>
 
-              <h3 className="text-h2 font-semibold">{cs.title}</h3>
+              <h3 className="font-display text-[2rem] font-normal leading-[1.1] tracking-[-0.015em] sm:text-[2.5rem]">
+                {cs.title}
+              </h3>
 
               <p className="mt-4 max-w-prose text-body">{cs.summary}</p>
 

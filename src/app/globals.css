@@ -92,27 +92,50 @@
 
 @layer utilities {
   /*
-   * Section reveal, CSS-only. Content is visible by default — the animation is
-   * added only where scroll-driven animations are supported, so there is no
-   * state in which JavaScript failing leaves the page blank.
+   * Scroll reveal. `.reveal` is visible by default — Reveal.tsx only adds
+   * `.reveal-armed` to sections already below the fold, so nothing the user
+   * can see is ever hidden and a JS failure leaves the page fully readable.
    */
-  @supports (animation-timeline: view()) {
-    @keyframes reveal-in {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
+  .reveal {
+    transition: opacity 320ms ease-out, transform 320ms ease-out;
+  }
+  .reveal-armed {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .reveal-shown {
+    opacity: 1;
+    transform: none;
+  }
 
-    .reveal {
-      animation: reveal-in 200ms ease-out both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 30%;
+  /* Masthead entrance. Pure CSS, runs once on load, staggered by depth. */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
     }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .rise > * {
+    animation: rise 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .rise > *:nth-child(1) { animation-delay: 40ms; }
+  .rise > *:nth-child(2) { animation-delay: 110ms; }
+  .rise > *:nth-child(3) { animation-delay: 180ms; }
+  .rise > *:nth-child(4) { animation-delay: 250ms; }
+
+  /* Accent rule that draws itself in under a section heading. */
+  @keyframes draw {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  .draw {
+    transform-origin: left;
+    animation: draw 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 120ms;
   }
 }
 
@@ -127,9 +150,12 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal {
+  .reveal,
+  .reveal-armed,
+  .rise > *,
+  .draw {
     animation: none !important;
-    opacity: 1;
-    transform: none;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
