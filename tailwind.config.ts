@@ -10,37 +10,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        paper: "var(--paper)",
+        ink: "var(--ink)",
+        "ink-muted": "var(--ink-muted)",
+        rule: "var(--rule)",
+        accent: "var(--accent)",
+        "accent-dim": "var(--accent-dim)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-plex-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-plex-mono)", "ui-monospace", "monospace"],
       },
-      animation: {
-        float: "float 6s ease-in-out infinite",
-        "float-delayed": "float 6s ease-in-out 2s infinite",
-        "float-slow": "float 8s ease-in-out 1s infinite",
-        glow: "glow 2s ease-in-out infinite alternate",
-        "gradient-shift": "gradientShift 8s ease infinite",
-        marquee: "marquee 25s linear infinite",
+      fontSize: {
+        // Scale from DESIGN.md
+        label: ["0.6875rem", { lineHeight: "1.4", letterSpacing: "0.12em" }],
+        small: ["0.875rem", { lineHeight: "1.6" }],
+        body: ["1rem", { lineHeight: "1.65" }],
+        h3: ["1.125rem", { lineHeight: "1.4", letterSpacing: "-0.01em" }],
+        h2: ["1.5rem", { lineHeight: "1.25", letterSpacing: "-0.015em" }],
+        h1: ["2.25rem", { lineHeight: "1.15", letterSpacing: "-0.02em" }],
+        display: ["3.5rem", { lineHeight: "1.05", letterSpacing: "-0.03em" }],
+        metric: ["2.75rem", { lineHeight: "1", letterSpacing: "-0.02em" }],
       },
-      keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" },
-        },
-        glow: {
-          from: { opacity: "0.4" },
-          to: { opacity: "1" },
-        },
-        gradientShift: {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-        marquee: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
+      maxWidth: {
+        prose: "68ch",
       },
     },
   },

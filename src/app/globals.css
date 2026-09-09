@@ -2,63 +2,134 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Technical dossier. See DESIGN.md before changing anything here.
+ * No gradients. No glass. No shadows for hierarchy.
+ */
+
 @layer base {
   :root {
-    --background: #fafafa;
-    --foreground: #1e293b;
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --card-border: rgba(200, 200, 220, 0.3);
-    --input-bg: rgba(0, 0, 0, 0.05);
-    --muted: #64748b;
-    --nav-bg: rgba(250, 250, 250, 0.8);
+    --paper: #fbfbf9;
+    --ink: #16161a;
+    --ink-muted: #6b6b72;
+    --rule: #e2e1dc;
+    --accent: #b4451f;
+    --accent-dim: #f5ede9;
   }
 
   .dark {
-    --background: #0a0a14;
-    --foreground: #f1f5f9;
-    --card-bg: rgba(15, 15, 35, 0.6);
-    --card-border: rgba(100, 100, 180, 0.15);
-    --input-bg: rgba(255, 255, 255, 0.05);
-    --muted: #94a3b8;
-    --nav-bg: rgba(10, 10, 20, 0.8);
+    --paper: #0c0c0e;
+    --ink: #e8e8e3;
+    --ink-muted: #8a8a93;
+    --rule: #26262b;
+    --accent: #e8703a;
+    --accent-dim: #2a1a13;
+  }
+
+  * {
+    border-color: var(--rule);
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    color: var(--foreground);
-    background: var(--background);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background: var(--paper);
+    color: var(--ink);
+    font-feature-settings: "kern", "liga";
+  }
+
+  /* Numbers always align in columns. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply backdrop-blur-xl border rounded-2xl;
-    background: var(--card-bg);
-    border-color: var(--card-border);
+  /* The mono label: uppercase, tracked, small. Used for every meta line. */
+  .label {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.12em];
+    color: var(--ink-muted);
   }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400;
+  /* Hairline rules do the work that cards used to. */
+  .rule-t {
+    border-top: 1px solid var(--rule);
+  }
+  .rule-b {
+    border-bottom: 1px solid var(--rule);
   }
 
-  .glass-input {
-    @apply w-full rounded-xl px-4 py-3 border outline-none transition-all duration-300;
-    background: var(--input-bg);
-    border-color: var(--card-border);
-    color: var(--foreground);
+  .shell {
+    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6;
   }
 
-  .glass-input:focus {
-    @apply border-indigo-500 ring-1 ring-indigo-500;
+  /* Links: underline on the accent, never a colored button. */
+  .link {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color 150ms ease-out;
+  }
+  .link:hover {
+    color: var(--accent);
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /*
+   * Section reveal, CSS-only. Content is visible by default — the animation is
+   * added only where scroll-driven animations are supported, so there is no
+   * state in which JavaScript failing leaves the page blank.
+   */
+  @supports (animation-timeline: view()) {
+    @keyframes reveal-in {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .reveal {
+      animation: reveal-in 200ms ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
 }
