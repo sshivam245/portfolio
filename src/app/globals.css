@@ -138,6 +138,107 @@
   .rise > *:nth-child(3) { animation-delay: 180ms; }
   .rise > *:nth-child(4) { animation-delay: 250ms; }
 
+  /*
+   * Orbit. Rings rotate; chips counter-rotate at the same duration so the
+   * logos stay upright. Radii scale with the viewport so the whole thing
+   * shrinks cleanly on mobile rather than overflowing.
+   */
+  .orbit-wrap {
+    --orbit-size: clamp(320px, 78vw, 520px);
+    --orbit-r-inner: calc(var(--orbit-size) * 0.325);
+    --orbit-r-outer: calc(var(--orbit-size) * 0.475);
+    position: relative;
+    width: var(--orbit-size);
+    height: var(--orbit-size);
+    margin-inline: auto;
+    isolation: isolate;
+  }
+
+  .orbit-guide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid var(--rule);
+    border-radius: 9999px;
+    transform: translate(-50%, -50%);
+  }
+  .orbit-guide-inner {
+    width: calc(var(--orbit-r-inner) * 2);
+    height: calc(var(--orbit-r-inner) * 2);
+  }
+  .orbit-guide-outer {
+    width: calc(var(--orbit-r-outer) * 2);
+    height: calc(var(--orbit-r-outer) * 2);
+    border-style: dashed;
+    opacity: 0.6;
+  }
+
+  .orbit-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--orbit-r-inner) * 2.1);
+    height: calc(var(--orbit-r-inner) * 2.1);
+    transform: translate(-50%, -50%);
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle at 50% 45%,
+      color-mix(in srgb, var(--accent) 26%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 9%, transparent) 45%,
+      transparent 72%
+    );
+    z-index: -1;
+  }
+
+  .orbit-portrait {
+    position: absolute;
+    left: 50%;
+    bottom: 8%;
+    width: calc(var(--orbit-size) * 0.52);
+    height: calc(var(--orbit-size) * 0.74);
+    transform: translateX(-50%);
+  }
+
+  .orbit-ring {
+    position: absolute;
+    inset: 0;
+  }
+  .orbit-slot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--i) * (360deg / var(--n))))
+      translateY(calc(var(--r) * -1));
+  }
+  .orbit-upright {
+    display: block;
+    transform: rotate(calc(var(--i) * (-360deg / var(--n))));
+  }
+
+  @keyframes orbit-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes orbit-spin-rev {
+    from { transform: rotate(360deg); }
+    to   { transform: rotate(0deg); }
+  }
+
+  .orbit-spin     { animation: orbit-spin 64s linear infinite; }
+  .orbit-spin-rev { animation: orbit-spin-rev 88s linear infinite; }
+  /* Counter-spins share the duration of their ring, in the opposite sense,
+     so each chip stays upright as its ring turns. */
+  .orbit-counter     { display: block; animation: orbit-spin-rev 64s linear infinite; }
+  .orbit-counter-rev { display: block; animation: orbit-spin 88s linear infinite; }
+
+  .orbit-wrap:hover .orbit-spin,
+  .orbit-wrap:hover .orbit-spin-rev,
+  .orbit-wrap:hover .orbit-counter,
+  .orbit-wrap:hover .orbit-counter-rev {
+    animation-play-state: paused;
+  }
+
   /* Continuous ticker. Two identical tracks, translated -50%. */
   @keyframes ticker {
     from { transform: translateX(0); }
@@ -173,7 +274,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .ticker-track {
+  .ticker-track,
+  .orbit-spin,
+  .orbit-spin-rev,
+  .orbit-counter,
+  .orbit-counter-rev {
     animation: none !important;
   }
   .reveal,

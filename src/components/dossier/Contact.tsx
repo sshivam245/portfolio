@@ -1,16 +1,17 @@
 import Section from "./Section";
 import { profile } from "@/content/profile";
 import { asset } from "@/lib/basePath";
+import { MailIcon, LinkedInIcon, GitHubIcon, DownloadIcon } from "./Icons";
 
 /**
  * A specific ask, not "Let's Build Something".
  */
 export default function Contact() {
   const rows = [
-    { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
-    { label: "LinkedIn", value: "in/shivam-goel-245ss", href: profile.linkedin },
-    { label: "GitHub", value: "sshivam245", href: profile.github },
-    { label: "CV", value: "Download PDF", href: asset(profile.resumePath) },
+    { label: "Email", value: profile.email, href: `mailto:${profile.email}`, Icon: MailIcon },
+    { label: "LinkedIn", value: "in/shivam-goel-245ss", href: profile.linkedin, Icon: LinkedInIcon },
+    { label: "GitHub", value: "sshivam245", href: profile.github, Icon: GitHubIcon },
+    { label: "CV", value: "Download PDF", href: asset(profile.resumePath), Icon: DownloadIcon },
   ];
 
   return (
@@ -32,7 +33,10 @@ export default function Contact() {
                 key={r.label}
                 className="rule-b flex items-baseline justify-between gap-4 py-3"
               >
-                <dt className="label">{r.label}</dt>
+                <dt className="label flex items-center gap-2">
+                  <r.Icon className="text-accent" />
+                  {r.label}
+                </dt>
                 <dd className="text-small">
                   <a
                     href={r.href}

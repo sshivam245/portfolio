@@ -1,5 +1,5 @@
 import { profile, headlineMetrics } from "@/content/profile";
-import Portrait from "./Portrait";
+import Orbit from "./Orbit";
 
 /**
  * Left-aligned, no gradient, no rotating text, no status pill.
@@ -8,8 +8,8 @@ import Portrait from "./Portrait";
 export default function Masthead() {
   return (
     <section id="top" className="shell pb-14 pt-16 sm:pb-20 sm:pt-24">
-      <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-        <div className="rise lg:col-span-8">
+      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="rise lg:col-span-7">
           <p className="label">
             {profile.role}
             <span className="mx-2 text-accent">/</span>
@@ -48,8 +48,8 @@ export default function Masthead() {
           </div>
         </div>
 
-        <div className="lg:col-span-4">
-          <Portrait />
+        <div className="lg:col-span-5">
+          <Orbit />
         </div>
       </div>
 
