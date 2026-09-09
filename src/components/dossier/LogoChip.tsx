@@ -33,7 +33,7 @@ export default function LogoChip({ logo }: { logo: Logo }) {
     >
       {logo.path ? (
         <svg
-          viewBox="0 0 24 24"
+          viewBox={logo.viewBox ?? "0 0 24 24"}
           fill="currentColor"
           role="img"
           aria-label={logo.label}

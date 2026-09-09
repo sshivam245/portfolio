@@ -1,51 +1,60 @@
 # Orbit logos
 
-Chips fall back down a chain: **inline SVG path → image file → text label**.
-That last step means the orbit always looks finished, even with
-`public/logos/` empty.
+Chips fall back: **inline SVG path → image file → text label**.
 
-## Already real (no action needed)
+## Real logos (7) — done
 
-These come from the `simple-icons` package, imported directly in
-`src/content/logos.ts` and rendered inline so they inherit `currentColor`:
+Rendered inline in `currentColor`, so they match the text chips:
 
-Claude · n8n · HubSpot · Python · PostgreSQL (shown as "SQL") · GitHub Actions
+| Mark | Source |
+|---|---|
+| Claude, n8n, HubSpot, Python, PostgreSQL (shown "SQL"), GitHub Actions | `simple-icons` package |
+| Tableau | Ionicons set via Wikimedia Commons (MIT) |
 
-## Still text — drop a file to upgrade
+## Still text (7) — need files from you
 
-`simple-icons` doesn't carry these. Save an SVG into `public/logos/` with the
-exact filename and it swaps in automatically.
+Save into `public/logos/` with the exact filename and it swaps in
+automatically. No code change needed.
 
-| File | Label | Where to get it |
+| File | Label | Why it's not done |
 |---|---|---|
-| `clay.svg` | Clay | clay.com press kit |
-| `apollo.svg` | Apollo | apollo.io brand assets |
-| `tableau.svg` | Tableau | Salesforce brand centre |
-| `cloudsheer.svg` | Cloudsheer | your own company |
-| `nuvia.svg` | Nuvia AI | ask them |
-| `comviva.svg` | Comviva | comviva.com press |
-| `ey.svg` | EY | ey.com brand |
-| `lbs.svg` | LBS | london.edu brand |
+| `clay.svg` | Clay | Not in any open icon set. Needs clay.com brand assets. |
+| `apollo.svg` | Apollo | Same. **Must be apollo.io, not Apollo GraphQL.** |
+| `cloudsheer.svg` | Cloudsheer | Private company — only you have this. |
+| `nuvia.svg` | Nuvia AI | Private company — only you have this. |
+| `comviva.svg` | Comviva | Commons has only a wide wordmark. |
+| `ey.svg` | EY | Commons version bundles the "Building a better working world" tagline. Need the bare beam+EY mark. |
+| `lbs.svg` | LBS | Commons version is a navy block with three lines of text. |
 
-## ⚠️ One trap
+## What to send
 
-`simple-icons` has an **Apollo GraphQL** icon. That is a *different company*
-from **Apollo.io**, the sales tool. Do not use it — `logos.ts` has a comment
-marking this.
+A **square, single-colour, transparent** SVG per brand — the icon/monogram,
+not the horizontal wordmark. Chips are 56–64px with the mark at ~28px, so:
 
-## What works best
+- ✅ A monogram or symbol (EY's beam, a favicon-style mark)
+- ❌ A wordmark with the company name spelled out — unreadable at this size
+- ❌ A logo locked up with a tagline
+- ❌ A logo on a solid coloured background plate
 
-- **SVG**, single colour, transparent background. Chips are 56–64px with the
-  mark at ~28px, so detailed full-colour logos turn to mush.
-- Monochrome reads best. Inline marks are drawn in `currentColor` on purpose,
-  so a logo chip and a text chip look like the same object. A file with its
-  own strong brand colour will break that — use the mono variant.
-- PNG works too; change the extension in `logos.ts` to match.
+Monochrome white or black works best; brand colours at 28px on a near-black
+ground just turn to noise. PNG is fine too — change the extension in
+`src/content/logos.ts` to match.
+
+**If a brand only has a wordmark**, tell me and I'll switch the inner ring to
+wide pill-shaped chips instead of circles, which fit wordmarks properly. The
+text labels are also a perfectly respectable end state — kevinshelly.com uses
+no logos at all.
+
+## ⚠️ Trap
+
+`simple-icons` has an "Apollo" icon, but it is **Apollo GraphQL** — a
+different company from **Apollo.io**. `logos.ts` has a comment marking this
+so nobody wires it up by mistake.
 
 ## Using third-party marks
 
 Showing logos of companies you worked for and tools you used is normal
-portfolio practice — it states factual history. Keep two things right: use
-each brand's own mark unmodified in shape, and don't imply endorsement or
-current employment. The `note` field shows your actual role and dates on
-hover, which keeps it unambiguous.
+portfolio practice — it states factual history. Use each brand's own mark
+unmodified in shape, and don't imply endorsement or current employment. The
+`note` field shows your real role and dates on hover, which keeps it
+unambiguous.
