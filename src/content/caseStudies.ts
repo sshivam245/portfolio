@@ -25,6 +25,8 @@ export type CaseStudy = {
   tag: string;
   timeframe: string;
   org: string;
+  /** Optional live link, e.g. the shipped product. */
+  link?: { href: string; label: string };
   summary: string;
   context: string;
   built: string[];
@@ -35,6 +37,40 @@ export type CaseStudy = {
 };
 
 export const caseStudies: CaseStudy[] = [
+  {
+    id: "mintnovalabs",
+    title: "MintNovaLabs, built from nothing",
+    tag: "0 → 1 venture",
+    timeframe: "2026",
+    org: "Founder",
+    link: { href: "https://www.mintnovalabs.com/", label: "mintnovalabs.com" },
+    summary:
+      "A productised outbound agency on a pay-per-result model — offer, pricing, positioning and the site itself. The whole thing is the GTM artefact, not a description of one.",
+    context:
+      "Outbound agencies mostly sell retainers, which puts the risk on the buyer and rewards activity over meetings booked. I wanted to test whether the opposite offer — the client pays only when a qualified meeting lands — could be packaged tightly enough to sell without a sales team, and built the company to find out.",
+    built: [
+      "The offer itself: pay-per-result rather than a retainer, so the pricing model is the differentiator rather than the copy.",
+      "Positioning and messaging built around six specific failure modes of in-house outbound — time to launch, SDR cost, reply rates, bad data, deliverability, unclear ROI — so the pitch names the buyer's problem before naming the service.",
+      "A four-step delivery process, from strategy call to booked meetings in 14 days, defined tightly enough to be repeatable rather than bespoke per client.",
+      "An interactive ROI calculator on the site, so a prospect can price the offer against their own numbers before ever talking to me.",
+      "The service architecture behind it: list building and verification, domain and deliverability setup (SPF/DKIM/DMARC, warmup, rotation), multi-step sequences, and weekly reporting.",
+      "The site itself — Next.js, Tailwind and Framer Motion, deployed from GitHub Actions.",
+    ],
+    // TODO: confirm which of these are real, achieved results before publishing.
+    // The figures on the live site (500+ meetings, 4.8% reply rate, 3.2x ROI,
+    // 14 days) sit alongside a demo activity feed, so I have not presented them
+    // as outcomes here. Replace with numbers you can stand behind.
+    outcomes: [
+      { value: "Live", label: "Shipped and taking clients at mintnovalabs.com" },
+      { value: "0→1", label: "Offer, pricing, positioning and site, all from scratch" },
+      { value: "14 days", label: "Defined time from kickoff to first meetings" },
+    ],
+    stack: ["Next.js", "Tailwind", "Framer Motion", "GitHub Actions", "Deliverability", "Positioning"],
+    reflection: "",
+    figures: [
+      { src: "mintnova-home.png", caption: "The offer, the process, and the ROI calculator." },
+    ],
+  },
   {
     id: "aeo-geo",
     title: "Getting found by AI browsers",

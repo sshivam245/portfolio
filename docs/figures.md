@@ -25,6 +25,7 @@ ship before you've collected everything.
 | `descipher-positioning.png` | Launching Descipher OS | needed |
 | `nuvia-funnel.png` | Nuvia acquisition engine | needed |
 | `job-pipeline-architecture.svg` | Job pipeline | ✅ included |
+| `mintnova-home.png` | MintNovaLabs | needed — screenshot mintnovalabs.com |
 
 ## Before you add a screenshot
 

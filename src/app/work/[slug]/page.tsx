@@ -52,6 +52,21 @@ export default function CaseStudyPage({
         </h1>
 
         <p className="mt-6 max-w-prose text-body">{cs.summary}</p>
+
+        {cs.link ? (
+          <a
+            href={cs.link.href}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="label group mt-6 inline-flex items-center gap-2 text-ink"
+          >
+            {cs.link.label} ↗
+            <span
+              aria-hidden
+              className="h-px w-6 bg-accent transition-all duration-200 group-hover:w-12"
+            />
+          </a>
+        ) : null}
       </header>
 
       {/* Outcomes up top — the numbers are the reason to keep reading. */}
