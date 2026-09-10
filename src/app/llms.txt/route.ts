@@ -1,4 +1,4 @@
-import { profile, headlineMetrics, experience, skills, education } from "@/content/profile";
+import { profile, headlineMetrics, experience, skills, education, recognition } from "@/content/profile";
 import { caseStudies } from "@/content/caseStudies";
 import { publishedPosts } from "@/content/writing";
 import { SITE_NAME, url } from "@/lib/site";
@@ -65,6 +65,15 @@ export function GET() {
   push("## Skills", "");
   for (const g of skills) push(`- ${g.group}: ${g.items.join(", ")}`);
   push("");
+
+  if (recognition.length) {
+    push("## Recognition", "");
+    for (const r of recognition) {
+      push(`- ${r.title} (${r.year}) — ${r.href}`);
+      push(`  ${r.body}`);
+    }
+    push("");
+  }
 
   push("## Education", "");
   for (const e of education) push(`- ${e.credential}, ${e.institution} (${e.period})`);

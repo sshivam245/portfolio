@@ -1,4 +1,4 @@
-import { profile, experience, education, skills } from "@/content/profile";
+import { profile, experience, education, skills, recognition } from "@/content/profile";
 import { caseStudies } from "@/content/caseStudies";
 import { publishedPosts } from "@/content/writing";
 import { SITE_NAME, SITE_URL, url } from "@/lib/site";
@@ -44,6 +44,12 @@ function Person() {
       occupationLocation: { "@type": "Country", name: "Remote" },
       skills: skills.flatMap((g) => g.items).join(", "),
     },
+    award: recognition.map((r) => r.title),
+    subjectOf: recognition.map((r) => ({
+      "@type": "Article",
+      name: r.title,
+      url: r.href,
+    })),
     sameAs: [profile.linkedin, profile.github].filter(Boolean),
   };
   return <Script data={data} />;

@@ -126,6 +126,24 @@ export const education = [
   },
 ] as const;
 
+/**
+ * Third-party recognition. Kept separate from publications because it is a
+ * different kind of evidence: someone else chose to point at the work.
+ *
+ * URLs are stored without tracking parameters — a `trackingId` is tied to
+ * the session that generated the link and has no business on a public page.
+ */
+export const recognition = [
+  {
+    title: "Best of LinkedIn: AI in B2B Marketing, CW 51–02",
+    body: "Selected among 66 people to follow and 126 posts, curated by Thomas Allgeyer for the Strategic B2B Marketing Community by Frenus.",
+    quote:
+      "GTM strategies must adapt to AI, shifting from manual processes to automated, context-driven systems.",
+    href: "https://www.linkedin.com/pulse/best-linkedin-cw-51-02-ai-b2b-marketing-thomas-allgeyer-nugjf/",
+    year: "2026",
+  },
+] as const;
+
 export const publications = [
   {
     title: "Use Case of Intelligent Manufacturing",

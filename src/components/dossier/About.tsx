@@ -1,5 +1,5 @@
 import Section from "./Section";
-import { profile, education, publications, beyond } from "@/content/profile";
+import { profile, education, publications, beyond, recognition } from "@/content/profile";
 
 export function About({ index = "01" }: { index?: string }) {
   return (
@@ -32,8 +32,43 @@ export function About({ index = "01" }: { index?: string }) {
 
 export function Credentials({ index = "04" }: { index?: string }) {
   return (
-    <Section id="credentials" index={index} title="Education & publications">
+    <Section id="credentials" index={index} title="Recognition, education & publications">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
+        {/* Recognition leads: someone else pointing at the work is stronger
+            evidence than anything self-reported below it. */}
+        <div className="lg:col-span-12">
+          <h3 className="label rule-b pb-2 text-ink">Recognition</h3>
+          <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
+            {recognition.map((r) => (
+              <div key={r.title} className="grid gap-x-10 gap-y-3 py-4 lg:grid-cols-12">
+                <div className="lg:col-span-7">
+                  <h4 className="text-body font-medium">
+                    <a
+                      href={r.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="link"
+                    >
+                      {r.title} ↗
+                    </a>
+                  </h4>
+                  <p className="mt-2 max-w-prose text-small text-ink-muted">{r.body}</p>
+                  <p className="label mt-2">{r.year}</p>
+                </div>
+                <blockquote className="lg:col-span-5">
+                  <p className="max-w-prose text-small text-ink-muted">
+                    <span aria-hidden className="mr-2 text-accent">“</span>
+                    {r.quote}
+                  </p>
+                  <cite className="label mt-2 block not-italic">
+                    The takeaway they pulled from the post
+                  </cite>
+                </blockquote>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="lg:col-span-6">
           <h3 className="label rule-b pb-2 text-ink">Education</h3>
           <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
