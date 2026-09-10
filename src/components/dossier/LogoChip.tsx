@@ -9,9 +9,9 @@ import type { Logo } from "@/content/logos";
  * image file → text label. That last step is why the orbit looks finished
  * even with /public/logos completely empty.
  *
- * Inline marks are drawn in currentColor rather than brand colours, so a
- * chip containing a logo and a chip containing text read as the same object.
- * Brand colours at 32px against a near-black ground would just be noise.
+ * Marks render in brand colour. The supplied files (Clay's 3D arch, Nuvia's
+ * gradient) can't be flattened to a single colour without destroying them,
+ * so the inline marks match those rather than fighting them.
  */
 export default function LogoChip({ logo }: { logo: Logo }) {
   const [failed, setFailed] = useState(false);
@@ -37,7 +37,8 @@ export default function LogoChip({ logo }: { logo: Logo }) {
           fill="currentColor"
           role="img"
           aria-label={logo.label}
-          className="h-6 w-6 text-ink sm:h-7 sm:w-7"
+          className="h-6 w-6 sm:h-7 sm:w-7"
+          style={{ color: logo.color ?? "var(--ink)" }}
         >
           <path d={logo.path} />
         </svg>

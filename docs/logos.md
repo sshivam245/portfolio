@@ -2,59 +2,60 @@
 
 Chips fall back: **inline SVG path → image file → text label**.
 
-## Real logos (7) — done
+## Done — 12 of 14
 
-Rendered inline in `currentColor`, so they match the text chips:
+**From your supplied files** (`~/Desktop/logos`), cropped to the icon and
+normalised to 256px:
 
-| Mark | Source |
+| File | Notes |
 |---|---|
-| Claude, n8n, HubSpot, Python, PostgreSQL (shown "SQL"), GitHub Actions | `simple-icons` package |
-| Tableau | Ionicons set via Wikimedia Commons (MIT) |
+| `clay.png` | 3D arch icon, cropped out of the lockup |
+| `apollo.png` | Yellow starburst, cropped out of the lockup |
+| `cloudsheer.png` | Cloud + S mark, cropped out of the lockup |
+| `nuvia.png` | Already a square app icon |
+| `ey.svg` | EY's **reversed** lockup — navy recoloured to white for the dark ground, yellow beam untouched |
 
-## Still text (7) — need files from you
+**Inline from `simple-icons`**, each in its brand hex: Claude, n8n, HubSpot,
+Python, PostgreSQL (shown "SQL"), GitHub Actions. Tableau uses the Ionicons
+glyph in Tableau orange.
 
-Save into `public/logos/` with the exact filename and it swaps in
-automatically. No code change needed.
+## Still text — 2
 
-| File | Label | Why it's not done |
-|---|---|---|
-| `clay.svg` | Clay | Not in any open icon set. Needs clay.com brand assets. |
-| `apollo.svg` | Apollo | Same. **Must be apollo.io, not Apollo GraphQL.** |
-| `cloudsheer.svg` | Cloudsheer | Private company — only you have this. |
-| `nuvia.svg` | Nuvia AI | Private company — only you have this. |
-| `comviva.svg` | Comviva | Commons has only a wide wordmark. |
-| `ey.svg` | EY | Commons version bundles the "Building a better working world" tagline. Need the bare beam+EY mark. |
-| `lbs.svg` | LBS | Commons version is a navy block with three lines of text. |
+| Label | Why |
+|---|---|
+| **Comviva** | Their logo is a wordmark with no standalone icon. Cropping the orange "o" out of it would not be their mark. |
+| **LBS** | No file supplied. The Wikimedia version is a navy block with three lines of text — illegible at 28px. |
 
-## What to send
+To fix either, drop `comviva.png` / `lbs.png` (or `.svg`) into
+`public/logos/` and add `file:` to that entry in `src/content/logos.ts`.
 
-A **square, single-colour, transparent** SVG per brand — the icon/monogram,
-not the horizontal wordmark. Chips are 56–64px with the mark at ~28px, so:
+## Colour
 
-- ✅ A monogram or symbol (EY's beam, a favicon-style mark)
-- ❌ A wordmark with the company name spelled out — unreadable at this size
-- ❌ A logo locked up with a tagline
-- ❌ A logo on a solid coloured background plate
+Everything renders in **brand colour**. Clay's 3D arch and Nuvia's gradient
+can't be flattened to a single colour without destroying them, so the inline
+marks match those rather than fighting them.
 
-Monochrome white or black works best; brand colours at 28px on a near-black
-ground just turn to noise. PNG is fine too — change the extension in
-`src/content/logos.ts` to match.
+Two hex values are deliberately not the brand default: Python's own `#3776AB`
+and PostgreSQL's `#4169E1` are too dark against `#08080a`, so both use a
+lighter blue from their own two-tone marks.
 
-**If a brand only has a wordmark**, tell me and I'll switch the inner ring to
-wide pill-shaped chips instead of circles, which fit wordmarks properly. The
-text labels are also a perfectly respectable end state — kevinshelly.com uses
-no logos at all.
+## What works as a source file
+
+- **Square, transparent, icon-only.** Chips are 56–64px with the mark at
+  ~28px. A horizontal wordmark is unreadable at that size.
+- SVG preferred; PNG at 256px+ is fine.
+- If a brand only has a wordmark, leave it as a text chip — or ask for the
+  inner ring to become wide pill-shaped chips, which fit wordmarks properly.
 
 ## ⚠️ Trap
 
 `simple-icons` has an "Apollo" icon, but it is **Apollo GraphQL** — a
-different company from **Apollo.io**. `logos.ts` has a comment marking this
-so nobody wires it up by mistake.
+different company from **Apollo.io**. `logos.ts` has a comment marking this.
 
 ## Using third-party marks
 
 Showing logos of companies you worked for and tools you used is normal
-portfolio practice — it states factual history. Use each brand's own mark
-unmodified in shape, and don't imply endorsement or current employment. The
-`note` field shows your real role and dates on hover, which keeps it
-unambiguous.
+portfolio practice — it states factual history. Shapes are unmodified; only
+EY was recoloured, to the reversed version the brand itself publishes for
+dark backgrounds. The `note` field shows your real role and dates on hover,
+so nothing implies current employment or endorsement.
