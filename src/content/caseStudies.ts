@@ -118,6 +118,43 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
   {
+    id: "investor-sourcing",
+    title: "Fundraising as an outbound problem",
+    tag: "Clay workflow",
+    timeframe: "2026",
+    // The org line renders as `{org}, {timeframe}`, so avoid a comma here or
+    // it reads "Personal, then a seed-stage client, 2026".
+    org: "Personal → seed-stage client",
+    summary:
+      "A Clay workflow that turns one startup profile into a ranked investor pipeline with outreach already written — research, thesis fit, partner selection, enrichment and personalisation in a single automated run.",
+    context:
+      "Founders raise the way bad SDRs prospect: a long list, the same deck, and hope. The expensive part isn't sending the emails, it's the judgement before them — which firms actually invest at this stage in this space, which partner owns the thesis, and whether they've already backed a competitor. That research is what founders skip when they're busy, and skipping it is what makes the outreach ignorable. It is an outbound problem, so I built it like one.",
+    built: [
+      "One input: the startup's profile. Everything downstream derives from it, so a founder isn't assembling a list by hand before the automation can help.",
+      "Firm sourcing against the startup's space and stage, so the universe is filtered to investors whose thesis actually matches rather than every fund in a directory.",
+      "Partner-level resolution — funds don't write cheques, partners do. The workflow identifies who owns the relevant thesis inside each firm.",
+      "Portfolio analysis on each partner's prior investments, checking whether they have already backed something similar. That is the signal that separates a warm angle from a conflict, and it's the step manual research usually misses.",
+      "Contact enrichment on the resolved partner, so the pipeline ends with a reachable person rather than a firm name.",
+      "Personalised email and LinkedIn drafts written from both sides of the match — the startup's specifics and the partner's own portfolio — so the opening line references a real reason to talk.",
+    ],
+    // Mechanism only for now; no outcome metrics supplied yet.
+    outcomes: [
+      { value: "1 input", label: "A startup profile drives the entire pipeline" },
+      { value: "6 stages", label: "Sourcing → partner → portfolio fit → enrichment → drafting → outreach" },
+      { value: "2×", label: "Built for myself, then replicated for a seed-stage client" },
+    ],
+    stack: ["Clay", "Claygent", "Enrichment waterfalls", "LinkedIn", "Email"],
+    reflection:
+      "The portfolio-analysis step is the one that earns its place. Sourcing and enrichment are commodities — every tool does them. Checking whether a partner has already backed an adjacent company is the judgement a founder would apply if they had the hours, and automating judgement rather than typing is the difference between a workflow and a mail merge.",
+    figures: [
+      {
+        src: "investor-workflow.svg",
+        caption: "startup profile → firms → partner → portfolio fit → enrichment → drafted outreach",
+        diagram: true,
+      },
+    ],
+  },
+  {
     id: "descipher-os",
     title: "Launching Descipher OS from zero",
     tag: "0 → 1",

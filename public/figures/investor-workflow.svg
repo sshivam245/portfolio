@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" width="640" height="330" role="img" aria-label="Investor sourcing workflow: startup profile to relevant firms to partner to portfolio fit to enrichment to drafted outreach">
+  <style>
+    .ink   { fill: #16161a; }
+    .muted { fill: #6b6b72; }
+    .accf  { fill: #b4451f; }
+    .acc   { stroke: #b4451f; }
+    .box   { fill: none; stroke: #cfcec9; stroke-width: 1; }
+    .rule  { stroke: #cfcec9; }
+    text   { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+    .lbl   { font-size: 10px; letter-spacing: 0.08em; }
+    .sub   { font-size: 9px; }
+    .tiny  { font-size: 8px; }
+    @media (prefers-color-scheme: dark) {
+      .ink   { fill: #e8e8e3; }
+      .muted { fill: #8a8a93; }
+      .accf  { fill: #e8703a; }
+      .acc   { stroke: #e8703a; }
+      .box, .rule { stroke: #3a3a40; }
+    }
+  </style>
+
+  <text class="lbl muted" x="8" y="18">INPUT</text>
+
+  <!-- Single input -->
+  <rect class="box" x="8" y="28" width="120" height="46"/>
+  <text class="sub ink" x="18" y="46">startup profile</text>
+  <text class="tiny muted" x="18" y="62">space · stage · thesis</text>
+
+  <path class="acc" d="M128 51 H166" stroke-width="1"/>
+  <path class="accf" d="M166 51 l-6 -3 v6 z"/>
+
+  <!-- Sourcing -->
+  <rect class="box" x="172" y="28" width="124" height="46"/>
+  <text class="sub ink" x="182" y="46">relevant firms</text>
+  <text class="tiny muted" x="182" y="62">thesis + stage filter</text>
+
+  <path class="acc" d="M296 51 H334" stroke-width="1"/>
+  <path class="accf" d="M334 51 l-6 -3 v6 z"/>
+
+  <!-- Partner -->
+  <rect class="box" x="340" y="28" width="124" height="46"/>
+  <text class="sub ink" x="350" y="46">right partner</text>
+  <text class="tiny muted" x="350" y="62">funds don't write cheques</text>
+
+  <path class="acc" d="M464 51 H502" stroke-width="1"/>
+  <path class="accf" d="M502 51 l-6 -3 v6 z"/>
+
+  <!-- Portfolio fit — the judgement step -->
+  <rect class="box" x="508" y="28" width="124" height="46" stroke-width="1.6"/>
+  <text class="sub ink" x="518" y="46">portfolio fit</text>
+  <text class="tiny accf" x="518" y="62">already backed a rival?</text>
+
+  <!-- down -->
+  <path class="acc" d="M570 74 V126" stroke-width="1"/>
+  <path class="accf" d="M570 126 l-3 -6 h6 z"/>
+
+  <!-- Enrichment -->
+  <rect class="box" x="508" y="132" width="124" height="46"/>
+  <text class="sub ink" x="518" y="150">enrichment</text>
+  <text class="tiny muted" x="518" y="166">reachable person</text>
+
+  <path class="acc" d="M508 155 H470" stroke-width="1"/>
+  <path class="accf" d="M470 155 l6 -3 v6 z"/>
+
+  <!-- Personalisation -->
+  <rect class="box" x="340" y="132" width="124" height="46"/>
+  <text class="sub ink" x="350" y="150">personalisation</text>
+  <text class="tiny muted" x="350" y="166">both sides of the match</text>
+
+  <path class="acc" d="M340 155 H302" stroke-width="1"/>
+  <path class="accf" d="M302 155 l6 -3 v6 z"/>
+
+  <!-- Outreach -->
+  <rect class="box" x="172" y="132" width="124" height="46"/>
+  <text class="sub ink" x="182" y="150">drafted outreach</text>
+  <text class="tiny muted" x="182" y="166">email + LinkedIn</text>
+
+  <!-- Contrast panel -->
+  <line class="rule" x1="8" y1="212" x2="632" y2="212" stroke-width="1"/>
+  <text class="lbl muted" x="8" y="234">WITHOUT IT</text>
+  <text class="sub muted" x="8" y="252">one long list · the same deck · hope</text>
+
+  <text class="lbl accf" x="330" y="234">WITH IT</text>
+  <text class="sub ink" x="330" y="252">only partners with a real thesis and</text>
+  <text class="sub ink" x="330" y="266">portfolio fit, with the opener written</text>
+
+  <line class="rule" x1="8" y1="292" x2="632" y2="292" stroke-width="1"/>
+  <text class="lbl muted" x="8" y="312">AUTOMATE THE JUDGEMENT, NOT JUST THE TYPING</text>
+</svg>
