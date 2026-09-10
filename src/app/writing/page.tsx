@@ -6,6 +6,15 @@ export const metadata: Metadata = {
   title: "Writing — Shivam Goel",
   description:
     "Notes on generative-search optimisation, GTM automation, and building acquisition systems.",
+  alternates: { canonical: "/writing" },
+  openGraph: {
+    title: "Writing",
+    description:
+      "Notes on generative-search optimisation, GTM automation, and building acquisition systems.",
+    type: "website",
+    url: "/writing",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shivam Goel — Writing" }],
+  },
 };
 
 export default function WritingIndexPage() {

@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Experience, Capabilities } from "@/components/dossier/Track";
 import { About, Credentials } from "@/components/dossier/About";
 import { profile } from "@/content/profile";
+import { AboutSchema } from "@/components/dossier/StructuredData";
 
 export const metadata: Metadata = {
   title: "About — Shivam Goel",
   description:
     "Growth & GTM, two years, remote. Track record, capabilities, education and publications.",
+  alternates: { canonical: "/about" },
 };
 
 /**
@@ -18,6 +20,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
+      <AboutSchema />
       <header className="shell py-12 sm:py-16">
         <p className="label mb-6">
           {profile.role}

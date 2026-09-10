@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Figure from "@/components/dossier/Figure";
 import { caseStudies } from "@/content/caseStudies";
+import { CaseStudySchema } from "@/components/dossier/StructuredData";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.id }));
@@ -18,7 +19,22 @@ export function generateMetadata({
   return {
     title: `${cs.title} — Shivam Goel`,
     description: cs.summary,
-    openGraph: { title: cs.title, description: cs.summary, type: "article" },
+    alternates: { canonical: `/work/${cs.id}` },
+    openGraph: {
+      title: cs.title,
+      description: cs.summary,
+      type: "article",
+      url: `/work/${cs.id}`,
+      // Defining openGraph here REPLACES the layout's, images included —
+      // so it has to be restated or shares render blank.
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: cs.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: cs.title,
+      description: cs.summary,
+      images: ["/og.png"],
+    },
   };
 }
 
@@ -34,6 +50,7 @@ export default function CaseStudyPage({
 
   return (
     <article>
+      <CaseStudySchema slug={cs.id} />
       <header className="shell py-12 sm:py-16">
         <Link href="/#work" className="label hover:text-accent transition-colors">
           ← Selected work
