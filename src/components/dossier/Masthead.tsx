@@ -24,7 +24,7 @@ export default function Masthead() {
           */}
           <h1 className="t-display mt-6 max-w-[16ch]">
             I build{" "}
-            <span className="italic text-accent">acquisition engines</span> —
+            <span className="italic text-accent">acquisition engines</span>,
             and the automation underneath them.
           </h1>
 

@@ -72,7 +72,7 @@ export function HomeSchema() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     url: url("/"),
-    name: `${SITE_NAME} — ${profile.role}`,
+    name: `${SITE_NAME} · ${profile.role}`,
     description: profile.statement,
     inLanguage: "en",
     publisher: { "@id": PERSON_ID },
@@ -142,7 +142,7 @@ export function CaseStudySchema({ slug }: { slug: string }) {
     // The outcomes as explicit facts rather than sentences to parse.
     mentions: cs.outcomes.map((o) => ({
       "@type": "Thing",
-      name: `${o.value} — ${o.label}`,
+      name: `${o.value}: ${o.label}`,
     })),
   };
 

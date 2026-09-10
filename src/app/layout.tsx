@@ -38,7 +38,7 @@ const instrument = Instrument_Serif({
 });
 
 const DESCRIPTION =
-  "I build acquisition engines — and the automation underneath them. Growth & GTM, 2 years, remote. Case studies in generative-search optimisation, 0→1 brand launch, demand generation, and pipeline automation.";
+  "I build acquisition engines, and the automation underneath them. Growth & GTM, 2 years, remote. Case studies in generative-search optimisation, 0→1 brand launch, demand generation, and pipeline automation.";
 
 export const metadata: Metadata = {
   // Required for og:image and canonical URLs to resolve to absolute paths.
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   // cannot follow.
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Shivam Goel — Growth & GTM",
-    template: "%s — Shivam Goel",
+    default: "Shivam Goel · Growth & GTM",
+    template: "%s · Shivam Goel",
   },
   description: DESCRIPTION,
   alternates: { canonical: "/" },
@@ -67,18 +67,18 @@ export const metadata: Metadata = {
     "HubSpot",
   ],
   openGraph: {
-    title: "Shivam Goel — Growth & GTM",
-    description: "I build acquisition engines — and the automation underneath them.",
+    title: "Shivam Goel · Growth & GTM",
+    description: "I build acquisition engines, and the automation underneath them.",
     type: "website",
     url: SITE_URL,
     siteName: "Shivam Goel",
     locale: "en_GB",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shivam Goel — Growth & GTM" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shivam Goel · Growth & GTM" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shivam Goel — Growth & GTM",
-    description: "I build acquisition engines — and the automation underneath them.",
+    title: "Shivam Goel · Growth & GTM",
+    description: "I build acquisition engines, and the automation underneath them.",
     images: ["/og.png"],
   },
   robots: {

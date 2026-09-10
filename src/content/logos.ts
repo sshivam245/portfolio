@@ -87,7 +87,7 @@ export const toolLogos: Logo[] = [
   { label: "Clay", file: "clay.png", note: "Enrichment and list building" },
   // NOTE: deliberately not simple-icons' `siApollographql` — that is Apollo
   // GraphQL, an unrelated company. This is Apollo.io, the sales platform.
-  { label: "Apollo", file: "apollo.png", note: "Prospecting — apollo.io" },
+  { label: "Apollo", file: "apollo.png", note: "Prospecting via apollo.io" },
   { label: "HubSpot", path: siHubspot.path, color: `#${siHubspot.hex}`, note: "CRM and lifecycle" },
   // Python's own #3776AB is very dark on a near-black ground; this is the
   // lighter blue from its two-tone mark, so it stays visible.

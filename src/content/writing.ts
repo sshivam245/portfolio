@@ -50,7 +50,7 @@ export const posts: Post[] = [
     venue: "Medium",
     href: "https://medium.com/@shivam55.goel/ai-for-growth-marketing-how-to-use-claude-chatgpt-clay-and-apollo-030cf7651e4b",
     blurb:
-      "The growth stack has settled into three layers — data, reasoning, and delivery — and the teams pulling ahead are the ones wiring them together. What each tool actually does, the two ways to connect models to your data, and the failure modes when the wiring is right but the thinking is wrong.",
+      "The growth stack has settled into three layers (data, reasoning, and delivery), and the teams pulling ahead are the ones wiring them together. What each tool actually does, the two ways to connect models to your data, and the failure modes when the wiring is right but the thinking is wrong.",
     tags: ["Growth", "AI", "Outbound"],
   },
   {
@@ -63,9 +63,9 @@ export const posts: Post[] = [
     tags: ["AEO", "GEO", "Search"],
     draft: true, // DRAFT BY CLAUDE — rewrite in your own words before publishing
     body: [
-      "Most of the AEO advice circulating in 2026 is SEO advice with the nouns swapped. It tells you to write good content, add schema, and build authority — which was true before generative search and is true after, and therefore explains nothing about what changed.",
+      "Most of the AEO advice circulating in 2026 is SEO advice with the nouns swapped. It tells you to write good content, add schema, and build authority, all of which was true before generative search and is true after, and therefore explains nothing about what changed.",
       "Here is what actually changed. A ranking engine returns a list and lets the user choose. A generative engine reads a handful of sources, synthesises an answer, and cites some of them. You are no longer competing for a position. You are competing to be the source that is easiest to lift a defensible sentence from.",
-      "That reframing has consequences. Long, hedged, narrative prose is hostile to extraction — there is no clean sentence to quote. Content that states a claim plainly, attributes it, and puts the qualifying detail adjacent rather than tangled through the sentence, is easy to quote. When I restructured our pages around that principle, referrals from AI browsers rose about 15% over the following quarter.",
+      "That reframing has consequences. Long, hedged, narrative prose is hostile to extraction, because there is no clean sentence to quote. Content that states a claim plainly, attributes it, and puts the qualifying detail adjacent rather than tangled through the sentence, is easy to quote. When I restructured our pages around that principle, referrals from AI browsers rose about 15% over the following quarter.",
       "The second consequence is measurement. If you cannot separate AI-browser referrals from conventional organic in your analytics, you cannot tell whether any of this worked, and you will end up arguing from vibes. Splitting that traffic out was the least glamorous part of the project and the part that made the rest of it arguable.",
       "I would treat all of this as provisional. The surface is changing faster than anyone's playbook, mine included. The durable part is the habit: work out what the retrieval mechanism actually rewards, then write for that, rather than inheriting the previous era's checklist.",
     ],
@@ -96,7 +96,7 @@ export const posts: Post[] = [
     tags: ["GTM", "0→1", "Founding"],
     draft: true,
     body: [
-      "Draft — replace this with the real account.",
+      "Draft. Replace this with the real account.",
     ],
   },
 ];

@@ -14,7 +14,7 @@ export function Experience({ index = "02" }: { index?: string }) {
               <h3 className="text-h3 font-semibold">{job.role}</h3>
               <p className="mt-1 text-small text-ink-muted">{job.company}</p>
               <p className="label mt-2">
-                {job.start} — {job.end}
+                {job.start}–{job.end}
                 {"current" in job && job.current ? (
                   <span className="ml-2 text-accent">CURRENT</span>
                 ) : null}

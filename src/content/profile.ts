@@ -7,7 +7,7 @@ export const profile = {
   name: "Shivam Goel",
   role: "Growth & GTM",
   // Kept deliberately concrete. No "passionate", no "results-driven".
-  statement: "I build acquisition engines — and the automation underneath them.",
+  statement: "I build acquisition engines, and the automation underneath them.",
   location: "Remote",
   yearsExperience: 2,
 
@@ -20,7 +20,7 @@ export const profile = {
 
   /** Short human note. First person, plain language. */
   about: [
-    "I work at the seam between growth and engineering. Most of what I do ends up as a system someone else can run — a lead pipeline that scores and routes on its own, a dashboard that answers the question before it gets asked, a launch checklist that survives the person who wrote it.",
+    "I work at the seam between growth and engineering. Most of what I do ends up as a system someone else can run: a lead pipeline that scores and routes on its own, a dashboard that answers the question before it gets asked, a launch checklist that survives the person who wrote it.",
     "I started in IT and cybersecurity, spent a summer as a UX designer, and ended up in GTM. That path is why I reach for SQL and automation before I reach for a deck. Right now I'm looking for a founding-GTM or growth-engineering role at a company early enough that building the machine is the job.",
   ],
 } as const;
@@ -46,7 +46,7 @@ export const experience = [
       "Automated end-to-end lead generation, improving outreach efficiency and pipeline scalability.",
       "Led LinkedIn growth and brand positioning for inbound opportunities.",
       "Implemented AEO and GEO strategies, growing traffic from AI browsers and generative search by 15%.",
-      "Launched Descipher OS — GTM strategy, positioning, messaging and digital presence from inception.",
+      "Launched Descipher OS: GTM strategy, positioning, messaging and digital presence from inception.",
       "Opened the Middle East market: demand identification, entry strategy, early partnerships.",
     ],
   },
@@ -76,7 +76,7 @@ export const experience = [
   },
   {
     company: "Comviva Technology",
-    role: "UX/UI Designer — Intern",
+    role: "UX/UI Designer, Intern",
     start: "May 2023",
     end: "Jul 2023",
     points: [
@@ -86,7 +86,7 @@ export const experience = [
   },
   {
     company: "EY Technology Solutions",
-    role: "Cyber Security Analyst — Intern",
+    role: "Cyber Security Analyst, Intern",
     start: "Jun 2022",
     end: "Jul 2022",
     points: [
@@ -115,13 +115,13 @@ export const education = [
   {
     institution: "London Business School",
     credential: "Certificate in Digital Marketing, AI Specialization",
-    period: "Oct 2024 — Mar 2025",
+    period: "Oct 2024 – Mar 2025",
     honors: [],
   },
   {
     institution: "Amity University, Noida",
-    credential: "B.Sc. Information Technology — GPA 8.73",
-    period: "Apr 2021 — Aug 2024",
+    credential: "B.Sc. Information Technology, GPA 8.73",
+    period: "Apr 2021 – Aug 2024",
     honors: ["Best Technical Innovation", "2nd in university, academic & extracurricular"],
   },
 ] as const;
@@ -147,11 +147,11 @@ export const recognition = [
 export const publications = [
   {
     title: "Use Case of Intelligent Manufacturing",
-    venue: "Intelligent Manufacturing in Industry 4.0, Ch. 10 — Taylor & Francis",
+    venue: "Intelligent Manufacturing in Industry 4.0, Ch. 10, Taylor & Francis",
   },
   {
     title: "Next-Gen Diagnostics: A Comprehensive Approach to Patent Assessment",
-    venue: "Government of India — Copyright Holder",
+    venue: "Government of India, Copyright Holder",
   },
   {
     title: "Prediction of Health Insurance Price using Machine Learning Algorithms",
@@ -171,6 +171,6 @@ export const beyond = [
     label: "Leadership",
     title: "HPAIR delegate, 2026",
     detail:
-      "Selected for the Harvard Project for Asian & International Relations — a conference on business, policy and innovation across Asia.",
+      "Selected for the Harvard Project for Asian & International Relations, a conference on business, policy and innovation across Asia.",
   },
 ] as const;

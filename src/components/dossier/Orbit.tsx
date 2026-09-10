@@ -61,11 +61,10 @@ export default function Orbit() {
 
       {/* Centre. The portrait used to sit here; a monogram keeps the rings
           anchored so the middle doesn't read as an empty hole. */}
+      {/* Monogram only. The "Growth & GTM" label that used to sit under it
+          repeated the masthead meta line a few hundred pixels above. */}
       <div className="orbit-centre">
-        <span className="t-title">
-          SG
-        </span>
-        <span className="label mt-2 block">Growth &amp; GTM</span>
+        <span className="t-title">SG</span>
       </div>
 
       <Ring logos={orgLogos} radiusVar="--orbit-r-inner" spinClass="orbit-spin" />

@@ -39,7 +39,7 @@ export function GET() {
 
   push("## Headline results", "");
   for (const m of headlineMetrics) {
-    push(`- ${m.value}${m.unit} — ${m.label} (${m.note})`);
+    push(`- ${m.value}${m.unit}: ${m.label} (${m.note})`);
   }
   push("");
 
@@ -58,7 +58,7 @@ export function GET() {
 
   push("## Experience", "");
   for (const job of experience) {
-    push(`- ${job.role}, ${job.company} (${job.start} — ${job.end})`);
+    push(`- ${job.role}, ${job.company} (${job.start}–${job.end})`);
   }
   push("");
 
@@ -69,7 +69,7 @@ export function GET() {
   if (recognition.length) {
     push("## Recognition", "");
     for (const r of recognition) {
-      push(`- ${r.title} (${r.year}) — ${r.href}`);
+      push(`- ${r.title} (${r.year}): ${r.href}`);
       push(`  ${r.body}`);
     }
     push("");
@@ -82,17 +82,17 @@ export function GET() {
   if (publishedPosts.length) {
     push("## Writing", "");
     for (const p of publishedPosts) {
-      push(`- ${p.title} (${p.venue}, ${p.date}) — ${p.href ?? url(`/writing/${p.slug}`)}`);
+      push(`- ${p.title} (${p.venue}, ${p.date}): ${p.href ?? url(`/writing/${p.slug}`)}`);
       push(`  ${p.blurb}`);
     }
     push("");
   }
 
   push("## Pages", "");
-  push(`- ${url("/")} — overview, headline results, work index`);
-  push(`- ${url("/about")} — full history, capabilities, education, publications`);
-  push(`- ${url("/writing")} — articles`);
-  for (const cs of caseStudies) push(`- ${url(`/work/${cs.id}`)} — ${cs.title}`);
+  push(`- ${url("/")}: overview, headline results, work index`);
+  push(`- ${url("/about")}: full history, capabilities, education, publications`);
+  push(`- ${url("/writing")}: articles`);
+  for (const cs of caseStudies) push(`- ${url(`/work/${cs.id}`)}: ${cs.title}`);
   push("");
 
   return new Response(L.join("\n"), {

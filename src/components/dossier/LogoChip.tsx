@@ -27,7 +27,7 @@ export default function LogoChip({ logo }: { logo: Logo }) {
 
   return (
     <span
-      title={logo.note ? `${logo.label} — ${logo.note}` : logo.label}
+      title={logo.note ? `${logo.label}: ${logo.note}` : logo.label}
       className={`flex h-14 w-14 items-center justify-center rounded-full border transition-colors duration-200 hover:border-accent sm:h-16 sm:w-16 ${
         logo.tile
           ? "overflow-hidden"

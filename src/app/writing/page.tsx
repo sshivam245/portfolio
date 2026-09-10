@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       "Notes on generative-search optimisation, GTM automation, and building acquisition systems.",
     type: "website",
     url: "/writing",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shivam Goel — Writing" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shivam Goel · Writing" }],
   },
 };
 

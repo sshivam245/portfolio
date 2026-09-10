@@ -20,7 +20,7 @@ export default function Contact({ index = "04" }: { index?: string }) {
         <div className="lg:col-span-7">
           <p className="max-w-prose text-body">
             I&apos;m looking for a remote founding-GTM or growth-engineering
-            role — somewhere early enough that building the acquisition machine
+            role, somewhere early enough that building the acquisition machine
             is the job rather than maintaining one. If that&apos;s what
             you&apos;re hiring for, email me and I&apos;ll reply the same day.
           </p>

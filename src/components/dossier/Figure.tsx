@@ -30,7 +30,7 @@ export default function Figure({ figure }: { figure: FigureData }) {
           style={{ borderColor: "var(--rule)" }}
         >
           <span className="label">
-            Figure pending — drop{" "}
+            Figure pending: drop{" "}
             <span className="text-ink">{figure.src}</span> into /public/figures
           </span>
         </div>
