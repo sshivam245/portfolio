@@ -2,7 +2,7 @@
 
 Chips fall back: **inline SVG path → image file → text label**.
 
-## Done — 13 of 14
+## Done — all 14
 
 **From your supplied files** (`~/Desktop/logos`), cropped to the icon and
 normalised to 256px:
@@ -14,21 +14,12 @@ normalised to 256px:
 | `cloudsheer.png` | Cloud + S mark, cropped out of the lockup |
 | `nuvia.png` | Square app icon — rendered as a **tile** (fills the chip) |
 | `lbs.png` | Square avatar — rendered as a **tile**; at 28px its three lines of type are unreadable, filling the chip makes them legible |
+| `comviva.png` | Square avatar — **tile**. Note this is the Tech Mahindra parallelogram mark (Comviva is a Tech Mahindra company), not Comviva's own red wordmark. |
 | `ey.svg` | EY's **reversed** lockup — navy recoloured to white for the dark ground, yellow beam untouched |
 
 **Inline from `simple-icons`**, each in its brand hex: Claude, n8n, HubSpot,
 Python, PostgreSQL (shown "SQL"), GitHub Actions. Tableau uses the Ionicons
 glyph in Tableau orange.
-
-## Still text — 1
-
-| Label | Why |
-|---|---|
-| **Comviva** | Their logo is a wordmark with no standalone icon. Cropping the orange "o" out of it would not be their mark. |
-
-To fix it, either supply a square Comviva avatar/app icon and add
-`file: "comviva.png", tile: true` to that entry in `src/content/logos.ts`, or
-ask for the inner ring to become wide pill-shaped chips, which fit wordmarks.
 
 ## Tiles vs glyphs
 

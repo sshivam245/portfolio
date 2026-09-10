@@ -63,17 +63,19 @@ const TABLEAU_PATH =
  * recoloured from the supplied navy version for the dark ground. Shapes
  * are unmodified in every case.
  *
- * Nuvia and LBS are square avatars with their own backgrounds, so they use
- * `tile` and fill the chip rather than shrinking to a 28px glyph.
+ * Nuvia, LBS and Comviva are square avatars with their own backgrounds, so
+ * they use `tile` and fill the chip rather than shrinking to a 28px glyph.
  *
- * Comviva is the only text chip left: its logo is a wordmark with no
- * standalone icon, and cropping the orange "o" out of it would not be their
- * mark. A square Comviva avatar would drop in the same way LBS did.
+ * Every mark on this ring is now a real logo.
  */
 export const orgLogos: Logo[] = [
   { label: "Cloudsheer", file: "cloudsheer.png", note: "Growth & Strategy, 2025–" },
   { label: "Nuvia AI", file: "nuvia.png", tile: true, note: "Founding GTM → Growth Manager" },
-  { label: "Comviva", note: "UX/UI Design intern" },
+  // NOTE: this avatar is the red-parallelogram-on-maroon Tech Mahindra mark
+  // (Comviva is a Tech Mahindra company) rather than Comviva's own red
+  // "comviva" wordmark. Supplied deliberately; worth a second look if you
+  // want Comviva's own branding here.
+  { label: "Comviva", file: "comviva.png", tile: true, note: "UX/UI Design intern" },
   { label: "EY", file: "ey.svg", note: "Cyber Security intern" },
   { label: "LBS", file: "lbs.png", tile: true, note: "Digital Marketing with AI" },
 ];
