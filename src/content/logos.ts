@@ -63,8 +63,12 @@ const TABLEAU_PATH =
  * recoloured from the supplied navy version for the dark ground. Shapes
  * are unmodified in every case.
  *
- * Comviva has no standalone icon (its logo is a wordmark), and no LBS file
- * was supplied, so both stay as text chips.
+ * Nuvia and LBS are square avatars with their own backgrounds, so they use
+ * `tile` and fill the chip rather than shrinking to a 28px glyph.
+ *
+ * Comviva is the only text chip left: its logo is a wordmark with no
+ * standalone icon, and cropping the orange "o" out of it would not be their
+ * mark. A square Comviva avatar would drop in the same way LBS did.
  */
 export const orgLogos: Logo[] = [
   { label: "Cloudsheer", file: "cloudsheer.png", note: "Growth & Strategy, 2025–" },
