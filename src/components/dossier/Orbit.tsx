@@ -1,9 +1,8 @@
-import { asset } from "@/lib/basePath";
 import { orgLogos, toolLogos, type Logo } from "@/content/logos";
 import LogoChip from "./LogoChip";
 
 /**
- * Portrait at the centre, companies on an inner ring and tools on an outer
+ * A monogram at the centre, companies on an inner ring and tools on an outer
  * ring, both slowly revolving in opposite directions.
  *
  * Each ring rotates; each chip counter-rotates at the same duration so the
@@ -11,9 +10,9 @@ import LogoChip from "./LogoChip";
  * rings so the marks can actually be read, and `prefers-reduced-motion`
  * stops them entirely (the layout is static and still correct).
  *
- * The soft radial glow behind the portrait is doing real work: the cutout
- * was matted from a light studio backdrop and fine curly hair keeps a faint
- * edge, which is invisible against a glow but obvious against flat black.
+ * The soft radial glow originally hid the matted edge of a cut-out portrait.
+ * The portrait is gone, but the glow stays — it gives the rings something to
+ * sit on so the centre reads as a focal point rather than a hole.
  */
 function Ring({
   logos,
@@ -64,13 +63,13 @@ export default function Orbit() {
       {/* Warm glow behind the subject. */}
       <span aria-hidden className="orbit-glow" />
 
-      <div className="orbit-portrait">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={asset("/portrait-cutout.png")}
-          alt="Shivam Goel"
-          className="h-full w-full object-contain object-bottom"
-        />
+      {/* Centre. The portrait used to sit here; a monogram keeps the rings
+          anchored so the middle doesn't read as an empty hole. */}
+      <div className="orbit-centre">
+        <span className="font-display text-[2.75rem] leading-none tracking-[-0.02em] sm:text-[3.5rem]">
+          SG
+        </span>
+        <span className="label mt-2 block">Growth &amp; GTM</span>
       </div>
 
       <Ring

@@ -144,9 +144,16 @@
    * shrinks cleanly on mobile rather than overflowing.
    */
   .orbit-wrap {
-    --orbit-size: clamp(320px, 78vw, 520px);
-    --orbit-r-inner: calc(var(--orbit-size) * 0.325);
-    --orbit-r-outer: calc(var(--orbit-size) * 0.475);
+    /*
+     * Radii must leave room for the chips themselves. A chip is 64px, so it
+     * sticks out ~32px past its ring — with the outer radius at 0.475 the
+     * chips spilled past the wrap and out of the grid column, giving the
+     * page a horizontal scrollbar. 0.425 keeps the furthest chip edge inside
+     * the box: 0.425 * size + 32 < size / 2.
+     */
+    --orbit-size: clamp(300px, 72vw, 440px);
+    --orbit-r-inner: calc(var(--orbit-size) * 0.29);
+    --orbit-r-outer: calc(var(--orbit-size) * 0.425);
     position: relative;
     width: var(--orbit-size);
     height: var(--orbit-size);
@@ -190,32 +197,14 @@
     z-index: -1;
   }
 
-  .orbit-portrait {
+  /* Centre of the orbit. Sits above the glow, below nothing. */
+  .orbit-centre {
     position: absolute;
+    top: 50%;
     left: 50%;
-    bottom: 8%;
-    width: calc(var(--orbit-size) * 0.52);
-    height: calc(var(--orbit-size) * 0.74);
-    transform: translateX(-50%);
-    /*
-     * The cutout is cropped mid-torso, so without this it ends in a hard
-     * horizontal line and reads as a photo rectangle floating on the page.
-     * Fading the bottom third lets the subject dissolve into the ground.
-     */
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      #000 0%,
-      #000 62%,
-      rgba(0, 0, 0, 0.55) 82%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      #000 0%,
-      #000 62%,
-      rgba(0, 0, 0, 0.55) 82%,
-      transparent 100%
-    );
+    transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 1;
   }
 
   .orbit-ring {
