@@ -28,7 +28,11 @@ export default function LogoChip({ logo }: { logo: Logo }) {
   return (
     <span
       title={logo.note ? `${logo.label} — ${logo.note}` : logo.label}
-      className="flex h-14 w-14 items-center justify-center rounded-full border bg-paper/90 backdrop-blur-sm transition-colors duration-200 hover:border-accent sm:h-16 sm:w-16"
+      className={`flex h-14 w-14 items-center justify-center rounded-full border transition-colors duration-200 hover:border-accent sm:h-16 sm:w-16 ${
+        logo.tile
+          ? "overflow-hidden"
+          : "bg-paper/90 backdrop-blur-sm"
+      }`}
       style={{ borderColor: "var(--rule)" }}
     >
       {logo.path ? (
@@ -49,7 +53,11 @@ export default function LogoChip({ logo }: { logo: Logo }) {
           src={asset(`/logos/${logo.file}`)}
           alt={logo.label}
           onError={() => setFailed(true)}
-          className="h-6 w-6 object-contain sm:h-7 sm:w-7"
+          className={
+            logo.tile
+              ? "h-full w-full object-cover"
+              : "h-6 w-6 object-contain sm:h-7 sm:w-7"
+          }
         />
       ) : (
         <span className="label px-1 text-center leading-tight text-ink">

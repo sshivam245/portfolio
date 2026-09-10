@@ -35,6 +35,13 @@ export type Logo = {
   viewBox?: string;
   /** Filename inside /public/logos, e.g. "clay.png". */
   file?: string;
+  /**
+   * The file is a square app-icon/avatar tile with its own background
+   * (Nuvia's gradient, LBS's navy block) rather than a transparent glyph.
+   * Tiles fill the whole chip instead of sitting at 28px inside it — which
+   * is the only size at which LBS's three lines of type are legible.
+   */
+  tile?: boolean;
   /** Short qualifier shown on hover. */
   note?: string;
 };
@@ -61,10 +68,10 @@ const TABLEAU_PATH =
  */
 export const orgLogos: Logo[] = [
   { label: "Cloudsheer", file: "cloudsheer.png", note: "Growth & Strategy, 2025–" },
-  { label: "Nuvia AI", file: "nuvia.png", note: "Founding GTM → Growth Manager" },
+  { label: "Nuvia AI", file: "nuvia.png", tile: true, note: "Founding GTM → Growth Manager" },
   { label: "Comviva", note: "UX/UI Design intern" },
   { label: "EY", file: "ey.svg", note: "Cyber Security intern" },
-  { label: "LBS", note: "Digital Marketing with AI" },
+  { label: "LBS", file: "lbs.png", tile: true, note: "Digital Marketing with AI" },
 ];
 
 /** Outer ring — the toolset. Colours are each brand's own hex. */
