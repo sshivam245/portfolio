@@ -18,18 +18,16 @@ function Ring({
   logos,
   radiusVar,
   spinClass,
-  counterClass,
 }: {
   logos: Logo[];
   radiusVar: string;
   spinClass: string;
-  counterClass: string;
 }) {
   return (
     <div className={`orbit-ring ${spinClass}`} aria-hidden>
       {logos.map((logo, i) => (
         <span
-          key={logo.file}
+          key={logo.label}
           className="orbit-slot"
           style={
             {
@@ -39,13 +37,11 @@ function Ring({
             } as React.CSSProperties
           }
         >
-          {/* Two nested spans on purpose: the static per-index rotation and
-              the animated counter-spin both write `transform`, so they cannot
-              share an element or the animation wins and the chips tumble. */}
+          {/* Both this slot's rotation and the chip's counter-rotation are
+              computed from the same inherited --orbit-a, so they cancel
+              exactly on every frame. See the note in globals.css. */}
           <span className="orbit-upright">
-            <span className={counterClass}>
-              <LogoChip logo={logo} />
-            </span>
+            <LogoChip logo={logo} />
           </span>
         </span>
       ))}
@@ -72,18 +68,8 @@ export default function Orbit() {
         <span className="label mt-2 block">Growth &amp; GTM</span>
       </div>
 
-      <Ring
-        logos={orgLogos}
-        radiusVar="--orbit-r-inner"
-        spinClass="orbit-spin"
-        counterClass="orbit-counter"
-      />
-      <Ring
-        logos={toolLogos}
-        radiusVar="--orbit-r-outer"
-        spinClass="orbit-spin-rev"
-        counterClass="orbit-counter-rev"
-      />
+      <Ring logos={orgLogos} radiusVar="--orbit-r-inner" spinClass="orbit-spin" />
+      <Ring logos={toolLogos} radiusVar="--orbit-r-outer" spinClass="orbit-spin-rev" />
 
       {/* The rings are decorative duplicates of content stated elsewhere, so
           they are aria-hidden. This keeps the same facts available to a

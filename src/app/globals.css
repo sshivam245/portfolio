@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 /*
+ * The orbit's rotation angle. Registered so it can be animated as a real
+ * <angle> rather than an uninterpolatable string. Must live at the top
+ * level, not inside @layer.
+ */
+@property --orbit-a {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+/*
  * Technical dossier. See DESIGN.md before changing anything here.
  * No gradients. No glass. No shadows for hierarchy.
  */
@@ -211,39 +222,48 @@
     position: absolute;
     inset: 0;
   }
+  /*
+   * A single animated angle drives both the ring's position and the chip's
+   * counter-rotation.
+   *
+   * This replaces an earlier version that ran two separate animations — one
+   * spinning the ring, one spinning each chip back the other way at a
+   * matching duration. Algebraically they cancel, but they are independent
+   * animations, and any drift between them tips every logo over. That is
+   * what rotated the LBS tile onto its side.
+   *
+   * Here both read the same inherited `--orbit-a` in the same frame, so the
+   * cancellation is exact by construction and cannot desync. It also drops
+   * 14 animations down to 2.
+   *
+   * Without @property support the variable never animates, so the rings sit
+   * still and the chips stay upright — a fine fallback.
+   */
   .orbit-slot {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%)
-      rotate(calc(var(--i) * (360deg / var(--n))))
+      rotate(calc(var(--orbit-a, 0deg) + var(--i) * (360deg / var(--n))))
       translateY(calc(var(--r) * -1));
   }
   .orbit-upright {
     display: block;
-    transform: rotate(calc(var(--i) * (-360deg / var(--n))));
+    transform: rotate(
+      calc(-1 * (var(--orbit-a, 0deg) + var(--i) * (360deg / var(--n))))
+    );
   }
 
-  @keyframes orbit-spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-  @keyframes orbit-spin-rev {
-    from { transform: rotate(360deg); }
-    to   { transform: rotate(0deg); }
+  @keyframes orbit-angle {
+    from { --orbit-a: 0deg; }
+    to   { --orbit-a: 360deg; }
   }
 
-  .orbit-spin     { animation: orbit-spin 64s linear infinite; }
-  .orbit-spin-rev { animation: orbit-spin-rev 88s linear infinite; }
-  /* Counter-spins share the duration of their ring, in the opposite sense,
-     so each chip stays upright as its ring turns. */
-  .orbit-counter     { display: block; animation: orbit-spin-rev 64s linear infinite; }
-  .orbit-counter-rev { display: block; animation: orbit-spin 88s linear infinite; }
+  .orbit-spin     { animation: orbit-angle 64s linear infinite; }
+  .orbit-spin-rev { animation: orbit-angle 88s linear infinite reverse; }
 
   .orbit-wrap:hover .orbit-spin,
-  .orbit-wrap:hover .orbit-spin-rev,
-  .orbit-wrap:hover .orbit-counter,
-  .orbit-wrap:hover .orbit-counter-rev {
+  .orbit-wrap:hover .orbit-spin-rev {
     animation-play-state: paused;
   }
 
@@ -284,9 +304,7 @@
   }
   .ticker-track,
   .orbit-spin,
-  .orbit-spin-rev,
-  .orbit-counter,
-  .orbit-counter-rev {
+  .orbit-spin-rev {
     animation: none !important;
   }
   .reveal,
