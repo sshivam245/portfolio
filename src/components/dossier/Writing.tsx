@@ -19,6 +19,8 @@ export default function Writing({
 
   const posts = limit ? publishedPosts.slice(0, limit) : publishedPosts;
   const hasMore = limit != null && publishedPosts.length > limit;
+  const n = publishedPosts.length;
+  const plural = `${n} post${n === 1 ? "" : "s"}`;
 
   return (
     <Section
@@ -28,10 +30,10 @@ export default function Writing({
       aside={
         hasMore ? (
           <Link href="/writing" className="hover:text-accent transition-colors">
-            All {publishedPosts.length} posts →
+            All {plural} →
           </Link>
         ) : (
-          `${publishedPosts.length} posts`
+          plural
         )
       }
     >

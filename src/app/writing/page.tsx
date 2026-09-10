@@ -13,7 +13,7 @@ export default function WritingIndexPage() {
     <>
       <header className="shell py-12 sm:py-16">
         <p className="label mb-6">
-          {publishedPosts.length} posts
+          {publishedPosts.length} post{publishedPosts.length === 1 ? "" : "s"}
           <span className="mx-2 text-accent">/</span>
           Growth, GTM, automation
         </p>
