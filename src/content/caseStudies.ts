@@ -93,11 +93,13 @@ export const caseStudies: CaseStudy[] = [
       "Geo-specific pages targeting Miami and South Florida intent, with the bilingual English-Spanish angle stated plainly enough to be quoted, which is the line the AI Overview ended up using.",
       "Tracking that separates AI-browser referrals from conventional organic, so the effect is measurable rather than assumed.",
     ],
+    // Search Console figures are for the cloudsheer.com property,
+    // 29 May – 28 Aug 2026. Average CTR is deliberately not reported here.
     outcomes: [
       { value: "AI Overview", label: "Named in Google's generative answer for “salesforce partner miami”" },
       { value: "#1", label: "Organic result for the same commercial query" },
-      { value: "+15%", label: "Traffic from generative search & AI browsers" },
-      { value: "5", label: "Schema types on the page, incl. FAQPage" },
+      { value: "68.7k", label: "Search impressions in three months" },
+      { value: "11,062", label: "Impressions in a single day at peak, from a ~1.5k baseline" },
     ],
     stack: ["Schema.org", "FAQPage", "Local SEO", "Content architecture", "GA4"],
     reflection:
@@ -107,6 +109,11 @@ export const caseStudies: CaseStudy[] = [
         src: "cloudsheer-ai-overview.png",
         caption:
           "Google AI Overview for “salesforce partner miami”, citing Cloudsheer alongside the #1 organic result.",
+      },
+      {
+        src: "cloudsheer-search-console.png",
+        caption:
+          "Search Console, 29 May – 28 Aug 2026: 68.7k impressions, with the step-change at the end of August.",
       },
     ],
   },
