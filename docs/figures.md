@@ -21,7 +21,7 @@ ship before you've collected everything.
 
 | File | Case study | Status |
 |---|---|---|
-| `aeo-traffic-split.png` | Getting found by AI browsers | needed |
+| `cloudsheer-ai-overview.png` | Cited by Google's AI Overview | **needed — the SERP screenshot** |
 | `descipher-positioning.png` | Launching Descipher OS | needed |
 | `nuvia-funnel.png` | Nuvia acquisition engine | needed |
 | `job-pipeline-architecture.svg` | Job pipeline | ✅ included |

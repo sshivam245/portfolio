@@ -73,28 +73,41 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "aeo-geo",
-    title: "Getting found by AI browsers",
-    tag: "AEO / GEO",
+    title: "Cited by Google's AI Overview",
+    tag: "SEO / AEO / GEO",
     timeframe: "2025",
     org: "Cloudsheer Consulting",
+    link: {
+      href: "https://www.cloudsheer.com/salesforce-consultant-miami",
+      label: "cloudsheer.com/salesforce-consultant-miami",
+    },
     summary:
-      "Search stopped being ten blue links. I rebuilt how we structured content so generative engines would cite us, and lifted traffic from AI-powered browsers by 15%.",
+      "I built Cloudsheer's site from nothing and owned its search strategy. It now ranks first organically for “salesforce partner miami” and is named directly inside Google's AI Overview for the same query — the outcome AEO is actually for.",
     context:
-      "Our organic traffic was flat and increasingly irrelevant — a growing share of buyers were asking an assistant instead of running a search. Traditional SEO was optimising for a surface our buyers had partly left. There was no playbook for the new one.",
+      "Salesforce implementation is a crowded, expensive category to buy keywords in, and a growing share of buyers were asking an assistant instead of scrolling results. Ranking was no longer sufficient: if the AI Overview answers the question and names two firms, being the third blue link is being invisible. So the target was not a position — it was being the source the answer is assembled from.",
     built: [
-      "Audited which queries in our category actually returned generative answers, and which sources those answers cited.",
-      "Restructured page content into extractable, answer-shaped blocks — definitions, comparisons, and explicit claims with sources — so an engine could lift them cleanly.",
-      "Added structured data and entity markup so we were legible as an organisation, not just a set of pages.",
-      "Set up tracking to separate AI-browser referrals from conventional organic, so the effect was measurable rather than assumed.",
+      "The site itself, from zero — architecture, pages and copy, not just an optimisation pass on someone else's build.",
+      "An entity layer in structured data: Organization, WebSite, ProfessionalService and BreadcrumbList, so the firm is machine-legible as a specific local business rather than a set of pages.",
+      "FAQPage schema on the money pages. An answer engine assembling a response wants a question paired with a short, liftable answer, and this hands it exactly that.",
+      "Headings written as the questions buyers actually ask — “what we deliver for Miami teams”, “how we wire your whole stack together” — so each section is a clean extract rather than a paragraph to summarise.",
+      "Geo-specific pages targeting Miami and South Florida intent, with the bilingual English-Spanish angle stated plainly enough to be quoted, which is the line the AI Overview ended up using.",
+      "Tracking that separates AI-browser referrals from conventional organic, so the effect is measurable rather than assumed.",
     ],
     outcomes: [
+      { value: "AI Overview", label: "Named in Google's generative answer for “salesforce partner miami”" },
+      { value: "#1", label: "Organic result for the same commercial query" },
       { value: "+15%", label: "Traffic from generative search & AI browsers" },
-      { value: "New", label: "Reporting split isolating AI referral traffic" },
+      { value: "5", label: "Schema types on the page, incl. FAQPage" },
     ],
-    stack: ["Schema.org", "GA4", "Content architecture", "SQL"],
-    reflection: "",
+    stack: ["Schema.org", "FAQPage", "Local SEO", "Content architecture", "GA4"],
+    reflection:
+      "The thing that moved the needle was not writing more, it was writing shorter. Every claim that got picked up was a sentence that survives being lifted out of its paragraph and still makes sense on its own. Long, hedged prose ranks fine and never gets quoted.",
     figures: [
-      { src: "aeo-traffic-split.png", caption: "AI-browser referrals isolated from conventional organic traffic." },
+      {
+        src: "cloudsheer-ai-overview.png",
+        caption:
+          "Google AI Overview for “salesforce partner miami”, citing Cloudsheer alongside the #1 organic result.",
+      },
     ],
   },
   {

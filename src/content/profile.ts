@@ -28,7 +28,9 @@ export const profile = {
 /** Headline metrics. Shown as an aligned table, never as cards. */
 export const headlineMetrics = [
   { value: "100+", unit: "", label: "Qualified leads", note: "in 6 months, Nuvia AI" },
-  { value: "15", unit: "%", label: "Generative-search lift", note: "AEO/GEO, Cloudsheer" },
+  // The AI Overview citation is the strongest single proof point on the
+  // site — a verifiable outcome, not a self-reported percentage.
+  { value: "#1", unit: "", label: "Google + AI Overview", note: "“salesforce partner miami”" },
   { value: "25", unit: "%", label: "Conversion lift", note: "multi-channel campaigns" },
   { value: "0→1", unit: "", label: "Brand launched", note: "Descipher OS, from scratch" },
 ] as const;
