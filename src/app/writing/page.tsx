@@ -3,7 +3,7 @@ import Writing from "@/components/dossier/Writing";
 import { publishedPosts } from "@/content/writing";
 
 export const metadata: Metadata = {
-  title: "Writing — Shivam Goel",
+  title: "Writing",
   description:
     "Notes on generative-search optimisation, GTM automation, and building acquisition systems.",
   alternates: { canonical: "/writing" },

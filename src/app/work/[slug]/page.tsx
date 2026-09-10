@@ -17,7 +17,7 @@ export function generateMetadata({
   const cs = caseStudies.find((c) => c.id === params.slug);
   if (!cs) return {};
   return {
-    title: `${cs.title} — Shivam Goel`,
+    title: cs.title,
     description: cs.summary,
     alternates: { canonical: `/work/${cs.id}` },
     openGraph: {

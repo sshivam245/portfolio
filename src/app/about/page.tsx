@@ -5,7 +5,7 @@ import { profile } from "@/content/profile";
 import { AboutSchema } from "@/components/dossier/StructuredData";
 
 export const metadata: Metadata = {
-  title: "About — Shivam Goel",
+  title: "About",
   description:
     "Growth & GTM, two years, remote. Track record, capabilities, education and publications.",
   alternates: { canonical: "/about" },
