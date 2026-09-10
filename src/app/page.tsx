@@ -1,25 +1,25 @@
-import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import WhatIDo from "@/components/sections/WhatIDo";
-import Experience from "@/components/sections/Experience";
-import Skills from "@/components/sections/Skills";
-import Education from "@/components/sections/Education";
-import BeyondWork from "@/components/sections/BeyondWork";
-import Publications from "@/components/sections/Publications";
-import Contact from "@/components/sections/Contact";
+import Masthead from "@/components/dossier/Masthead";
+import Ticker from "@/components/dossier/Ticker";
+import WorkIndex from "@/components/dossier/WorkIndex";
+import Writing from "@/components/dossier/Writing";
+import AboutTeaser from "@/components/dossier/AboutTeaser";
+import Contact from "@/components/dossier/Contact";
+import Wordmark from "@/components/dossier/Wordmark";
 
+/**
+ * The homepage is now an index, not the whole site. Case studies live at
+ * /work/<slug>, the full history at /about, all posts at /writing.
+ */
 export default function Home() {
   return (
-    <main>
-      <Hero />
-      <About />
-      <WhatIDo />
-      <Experience />
-      <Skills />
-      <Education />
-      <BeyondWork />
-      <Publications />
-      <Contact />
-    </main>
+    <>
+      <Masthead />
+      <Ticker />
+      <WorkIndex />
+      <Writing index="02" limit={2} />
+      <AboutTeaser index="03" />
+      <Contact index="04" />
+      <Wordmark />
+    </>
   );
 }

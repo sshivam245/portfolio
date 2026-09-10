@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" width="640" height="300" role="img" aria-label="Job pipeline architecture: fetchers to normalise and dedupe to filter to score to draft to digest">
+  <style>
+    .ink   { fill: #16161a; }
+    .muted { fill: #6b6b72; }
+    .rule  { stroke: #cfcec9; }
+    .acc   { stroke: #b4451f; }
+    .accf  { fill: #b4451f; }
+    .box   { fill: none; stroke: #cfcec9; stroke-width: 1; }
+    text   { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+    .lbl   { font-size: 10px; letter-spacing: 0.08em; }
+    .sub   { font-size: 9px; }
+    @media (prefers-color-scheme: dark) {
+      .ink   { fill: #e8e8e3; }
+      .muted { fill: #8a8a93; }
+      .rule, .box { stroke: #3a3a40; }
+      .acc   { stroke: #e8703a; }
+      .accf  { fill: #e8703a; }
+    }
+  </style>
+
+  <!-- Row 1: sources -->
+  <text class="lbl muted" x="8" y="20">SOURCES</text>
+  <g>
+    <rect class="box" x="8" y="30" width="104" height="26"/>
+    <text class="sub ink" x="18" y="47">Greenhouse</text>
+    <rect class="box" x="8" y="60" width="104" height="26"/>
+    <text class="sub ink" x="18" y="77">Lever</text>
+    <rect class="box" x="8" y="90" width="104" height="26"/>
+    <text class="sub ink" x="18" y="107">Ashby</text>
+    <rect class="box" x="8" y="120" width="104" height="26"/>
+    <text class="sub ink" x="18" y="137">Workable</text>
+    <rect class="box" x="8" y="150" width="104" height="26"/>
+    <text class="sub ink" x="18" y="167">RemoteOK</text>
+  </g>
+
+  <!-- converge arrow -->
+  <path class="acc" d="M112 103 H150" fill="none" stroke-width="1"/>
+  <path class="accf" d="M150 103 l-6 -3 v6 z"/>
+
+  <!-- Stage: normalise -->
+  <rect class="box" x="156" y="82" width="96" height="42"/>
+  <text class="sub ink" x="166" y="100">normalise</text>
+  <text class="sub muted" x="166" y="114">+ dedupe</text>
+  <text class="sub muted" x="166" y="140">SQLite</text>
+
+  <path class="acc" d="M252 103 H288" stroke-width="1"/>
+  <path class="accf" d="M288 103 l-6 -3 v6 z"/>
+
+  <!-- Stage: filter (cheap) -->
+  <rect class="box" x="294" y="82" width="96" height="42"/>
+  <text class="sub ink" x="304" y="100">filter</text>
+  <text class="sub muted" x="304" y="114">remote/YoE</text>
+  <text class="sub accf" x="304" y="140">deterministic</text>
+
+  <path class="acc" d="M390 103 H426" stroke-width="1"/>
+  <path class="accf" d="M426 103 l-6 -3 v6 z"/>
+
+  <!-- Stage: score -->
+  <rect class="box" x="432" y="82" width="96" height="42"/>
+  <text class="sub ink" x="442" y="100">score</text>
+  <text class="sub muted" x="442" y="114">vs. resume</text>
+  <text class="sub accf" x="442" y="140">LLM</text>
+
+  <!-- down to draft -->
+  <path class="acc" d="M480 124 V168" stroke-width="1"/>
+  <path class="accf" d="M480 168 l-3 -6 h6 z"/>
+
+  <!-- Stage: draft -->
+  <rect class="box" x="432" y="174" width="96" height="42"/>
+  <text class="sub ink" x="442" y="192">draft note</text>
+  <text class="sub muted" x="442" y="206">strong fits</text>
+  <text class="sub accf" x="442" y="232">LLM</text>
+
+  <path class="acc" d="M432 195 H396" stroke-width="1"/>
+  <path class="accf" d="M396 195 l6 -3 v6 z"/>
+
+  <!-- Stage: digest -->
+  <rect class="box" x="294" y="174" width="96" height="42"/>
+  <text class="sub ink" x="304" y="192">email</text>
+  <text class="sub muted" x="304" y="206">digest</text>
+
+  <path class="acc" d="M294 195 H258" stroke-width="1"/>
+  <path class="accf" d="M258 195 l6 -3 v6 z"/>
+
+  <!-- review gate -->
+  <rect class="box" x="150" y="174" width="102" height="42" stroke-dasharray="3 3"/>
+  <text class="sub accf" x="160" y="192">human review</text>
+  <text class="sub muted" x="160" y="206">no auto-submit</text>
+
+  <!-- footer note -->
+  <line class="rule" x1="8" y1="262" x2="632" y2="262" stroke-width="1"/>
+  <text class="lbl muted" x="8" y="280">DAILY · GITHUB ACTIONS · CHEAP FILTERS BEFORE EXPENSIVE JUDGEMENT</text>
+</svg>

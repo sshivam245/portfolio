@@ -2,63 +2,317 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * The orbit's rotation angle. Registered so it can be animated as a real
+ * <angle> rather than an uninterpolatable string. Must live at the top
+ * level, not inside @layer.
+ */
+@property --orbit-a {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+/*
+ * Technical dossier. See DESIGN.md before changing anything here.
+ * No gradients. No glass. No shadows for hierarchy.
+ */
+
 @layer base {
   :root {
-    --background: #fafafa;
-    --foreground: #1e293b;
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --card-border: rgba(200, 200, 220, 0.3);
-    --input-bg: rgba(0, 0, 0, 0.05);
-    --muted: #64748b;
-    --nav-bg: rgba(250, 250, 250, 0.8);
+    --paper: #fbfbf9;
+    --ink: #101014;
+    --ink-muted: #63636b;
+    --rule: #e0dfda;
+    --accent: #d1400a;
+    --accent-dim: #f7ebe4;
+    --grid: rgba(16, 16, 20, 0.045);
   }
 
   .dark {
-    --background: #0a0a14;
-    --foreground: #f1f5f9;
-    --card-bg: rgba(15, 15, 35, 0.6);
-    --card-border: rgba(100, 100, 180, 0.15);
-    --input-bg: rgba(255, 255, 255, 0.05);
-    --muted: #94a3b8;
-    --nav-bg: rgba(10, 10, 20, 0.8);
+    --paper: #08080a;
+    --ink: #f2f2ee;
+    --ink-muted: #8e8e98;
+    --rule: #23232a;
+    --accent: #ff6b35;
+    --accent-dim: #24140c;
+    --grid: rgba(255, 255, 255, 0.035);
+  }
+
+  * {
+    border-color: var(--rule);
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
+  /*
+   * Engineering-drawing grid. Gives the page depth without adding any
+   * decoration that has to be designed — it reads as graph paper, which is
+   * the right texture for a dossier.
+   */
   body {
-    color: var(--foreground);
-    background: var(--background);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--paper);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 72px 72px;
+    background-position: -1px -1px;
+    color: var(--ink);
+    font-feature-settings: "kern", "liga";
+  }
+
+  /* Numbers always align in columns. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply backdrop-blur-xl border rounded-2xl;
-    background: var(--card-bg);
-    border-color: var(--card-border);
+  /* The mono label: uppercase, tracked, small. Used for every meta line. */
+  .label {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.12em];
+    color: var(--ink-muted);
   }
 
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400;
+  /* Hairline rules do the work that cards used to. */
+  .rule-t {
+    border-top: 1px solid var(--rule);
+  }
+  .rule-b {
+    border-bottom: 1px solid var(--rule);
   }
 
-  .glass-input {
-    @apply w-full rounded-xl px-4 py-3 border outline-none transition-all duration-300;
-    background: var(--input-bg);
-    border-color: var(--card-border);
-    color: var(--foreground);
+  .shell {
+    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6;
   }
 
-  .glass-input:focus {
-    @apply border-indigo-500 ring-1 ring-indigo-500;
+  /* Links: underline on the accent, never a colored button. */
+  .link {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color 150ms ease-out;
+  }
+  .link:hover {
+    color: var(--accent);
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /*
+   * Scroll reveal. `.reveal` is visible by default — Reveal.tsx only adds
+   * `.reveal-armed` to sections already below the fold, so nothing the user
+   * can see is ever hidden and a JS failure leaves the page fully readable.
+   */
+  .reveal {
+    transition: opacity 320ms ease-out, transform 320ms ease-out;
+  }
+  .reveal-armed {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .reveal-shown {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Masthead entrance. Pure CSS, runs once on load, staggered by depth. */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .rise > * {
+    animation: rise 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .rise > *:nth-child(1) { animation-delay: 40ms; }
+  .rise > *:nth-child(2) { animation-delay: 110ms; }
+  .rise > *:nth-child(3) { animation-delay: 180ms; }
+  .rise > *:nth-child(4) { animation-delay: 250ms; }
+
+  /*
+   * Orbit. Rings rotate; chips counter-rotate at the same duration so the
+   * logos stay upright. Radii scale with the viewport so the whole thing
+   * shrinks cleanly on mobile rather than overflowing.
+   */
+  .orbit-wrap {
+    /*
+     * Radii must leave room for the chips themselves. A chip is 64px, so it
+     * sticks out ~32px past its ring — with the outer radius at 0.475 the
+     * chips spilled past the wrap and out of the grid column, giving the
+     * page a horizontal scrollbar. 0.425 keeps the furthest chip edge inside
+     * the box: 0.425 * size + 32 < size / 2.
+     */
+    --orbit-size: clamp(300px, 72vw, 440px);
+    --orbit-r-inner: calc(var(--orbit-size) * 0.29);
+    --orbit-r-outer: calc(var(--orbit-size) * 0.425);
+    position: relative;
+    width: var(--orbit-size);
+    height: var(--orbit-size);
+    margin-inline: auto;
+    isolation: isolate;
+  }
+
+  .orbit-guide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid var(--rule);
+    border-radius: 9999px;
+    transform: translate(-50%, -50%);
+  }
+  .orbit-guide-inner {
+    width: calc(var(--orbit-r-inner) * 2);
+    height: calc(var(--orbit-r-inner) * 2);
+  }
+  .orbit-guide-outer {
+    width: calc(var(--orbit-r-outer) * 2);
+    height: calc(var(--orbit-r-outer) * 2);
+    border-style: dashed;
+    opacity: 0.6;
+  }
+
+  .orbit-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--orbit-r-inner) * 2.1);
+    height: calc(var(--orbit-r-inner) * 2.1);
+    transform: translate(-50%, -50%);
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle at 50% 45%,
+      color-mix(in srgb, var(--accent) 26%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 9%, transparent) 45%,
+      transparent 72%
+    );
+    z-index: -1;
+  }
+
+  /* Centre of the orbit. Sits above the glow, below nothing. */
+  .orbit-centre {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    inset: 0;
+  }
+  /*
+   * A single animated angle drives both the ring's position and the chip's
+   * counter-rotation.
+   *
+   * This replaces an earlier version that ran two separate animations — one
+   * spinning the ring, one spinning each chip back the other way at a
+   * matching duration. Algebraically they cancel, but they are independent
+   * animations, and any drift between them tips every logo over. That is
+   * what rotated the LBS tile onto its side.
+   *
+   * Here both read the same inherited `--orbit-a` in the same frame, so the
+   * cancellation is exact by construction and cannot desync. It also drops
+   * 14 animations down to 2.
+   *
+   * Without @property support the variable never animates, so the rings sit
+   * still and the chips stay upright — a fine fallback.
+   */
+  .orbit-slot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+      rotate(calc(var(--orbit-a, 0deg) + var(--i) * (360deg / var(--n))))
+      translateY(calc(var(--r) * -1));
+  }
+  .orbit-upright {
+    display: block;
+    transform: rotate(
+      calc(-1 * (var(--orbit-a, 0deg) + var(--i) * (360deg / var(--n))))
+    );
+  }
+
+  @keyframes orbit-angle {
+    from { --orbit-a: 0deg; }
+    to   { --orbit-a: 360deg; }
+  }
+
+  .orbit-spin     { animation: orbit-angle 64s linear infinite; }
+  .orbit-spin-rev { animation: orbit-angle 88s linear infinite reverse; }
+
+  .orbit-wrap:hover .orbit-spin,
+  .orbit-wrap:hover .orbit-spin-rev {
+    animation-play-state: paused;
+  }
+
+  /* Continuous ticker. Two identical tracks, translated -50%. */
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .ticker-track {
+    animation: ticker 42s linear infinite;
+  }
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+
+  /* Accent rule that draws itself in under a section heading. */
+  @keyframes draw {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  .draw {
+    transform-origin: left;
+    animation: draw 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 120ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ticker-track,
+  .orbit-spin,
+  .orbit-spin-rev {
+    animation: none !important;
+  }
+  .reveal,
+  .reveal-armed,
+  .rise > *,
+  .draw {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
