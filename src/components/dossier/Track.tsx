@@ -1,9 +1,9 @@
 import Section from "./Section";
 import { experience, skills } from "@/content/profile";
 
-export function Experience() {
+export function Experience({ index = "02" }: { index?: string }) {
   return (
-    <Section id="track" index="03" title="Track record">
+    <Section id="track" index={index} title="Track record">
       <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
         {experience.map((job) => (
           <div
@@ -35,9 +35,9 @@ export function Experience() {
   );
 }
 
-export function Capabilities() {
+export function Capabilities({ index = "03" }: { index?: string }) {
   return (
-    <Section id="capabilities" index="04" title="Capabilities">
+    <Section id="capabilities" index={index} title="Capabilities">
       <div className="grid gap-x-10 gap-y-8 sm:grid-cols-3">
         {skills.map((group) => (
           <div key={group.group}>

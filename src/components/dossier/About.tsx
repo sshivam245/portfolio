@@ -1,9 +1,9 @@
 import Section from "./Section";
 import { profile, education, publications, beyond } from "@/content/profile";
 
-export function About() {
+export function About({ index = "01" }: { index?: string }) {
   return (
-    <Section id="about" index="05" title="About">
+    <Section id="about" index={index} title="About">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-7">
           {profile.about.map((para) => (
@@ -30,9 +30,9 @@ export function About() {
   );
 }
 
-export function Credentials() {
+export function Credentials({ index = "04" }: { index?: string }) {
   return (
-    <Section id="credentials" index="06" title="Education & publications">
+    <Section id="credentials" index={index} title="Education & publications">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <h3 className="label rule-b pb-2 text-ink">Education</h3>

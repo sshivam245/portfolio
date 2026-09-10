@@ -3,21 +3,40 @@ import Section from "./Section";
 import { publishedPosts, formatDate } from "@/content/writing";
 
 /**
- * Numbered list, same dossier grammar as the case studies. External posts link
- * out; local posts route to their own generated page.
+ * Numbered list of posts, same dossier grammar as the work index.
+ *
+ * `limit` shows only the most recent few, for the homepage; the full list
+ * lives at /writing.
  */
-export default function Writing() {
+export default function Writing({
+  index = "02",
+  limit,
+}: {
+  index?: string;
+  limit?: number;
+}) {
   if (!publishedPosts.length) return null;
+
+  const posts = limit ? publishedPosts.slice(0, limit) : publishedPosts;
+  const hasMore = limit != null && publishedPosts.length > limit;
 
   return (
     <Section
       id="writing"
-      index="02"
+      index={index}
       title="Writing"
-      aside={`${publishedPosts.length} posts`}
+      aside={
+        hasMore ? (
+          <Link href="/writing" className="hover:text-accent transition-colors">
+            All {publishedPosts.length} posts →
+          </Link>
+        ) : (
+          `${publishedPosts.length} posts`
+        )
+      }
     >
       <ol className="rule-t">
-        {publishedPosts.map((post, i) => {
+        {posts.map((post, i) => {
           const external = Boolean(post.href);
           const href = post.href ?? `/writing/${post.slug}`;
 
@@ -50,7 +69,6 @@ export default function Writing() {
                 </span>
               </span>
 
-              {/* Hairline that extends on hover — the only motion here. */}
               <span
                 aria-hidden
                 className="mt-3 hidden h-px w-6 shrink-0 bg-accent transition-all duration-200 group-hover:w-12 sm:block"
@@ -58,18 +76,12 @@ export default function Writing() {
             </>
           );
 
-          const cls =
-            "group flex gap-4 rule-b py-6 sm:gap-6 items-start";
+          const cls = "group flex gap-4 rule-b py-6 sm:gap-6 items-start";
 
           return (
             <li key={post.slug}>
               {external ? (
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className={cls}
-                >
+                <a href={href} target="_blank" rel="noreferrer noopener" className={cls}>
                   {inner}
                 </a>
               ) : (

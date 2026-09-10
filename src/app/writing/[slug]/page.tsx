@@ -28,8 +28,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
   return (
     <article className="shell py-14 sm:py-20">
-      <Link href="/#writing" className="label hover:text-accent transition-colors">
-        ← Writing
+      <Link href="/writing" className="label hover:text-accent transition-colors">
+        ← All writing
       </Link>
 
       <header className="mt-8 max-w-prose">
@@ -50,7 +50,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       </div>
 
       <footer className="rule-t mt-12 max-w-prose pt-6">
-        <Link href="/#writing" className="label hover:text-accent transition-colors">
+        <Link href="/writing" className="label hover:text-accent transition-colors">
           ← All writing
         </Link>
       </footer>
