@@ -25,7 +25,6 @@
     --ink-muted: #63636b;
     --rule: #e0dfda;
     --accent: #d1400a;
-    --accent-dim: #f7ebe4;
     --grid: rgba(16, 16, 20, 0.045);
   }
 
@@ -35,7 +34,6 @@
     --ink-muted: #8e8e98;
     --rule: #23232a;
     --accent: #ff6b35;
-    --accent-dim: #24140c;
     --grid: rgba(255, 255, 255, 0.035);
   }
 
@@ -80,10 +78,92 @@
 }
 
 @layer components {
+  /*
+   * Type scale.
+   *
+   * These exist because the scale in DESIGN.md had rotted: `text-display`,
+   * `text-metric`, `text-h1` and `text-h2` had zero usages and twelve
+   * arbitrary `text-[Nrem]` values had grown in their place — including a
+   * 32px and a 34px doing the same job two pixels apart, which reads as a
+   * mistake rather than a hierarchy.
+   *
+   * Tailwind's fontSize tokens can't carry a breakpoint, which is why these
+   * are component classes: one name, both sizes, one place to change them.
+   */
+  .t-display {
+    @apply font-display font-normal;
+    font-size: 3.25rem;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+  }
+  .t-title {
+    @apply font-display font-normal;
+    font-size: 2.5rem;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+  .t-heading {
+    @apply font-display font-normal;
+    font-size: 1.75rem;
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+  }
+  .t-subhead {
+    @apply font-display font-normal;
+    font-size: 1.375rem;
+    line-height: 1.15;
+    letter-spacing: -0.012em;
+  }
+  .t-metric {
+    @apply font-mono font-medium tnum;
+    font-size: 2.5rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .t-metric-sm {
+    @apply font-mono font-medium tnum;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  @media (min-width: 640px) {
+    .t-display { font-size: 5.5rem; }
+    .t-title { font-size: 4rem; }
+    .t-heading { font-size: 2.5rem; }
+    .t-subhead { font-size: 1.625rem; }
+    .t-metric { font-size: 3.5rem; }
+    /* 2rem, not 1.75rem: at 1.75 it landed 2px from .t-subhead, which is
+       the same non-hierarchy the old 32/34 pair had. */
+    .t-metric-sm { font-size: 2rem; }
+  }
+
   /* The mono label: uppercase, tracked, small. Used for every meta line. */
   .label {
     @apply font-mono text-[0.6875rem] uppercase tracking-[0.12em];
     color: var(--ink-muted);
+  }
+
+  /*
+   * Any label that is also a link or button. The label type is 11px, which
+   * made 13 of 21 tap targets on the homepage shorter than the 24px WCAG
+   * 2.5.8 minimum — nav items were 17px tall and "CV" was 16x17. This pads
+   * the hit area without changing how the label looks, using a pseudo
+   * element so surrounding layout is untouched.
+   */
+  .label-tap {
+    position: relative;
+  }
+  .label-tap::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    /* Both axes: "CV" was 16px wide, so height alone wasn't enough. */
+    min-width: 44px;
+    min-height: 44px;
+    transform: translate(-50%, -50%);
   }
 
   /* Hairline rules do the work that cards used to. */

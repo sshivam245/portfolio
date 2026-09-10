@@ -29,7 +29,7 @@ export default function AboutPage() {
           <span className="mx-2 text-accent">/</span>
           {profile.location}
         </p>
-        <h1 className="max-w-[16ch] font-display text-[2.5rem] font-normal leading-[1.02] tracking-[-0.02em] sm:text-[4rem]">
+        <h1 className="t-title max-w-[16ch]">
           The long version.
         </h1>
       </header>

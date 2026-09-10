@@ -22,7 +22,7 @@ export default function Masthead() {
             Serif display at low weight against the mono labels. This contrast
             is what stops the page reading as a generic Tailwind template.
           */}
-          <h1 className="mt-6 max-w-[16ch] font-display text-[3.25rem] font-normal leading-[0.95] tracking-[-0.025em] sm:text-[5.5rem]">
+          <h1 className="t-display mt-6 max-w-[16ch]">
             I build{" "}
             <span className="italic text-accent">acquisition engines</span> —
             and the automation underneath them.
@@ -35,14 +35,14 @@ export default function Masthead() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <a href="#work" className="label group inline-flex items-center gap-2 text-ink">
+            <a href="#work" className="label label-tap group inline-flex items-center gap-2 text-ink">
               See the work
               <span
                 aria-hidden
                 className="h-px w-6 bg-accent transition-all duration-200 group-hover:w-10"
               />
             </a>
-            <a href="#contact" className="label hover:text-accent transition-colors">
+            <a href="#contact" className="label label-tap hover:text-accent transition-colors">
               Get in touch
             </a>
           </div>
@@ -63,7 +63,7 @@ export default function Masthead() {
             />
             <dt className="label mb-2">{m.label}</dt>
             <dd>
-              <span className="tnum block font-mono text-[2.5rem] font-medium leading-none sm:text-[3.5rem]">
+              <span className="t-metric block">
                 {m.value}
                 {m.unit}
               </span>

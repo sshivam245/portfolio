@@ -15,7 +15,7 @@ export default function AboutTeaser({ index = "03" }: { index?: string }) {
           {profile.about[0]}
         </p>
         <div className="lg:col-span-4 lg:text-right">
-          <Link href="/about" className="label group inline-flex items-center gap-2 text-ink">
+          <Link href="/about" className="label label-tap group inline-flex items-center gap-2 text-ink">
             Track record &amp; capabilities
             <span
               aria-hidden

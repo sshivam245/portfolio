@@ -36,7 +36,7 @@ export default function WorkIndex() {
                 </p>
 
                 <div className="sm:col-span-7">
-                  <h3 className="font-display text-[1.75rem] font-normal leading-[1.1] tracking-[-0.015em] transition-colors duration-150 group-hover:text-accent sm:text-[2.125rem]">
+                  <h3 className="t-heading transition-colors duration-150 group-hover:text-accent">
                     {cs.title}
                   </h3>
                   <p className="mt-3 max-w-prose text-small text-ink-muted">
@@ -45,7 +45,7 @@ export default function WorkIndex() {
                 </div>
 
                 <div className="flex items-baseline gap-4 sm:col-span-5 sm:justify-end">
-                  <span className="tnum font-mono text-[2rem] font-medium leading-none text-accent">
+                  <span className="t-metric-sm text-accent">
                     {headline.value}
                   </span>
                   <span className="max-w-[18ch] text-small text-ink-muted">

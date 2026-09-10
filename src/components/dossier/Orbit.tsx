@@ -62,7 +62,7 @@ export default function Orbit() {
       {/* Centre. The portrait used to sit here; a monogram keeps the rings
           anchored so the middle doesn't read as an empty hole. */}
       <div className="orbit-centre">
-        <span className="font-display text-[2.75rem] leading-none tracking-[-0.02em] sm:text-[3.5rem]">
+        <span className="t-title">
           SG
         </span>
         <span className="label mt-2 block">Growth &amp; GTM</span>

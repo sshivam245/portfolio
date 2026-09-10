@@ -31,7 +31,7 @@ export default function Contact({ index = "04" }: { index?: string }) {
             {rows.map((r) => (
               <div
                 key={r.label}
-                className="rule-b flex items-baseline justify-between gap-4 py-3"
+                className="rule-b flex items-baseline justify-between gap-4 py-4 sm:py-3"
               >
                 <dt className="label flex items-center gap-2">
                   <r.Icon className="text-accent" />
@@ -40,7 +40,7 @@ export default function Contact({ index = "04" }: { index?: string }) {
                 <dd className="text-small">
                   <a
                     href={r.href}
-                    className="link"
+                    className="link label-tap"
                     {...(r.label === "CV" ? { download: true } : {})}
                     {...(r.href.startsWith("http")
                       ? { target: "_blank", rel: "noreferrer noopener" }

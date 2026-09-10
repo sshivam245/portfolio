@@ -50,7 +50,7 @@ export default function Writing({
 
               <span className="min-w-0 flex-1">
                 <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="font-display text-[1.5rem] font-normal leading-tight tracking-[-0.01em] group-hover:text-accent transition-colors duration-150">
+                  <span className="t-subhead group-hover:text-accent transition-colors duration-150">
                     {post.title}
                   </span>
                   {external ? (

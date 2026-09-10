@@ -52,11 +52,11 @@ export default function CaseStudyPage({
     <article>
       <CaseStudySchema slug={cs.id} />
       <header className="shell py-12 sm:py-16">
-        <Link href="/#work" className="label hover:text-accent transition-colors">
+        <Link href="/#work" className="label label-tap hover:text-accent transition-colors">
           ← Selected work
         </Link>
 
-        <p className="label mt-8">
+        <p className="label label-tap mt-8">
           <span className="tnum">{String(index + 1).padStart(2, "0")}</span>
           <span className="mx-2 text-accent">·</span>
           {cs.tag}
@@ -64,7 +64,7 @@ export default function CaseStudyPage({
           {cs.org}, {cs.timeframe}
         </p>
 
-        <h1 className="mt-4 max-w-[18ch] font-display text-[2.5rem] font-normal leading-[1.02] tracking-[-0.02em] sm:text-[4rem]">
+        <h1 className="t-title mt-4 max-w-[18ch]">
           {cs.title}
         </h1>
 
@@ -75,7 +75,7 @@ export default function CaseStudyPage({
             href={cs.link.href}
             target="_blank"
             rel="noreferrer noopener"
-            className="label group mt-6 inline-flex items-center gap-2 text-ink"
+            className="label label-tap group mt-6 inline-flex items-center gap-2 text-ink"
           >
             {cs.link.label} ↗
             <span
@@ -93,7 +93,7 @@ export default function CaseStudyPage({
           <dl className="grid grid-cols-2 gap-x-6 gap-y-6 lg:grid-cols-4">
             {cs.outcomes.map((o) => (
               <div key={o.label}>
-                <dd className="tnum font-mono text-[2rem] font-medium leading-none text-accent sm:text-[2.5rem]">
+                <dd className="t-metric text-accent">
                   {o.value}
                 </dd>
                 <dt className="mt-2 text-small text-ink-muted">{o.label}</dt>
@@ -145,8 +145,8 @@ export default function CaseStudyPage({
       <section className="rule-t">
         <div className="shell py-10">
           <Link href={`/work/${next.id}`} className="group block">
-            <p className="label mb-2">Next case study</p>
-            <h2 className="font-display text-[1.75rem] font-normal leading-tight tracking-[-0.015em] transition-colors duration-150 group-hover:text-accent sm:text-[2.25rem]">
+            <p className="label label-tap mb-2">Next case study</p>
+            <h2 className="t-heading transition-colors duration-150 group-hover:text-accent">
               {next.title}
             </h2>
           </Link>
