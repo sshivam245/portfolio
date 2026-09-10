@@ -27,7 +27,10 @@ function Person() {
     name: SITE_NAME,
     url: url("/"),
     email: `mailto:${profile.email}`,
-    jobTitle: experience[0].role,
+    // Both the self-description and the employer title; the first matches
+    // the linked LinkedIn headline, which helps an engine resolve them
+    // as one person.
+    jobTitle: [profile.role, experience[0].role],
     description: profile.statement,
     knowsAbout: skills.flatMap((g) => g.items),
     worksFor: {
@@ -72,7 +75,7 @@ export function HomeSchema() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     url: url("/"),
-    name: `${SITE_NAME} · ${profile.role}`,
+    name: `${SITE_NAME} · ${profile.role}, ${profile.roleAlt}`,
     description: profile.statement,
     inLanguage: "en",
     publisher: { "@id": PERSON_ID },

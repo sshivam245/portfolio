@@ -25,6 +25,8 @@ export default function AboutPage() {
         <p className="label mb-6">
           {profile.role}
           <span className="mx-2 text-accent">/</span>
+          {profile.roleAlt}
+          <span className="mx-2 text-accent">/</span>
           {profile.yearsExperience} yrs
           <span className="mx-2 text-accent">/</span>
           {profile.location}

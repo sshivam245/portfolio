@@ -5,7 +5,11 @@
 
 export const profile = {
   name: "Shivam Goel",
-  role: "Growth & GTM",
+  // Both labels, deliberately. "Marketing Engineer" leads because it matches
+  // the LinkedIn headline and is the claim this site exists to prove;
+  // "Growth & GTM" follows because it is what hiring managers search for.
+  role: "Marketing Engineer",
+  roleAlt: "Growth & GTM",
   // Kept deliberately concrete. No "passionate", no "results-driven".
   statement: "I build acquisition engines, and the automation underneath them.",
   location: "Remote",
@@ -13,7 +17,7 @@ export const profile = {
 
   email: "shivam55.goel@gmail.com",
   phone: "+91 99106 90655",
-  // NOTE: resume.json and the old site disagreed on this URL. Verify which is live.
+  // Confirmed correct by Shivam; resume.json's /in/shivam-goel/ is stale.
   linkedin: "https://www.linkedin.com/in/shivam-goel-245ss/",
   github: "https://github.com/sshivam245",
   resumePath: "/resume/shivam-goel-resume.pdf",

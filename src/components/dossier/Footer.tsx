@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="rule-t">
       <div className="shell flex flex-wrap items-center justify-between gap-3 py-8">
         <p className="label">
-          {profile.name} · {profile.role}
+          {profile.name} · {profile.role}, {profile.roleAlt}
         </p>
         <p className="label">
           Built with Next.js

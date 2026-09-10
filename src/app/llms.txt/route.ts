@@ -24,7 +24,7 @@ export function GET() {
   push(`# ${SITE_NAME}`, "");
   push(`> ${profile.statement}`, "");
   push(
-    `${SITE_NAME} is a ${profile.role} professional with ${profile.yearsExperience} years of`,
+    `${SITE_NAME} is a ${profile.role} (${profile.roleAlt}) with ${profile.yearsExperience} years of`,
     `experience, working ${profile.location.toLowerCase()}. Currently ${experience[0].role} at`,
     `${experience[0].company}. Previously the first GTM hire at Nuvia AI. Seeking a`,
     `founding-GTM or growth-engineering role.`,

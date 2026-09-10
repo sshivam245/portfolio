@@ -13,6 +13,8 @@ export default function Masthead() {
           <p className="label">
             {profile.role}
             <span className="mx-2 text-accent">/</span>
+            {profile.roleAlt}
+            <span className="mx-2 text-accent">/</span>
             {profile.yearsExperience} yrs
             <span className="mx-2 text-accent">/</span>
             {profile.location}
