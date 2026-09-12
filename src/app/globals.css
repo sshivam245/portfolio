@@ -292,20 +292,33 @@
    */
   .orbit-wrap {
     /*
-     * Radii must leave room for the chips themselves. A chip is 64px, so it
-     * sticks out ~32px past its ring — with the outer radius at 0.475 the
-     * chips spilled past the wrap and out of the grid column, giving the
-     * page a horizontal scrollbar. 0.425 keeps the furthest chip edge inside
-     * the box: 0.425 * size + 32 < size / 2.
+     * Fixed geometry, in pixels.
+     *
+     * The chips are a fixed 56px, so expressing the radii as ratios of a
+     * viewport-scaled box meant every size change silently broke one of the
+     * two constraints — which it did twice: once leaving chips outside the
+     * box, once collapsing the rings into a single crowded band.
+     *
+     * Chips are 48px, rings at 84 and 140:
+     *   ring gap      140 - 84 = 56px  > 48px chip, so rings never collide
+     *   centre clear  84 - 24 - 28 = 32px to the measured 57px monogram
+     *   box           2 * (140 + 24) = 328px, fits a 375px phone
+     *
+     * The monogram half-width is measured, not assumed. Guessing it at 30px
+     * is what left only 16px of clearance and made the centre look crowded.
+     *
+     * The box grows to 400px where there is room (the lg column is ~413px at
+     * 1280), because at the 328px floor the rings sit only 8px apart once
+     * chip width is subtracted and read as a single cluster. Ratios are
+     * derived from the solved 328px case so both constraints hold across the
+     * whole range: 84/328 and 140/328.
+     *
+     * One size everywhere. Nothing to re-derive when a chip or breakpoint
+     * changes; if either does, recompute these three lines.
      */
-    /* 30vw, not 72vw: at 1280 the column is ~413px, and a fixed 440px
-       orbit overflowed the page under 200% text zoom. */
-    --orbit-size: clamp(260px, 30vw, 420px);
-    --orbit-r-inner: calc(var(--orbit-size) * 0.29);
-    /* 0.38 holds at both ends: mobile 0.38*260 + 28 = 127 <= 130, desktop
-       0.38*384 + 32 = 178 <= 192. Chips are 56px on mobile, 64px above sm,
-       so the tighter constraint is the small end. */
-    --orbit-r-outer: calc(var(--orbit-size) * 0.38);
+    --orbit-size: clamp(328px, 32vw, 400px);
+    --orbit-r-inner: calc(var(--orbit-size) * 0.256);
+    --orbit-r-outer: calc(var(--orbit-size) * 0.427);
     position: relative;
     width: var(--orbit-size);
     height: var(--orbit-size);
@@ -322,11 +335,26 @@
     overflow: clip;
   }
 
+  /*
+   * Below 20rem of viewport the orbit is dropped. The unit matters: 20rem
+   * is 320px at a normal root, so phones keep it, but at 200% text the root
+   * is 32px, 20rem becomes 640px, and any phone matches — which is exactly
+   * when the column (311px) is too narrow for the 328px two-ring minimum.
+   * It is decorative; the sr-only list in Orbit.tsx carries the same names.
+   */
+  @media (max-width: 20rem) {
+    .orbit-wrap {
+      display: none;
+    }
+  }
+
   .orbit-guide {
     position: absolute;
     top: 50%;
     left: 50%;
-    border: 1px solid var(--rule);
+    /* --rule is 1px of #23232a on #08080a and read as nothing; the rings
+       are the structure the chips sit on, so they need to be visible. */
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
     border-radius: 9999px;
     transform: translate(-50%, -50%);
   }

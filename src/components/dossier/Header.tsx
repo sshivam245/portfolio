@@ -43,14 +43,17 @@ function ThemeToggle() {
 export default function Header() {
   return (
     <header className="rule-b sticky top-0 z-40 bg-paper/95 backdrop-blur-[2px]">
-      <div className="shell flex h-14 items-center justify-between gap-4">
+      {/* Wraps rather than overflowing: at 375px with 200% text the row
+          needs 696px, which is a WCAG 1.4.10 reflow failure. Height grows
+          instead, and the sticky offset is generous enough to absorb it. */}
+      <div className="shell flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2">
         {/* next/link, not <a> — Next only prepends basePath (/portfolio) to
             Link hrefs, so a plain anchor to "/" 404s on GitHub Pages. */}
         <Link href="/" className="label label-tap text-ink hover:text-accent transition-colors">
           Shivam Goel
         </Link>
 
-        <nav className="flex items-center gap-3 sm:gap-6">
+        <nav className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 sm:gap-x-6">
           {nav.map((item) => (
             <Link
               key={item.href}
