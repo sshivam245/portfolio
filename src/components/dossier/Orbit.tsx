@@ -2,8 +2,8 @@ import { orgLogos, toolLogos, type Logo } from "@/content/logos";
 import LogoChip from "./LogoChip";
 
 /**
- * A monogram at the centre, companies on an inner ring and tools on an outer
- * ring, both slowly revolving in opposite directions.
+ * Companies on an inner ring, tools on an outer ring, both slowly revolving
+ * in opposite directions around an empty centre.
  *
  * Each ring rotates; each chip counter-rotates at the same duration so the
  * logos stay upright rather than tumbling. Hovering anywhere pauses both
@@ -58,14 +58,6 @@ export default function Orbit() {
 
       {/* Warm glow behind the subject. */}
       <span aria-hidden className="orbit-glow" />
-
-      {/* Centre. The portrait used to sit here; a monogram keeps the rings
-          anchored so the middle doesn't read as an empty hole. */}
-      {/* Monogram only. The "Growth & GTM" label that used to sit under it
-          repeated the masthead meta line a few hundred pixels above. */}
-      <div className="orbit-centre">
-        <span className="t-title">SG</span>
-      </div>
 
       <Ring logos={orgLogos} radiusVar="--orbit-r-inner" spinClass="orbit-spin" />
       <Ring logos={toolLogos} radiusVar="--orbit-r-outer" spinClass="orbit-spin-rev" />

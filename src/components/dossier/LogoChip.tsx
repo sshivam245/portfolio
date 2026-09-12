@@ -28,11 +28,9 @@ export default function LogoChip({ logo }: { logo: Logo }) {
   return (
     <span
       title={logo.note ? `${logo.label}: ${logo.note}` : logo.label}
-      /* Fixed px, not rem: the ring radii are px, so rem-sized chips grew
-         under text zoom while the radii did not, and the orbit overflowed
-         the page. The logos themselves carry no text; the sr-only list in
-         Orbit.tsx is what a zoom or screen-reader user reads. */
-      className={`flex h-[48px] w-[48px] items-center justify-center rounded-full border transition-colors duration-200 hover:border-accent ${
+      /* Sized from --orbit-chip, which is a fraction of --orbit-size, so the
+         chip and the ring radii can never drift apart. */
+      className={`orbit-chip flex items-center justify-center rounded-full border transition-colors duration-200 hover:border-accent ${
         logo.tile
           ? "overflow-hidden"
           : "bg-paper/90 backdrop-blur-sm"
@@ -45,7 +43,7 @@ export default function LogoChip({ logo }: { logo: Logo }) {
           fill="currentColor"
           role="img"
           aria-label={logo.label}
-          className="h-[24px] w-[24px]"
+          className="orbit-chip-mark"
           style={{ color: logo.color ?? "var(--ink)" }}
         >
           <path d={logo.path} />
@@ -63,7 +61,7 @@ export default function LogoChip({ logo }: { logo: Logo }) {
           className={
             logo.tile
               ? "h-full w-full object-cover"
-              : "h-[24px] w-[24px] object-contain"
+              : "orbit-chip-mark object-contain"
           }
         />
       ) : (

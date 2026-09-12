@@ -292,33 +292,30 @@
    */
   .orbit-wrap {
     /*
-     * Fixed geometry, in pixels.
+     * Geometry. With the monogram gone the centre-clearance constraint went
+     * with it, which is what had been capping the size. Two left:
      *
-     * The chips are a fixed 56px, so expressing the radii as ratios of a
-     * viewport-scaled box meant every size change silently broke one of the
-     * two constraints — which it did twice: once leaving chips outside the
-     * box, once collapsing the rings into a single crowded band.
+     *   outer * size + chip/2  <=  size / 2   outermost chip stays in the box
+     *   (outer - inner) * size  >  chip       rings never collide
      *
-     * Chips are 48px, rings at 84 and 140:
-     *   ring gap      140 - 84 = 56px  > 48px chip, so rings never collide
-     *   centre clear  84 - 24 - 28 = 32px to the measured 57px monogram
-     *   box           2 * (140 + 24) = 328px, fits a 375px phone
+     * The chip is derived from the box rather than fixed, so both constraints
+     * become pure ratios and hold at every size by construction:
      *
-     * The monogram half-width is measured, not assumed. Guessing it at 30px
-     * is what left only 16px of clearance and made the centre look crowded.
+     *   0.43 + 0.115/2 = 0.4875  <= 0.5     outer chip inside the box
+     *   0.43 - 0.27    = 0.16    >  0.115   rings never collide
      *
-     * The box grows to 400px where there is room (the lg column is ~413px at
-     * 1280), because at the 328px floor the rings sit only 8px apart once
-     * chip width is subtracted and read as a single cluster. Ratios are
-     * derived from the solved 328px case so both constraints hold across the
-     * whole range: 84/328 and 140/328.
+     * 0.30 satisfied the inequality but left only 7px of visible space
+     * between the rings once chip width is subtracted; 0.27 gives 22px.
      *
-     * One size everywhere. Nothing to re-derive when a chip or breakpoint
-     * changes; if either does, recompute these three lines.
+     * That also removes the floor problem: a fixed chip was large relative to
+     * a 328px box and small relative to a 480px one, so no single value fit
+     * both ends. Being a multiple of the box, it is px-derived rather than
+     * rem, so text zoom still cannot desynchronise it from the radii.
      */
-    --orbit-size: clamp(328px, 32vw, 400px);
-    --orbit-r-inner: calc(var(--orbit-size) * 0.256);
-    --orbit-r-outer: calc(var(--orbit-size) * 0.427);
+    --orbit-size: clamp(328px, 38vw, 480px);
+    --orbit-chip: calc(var(--orbit-size) * 0.115);
+    --orbit-r-inner: calc(var(--orbit-size) * 0.27);
+    --orbit-r-outer: calc(var(--orbit-size) * 0.43);
     position: relative;
     width: var(--orbit-size);
     height: var(--orbit-size);
@@ -348,6 +345,16 @@
     }
   }
 
+  /* Chip sizing lives here so it stays tied to --orbit-size. */
+  .orbit-chip {
+    width: var(--orbit-chip);
+    height: var(--orbit-chip);
+  }
+  .orbit-chip-mark {
+    width: calc(var(--orbit-chip) * 0.5);
+    height: calc(var(--orbit-chip) * 0.5);
+  }
+
   .orbit-guide {
     position: absolute;
     top: 50%;
@@ -373,8 +380,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: calc(var(--orbit-r-inner) * 2.1);
-    height: calc(var(--orbit-r-inner) * 2.1);
+    width: calc(var(--orbit-r-inner) * 1.9);
+    height: calc(var(--orbit-r-inner) * 1.9);
     transform: translate(-50%, -50%);
     border-radius: 9999px;
     background: radial-gradient(
@@ -384,16 +391,6 @@
       transparent 72%
     );
     z-index: -1;
-  }
-
-  /* Centre of the orbit. Sits above the glow, below nothing. */
-  .orbit-centre {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    line-height: 1;
   }
 
   .orbit-ring {
