@@ -52,6 +52,9 @@ export default function LogoChip({ logo }: { logo: Logo }) {
           ref={imgRef}
           src={asset(`/logos/${logo.file}`)}
           alt={logo.label}
+          width={112}
+          height={112}
+          decoding="async"
           onError={() => setFailed(true)}
           className={
             logo.tile

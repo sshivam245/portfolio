@@ -41,7 +41,7 @@ export default function Masthead() {
               See the work
               <span
                 aria-hidden
-                className="h-px w-6 bg-accent transition-all duration-200 group-hover:w-10"
+                className="h-px w-10 origin-left scale-x-[0.6] bg-accent transition-transform duration-200 group-hover:scale-x-100"
               />
             </a>
             <a href="#contact" className="label label-tap hover:text-accent transition-colors">

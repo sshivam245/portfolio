@@ -73,7 +73,7 @@ export default function Writing({
 
               <span
                 aria-hidden
-                className="mt-3 hidden h-px w-6 shrink-0 bg-accent transition-all duration-200 group-hover:w-12 sm:block"
+                className="mt-3 hidden h-px w-12 shrink-0 origin-left scale-x-50 bg-accent transition-transform duration-200 group-hover:scale-x-100 sm:block"
               />
             </>
           );

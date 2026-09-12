@@ -57,7 +57,7 @@ export default function WorkIndex() {
                   Read the case study
                   <span
                     aria-hidden
-                    className="h-px w-6 bg-accent transition-all duration-200 group-hover:w-12"
+                    className="h-px w-12 origin-left scale-x-50 bg-accent transition-transform duration-200 group-hover:scale-x-100"
                   />
                 </span>
               </Link>

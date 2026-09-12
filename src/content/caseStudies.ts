@@ -17,6 +17,14 @@ export type Figure = {
   caption: string;
   /** true when this is a drawn diagram rather than a real screenshot */
   diagram?: boolean;
+  /**
+   * Intrinsic pixel size. Set these: without width/height the <img> has no
+   * height until it loads, which both shifts the layout (CLS) and stops
+   * loading="lazy" ever firing, since a zero-height box never enters the
+   * viewport.
+   */
+  w?: number;
+  h?: number;
 };
 
 export type CaseStudy = {
@@ -107,11 +115,15 @@ export const caseStudies: CaseStudy[] = [
     figures: [
       {
         src: "cloudsheer-ai-overview.png",
+        w: 1400,
+        h: 1340,
         caption:
           "Google AI Overview for “salesforce partner miami”, citing Cloudsheer alongside the #1 organic result.",
       },
       {
         src: "cloudsheer-search-console.png",
+        w: 1324,
+        h: 560,
         caption:
           "Search Console, 29 May – 28 Aug 2026: 68.7k impressions, with the step-change at the end of August.",
       },
@@ -154,6 +166,8 @@ export const caseStudies: CaseStudy[] = [
     figures: [
       {
         src: "gravitee-clay-board.png",
+        w: 1500,
+        h: 1154,
         caption:
           "The Clay board: company and people tables, with the research, tiering and generation columns.",
       },
@@ -193,11 +207,15 @@ export const caseStudies: CaseStudy[] = [
     figures: [
       {
         src: "investor-workflow-clay.jpg",
+        w: 1600,
+        h: 867,
         caption:
           "The workflow in Clay, with the Python handler behind “Build investor list”.",
       },
       {
         src: "investor-workflow.svg",
+        w: 640,
+        h: 330,
         caption: "startup profile → firms → partner → portfolio fit → enrichment → drafted outreach",
         diagram: true,
       },
@@ -286,6 +304,8 @@ export const caseStudies: CaseStudy[] = [
     figures: [
       {
         src: "job-pipeline-architecture.svg",
+        w: 640,
+        h: 300,
         caption: "fetchers → normalise/dedupe → filter → score → draft → digest",
         diagram: true,
       },

@@ -36,19 +36,23 @@ export default function Figure({ figure }: { figure: FigureData }) {
         </div>
       ) : (
         /*
-         * Deliberately NOT loading="lazy". With no intrinsic dimensions the
-         * element is 0px tall until it loads, and the browser's lazy-loader
-         * never treats a zero-height box as visible — so the request was never
-         * made, the image never appeared, and onError never fired to show the
-         * placeholder. There are only a handful of small figures on the page.
+         * width/height are what make lazy loading safe here. An earlier
+         * version dropped loading="lazy" because, with no intrinsic size,
+         * the box was 0px tall, never entered the viewport, and so never
+         * loaded at all. With the real dimensions declared the browser
+         * reserves the space (no layout shift) and lazy works as intended.
          */
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
           ref={imgRef}
           src={asset(`/figures/${figure.src}`)}
           alt={figure.caption}
+          width={figure.w}
+          height={figure.h}
+          loading={figure.w && figure.h ? "lazy" : undefined}
+          decoding="async"
           onError={() => setFailed(true)}
-          className="w-full border"
+          className="h-auto w-full border"
           style={{ borderColor: "var(--rule)" }}
         />
       )}
