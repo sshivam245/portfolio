@@ -37,14 +37,14 @@ export default function Masthead() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <a href="#work" className="label label-tap group inline-flex items-center gap-2 text-ink">
+            <a href="#work" className="label label-tap press group inline-flex items-center gap-2 text-ink">
               See the work
               <span
                 aria-hidden
                 className="h-px w-10 origin-left scale-x-[0.6] bg-accent transition-transform duration-200 group-hover:scale-x-100"
               />
             </a>
-            <a href="#contact" className="label label-tap hover:text-accent transition-colors">
+            <a href="#contact" className="label label-tap press hover:text-accent transition-colors duration-150">
               Get in touch
             </a>
           </div>
@@ -58,14 +58,14 @@ export default function Masthead() {
       {/* Evidence, as an aligned table — not as cards. */}
       <dl className="mt-14 grid grid-cols-2 gap-x-6 lg:grid-cols-4">
         {headlineMetrics.map((m) => (
-          <div key={m.label} className="rule-b py-5 lg:py-6">
+          <div key={m.label} className="min-w-0 rule-b py-5 lg:py-6">
             <span
               aria-hidden
               className="draw mb-4 block h-px w-full bg-accent/40"
             />
             <dt className="label mb-2">{m.label}</dt>
             <dd>
-              <span className="t-metric block">
+              <span className="t-metric block break-words">
                 {m.value}
                 {m.unit}
               </span>

@@ -78,10 +78,10 @@ export default function Writing({
             </>
           );
 
-          const cls = "group flex gap-4 rule-b py-6 sm:gap-6 items-start";
+          const cls = "press group flex gap-4 rule-b py-6 sm:gap-6 items-start";
 
           return (
-            <li key={post.slug}>
+            <li key={post.slug} className="stagger-item" style={{ "--i": i } as React.CSSProperties}>
               {external ? (
                 <a href={href} target="_blank" rel="noreferrer noopener" className={cls}>
                   {inner}

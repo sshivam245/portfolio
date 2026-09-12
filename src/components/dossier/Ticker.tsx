@@ -14,7 +14,7 @@ export default function Ticker() {
   const Track = ({ "aria-hidden": hidden }: { "aria-hidden"?: boolean }) => (
     <ul
       aria-hidden={hidden}
-      className="ticker-track flex shrink-0 items-center gap-8 pr-8"
+      className="ticker-track flex shrink-0 items-center gap-8 pe-8"
     >
       {items.map((item) => (
         <li key={item} className="label flex shrink-0 items-center gap-8">

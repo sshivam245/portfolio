@@ -1,6 +1,14 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  future: {
+    /*
+     * Compiles `hover:` to @media (hover: hover). Without it a tap on touch
+     * leaves the hover state stuck on, because the device reports a hover it
+     * cannot undo. 17 hover utilities across 7 files were affected.
+     */
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",

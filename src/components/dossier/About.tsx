@@ -57,7 +57,7 @@ export function Credentials({ index = "04" }: { index?: string }) {
                 </div>
                 <blockquote className="lg:col-span-5">
                   <p className="max-w-prose text-small text-ink-muted">
-                    <span aria-hidden className="mr-2 text-accent">“</span>
+                    <span aria-hidden className="me-2 text-accent">“</span>
                     {r.quote}
                   </p>
                   <cite className="label mt-2 block not-italic">
@@ -81,7 +81,7 @@ export function Credentials({ index = "04" }: { index?: string }) {
                   <ul className="mt-2 space-y-1">
                     {e.honors.map((h) => (
                       <li key={h} className="text-small text-ink-muted">
-                        <span className="mr-2 text-accent">·</span>
+                        <span className="me-2 text-accent">·</span>
                         {h}
                       </li>
                     ))}

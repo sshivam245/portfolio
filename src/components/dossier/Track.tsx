@@ -16,7 +16,7 @@ export function Experience({ index = "02" }: { index?: string }) {
               <p className="label mt-2">
                 {job.start}–{job.end}
                 {"current" in job && job.current ? (
-                  <span className="ml-2 text-accent">CURRENT</span>
+                  <span className="ms-2 text-accent">CURRENT</span>
                 ) : null}
               </p>
             </div>

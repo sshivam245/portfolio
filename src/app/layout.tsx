@@ -101,7 +101,13 @@ export default function RootLayout({
       >
         {/* Dark by default — the design is built for the dark ground and it
             carries far more contrast. System preference still wins if set. */}
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          /* Without this every colour transition fires at once on toggle. */
+          disableTransitionOnChange
+        >
           <a
             href="#main"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 focus:text-small"

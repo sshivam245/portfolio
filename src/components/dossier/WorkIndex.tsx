@@ -22,10 +22,10 @@ export default function WorkIndex() {
         {caseStudies.map((cs, i) => {
           const headline = cs.outcomes[0];
           return (
-            <li key={cs.id}>
+            <li key={cs.id} className="stagger-item" style={{ "--i": i } as React.CSSProperties}>
               <Link
                 href={`/work/${cs.id}`}
-                className="group grid items-baseline gap-x-6 gap-y-3 rule-b py-7 sm:grid-cols-12"
+                className="press group grid items-baseline gap-x-6 gap-y-3 rule-b py-7 sm:grid-cols-12"
               >
                 <p className="label sm:col-span-12">
                   <span className="tnum">{String(i + 1).padStart(2, "0")}</span>
@@ -44,8 +44,8 @@ export default function WorkIndex() {
                   </p>
                 </div>
 
-                <div className="flex items-baseline gap-4 sm:col-span-5 sm:justify-end">
-                  <span className="t-metric-sm text-accent">
+                <div className="flex min-w-0 items-baseline gap-4 sm:col-span-5 sm:justify-end">
+                  <span className="t-metric-sm break-words text-accent">
                     {headline.value}
                   </span>
                   <span className="max-w-[18ch] text-small text-ink-muted">

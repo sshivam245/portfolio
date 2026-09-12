@@ -37,7 +37,9 @@ export default function Contact({ index = "04" }: { index?: string }) {
                   <r.Icon className="text-accent" />
                   {r.label}
                 </dt>
-                <dd className="text-small">
+                {/* An email address is one unbreakable token; at 200% text it was
+                    339px wide and pushed the page past the viewport. */}
+                <dd className="min-w-0 break-all text-small">
                   <a
                     href={r.href}
                     className="link label-tap"

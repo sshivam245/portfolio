@@ -97,8 +97,8 @@ export default function CaseStudyPage({
           <h2 className="label mb-6">Outcome</h2>
           <dl className="grid grid-cols-2 gap-x-6 gap-y-6 lg:grid-cols-4">
             {cs.outcomes.map((o) => (
-              <div key={o.label}>
-                <dd className="t-metric text-accent">
+              <div key={o.label} className="min-w-0">
+                <dd className="t-metric break-words text-accent">
                   {o.value}
                 </dd>
                 <dt className="mt-2 text-small text-ink-muted">{o.label}</dt>
@@ -150,10 +150,10 @@ export default function CaseStudyPage({
       <section className="rule-t">
         <div className="shell py-10">
           <Link href={`/work/${next.id}`} className="group block">
-            <p className="label label-tap mb-2">Next case study</p>
-            <h2 className="t-heading transition-colors duration-150 group-hover:text-accent">
+            <h2 className="label mb-2">Next case study</h2>
+            <p className="t-heading transition-colors duration-150 group-hover:text-accent">
               {next.title}
-            </h2>
+            </p>
           </Link>
         </div>
       </section>
