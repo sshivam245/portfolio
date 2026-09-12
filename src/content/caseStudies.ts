@@ -118,6 +118,48 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
   {
+    id: "gravitee-abm",
+    title: "I pitched Gravitee by building their outbound",
+    // The org line renders as `{tag} · {org}, {timeframe}`, so "spec work"
+    // belongs in one of them, not both.
+    tag: "ABM",
+    timeframe: "2026",
+    org: "Spec work, unsolicited",
+    link: {
+      href: "/demos/gravitee-streamnative.html",
+      label: "See a generated account page",
+    },
+    summary:
+      "Nobody asked for this. I built a working 1:1 ABM engine for Gravitee, an API management company, and generated a bespoke landing page for one of their target accounts. The pitch was the artefact.",
+    context:
+      "API management is sold to platform and infrastructure teams, where the buying committee is technical and allergic to generic outbound. A template cold email naming the wrong runtime is worse than no email. That means the research has to be real and per-account, which is exactly the work that does not scale by hiring more SDRs. I picked Gravitee, built the engine I would have built if they had hired me, and used it on a real target so the output could be judged rather than described.",
+    built: [
+      "Two linked Clay tables: companies matching an API-platform and cloud-infrastructure ICP, and the technical executives inside them.",
+      "Thirty-four enrichment and research columns on the company table, including a technology-stack lookup, because the whole pitch depends on knowing what a prospect actually runs.",
+      "Research columns that produce judgement rather than data: “API Infrastructure Pain Point”, “Why This Account”, “Gravitee Relevance” and “Account Tier”. The tier is what decides how much effort an account is worth.",
+      "A people layer that resolves the right technical executives per account and joins them back to the company research.",
+      "Drafting columns for a personalised opener and cold email, each grounded in that account's stack rather than a merge field.",
+      "A “Personalized HTML Landing” column that generates a bespoke page per account. The StreamNative one names their real infrastructure: AWS, GCP, Azure and Alibaba Cloud, service meshes on Istio and Envoy, edge security via Cloudflare.",
+    ],
+    // Spec work, so there are no campaign metrics. The outcomes describe what
+    // the engine produces; the two figures and the live page are the proof.
+    outcomes: [
+      { value: "1:1", label: "A bespoke landing page generated per target account" },
+      { value: "34", label: "Research and enrichment columns on the company table" },
+      { value: "11", label: "Steps from raw company to drafted email and landing page" },
+    ],
+    stack: ["Clay", "Claygent", "Technographics", "HTML", "Account tiering"],
+    reflection:
+      "Spec work is the most honest sales pitch available: it removes the argument about whether you could do the thing. The risk is building something impressive that solves a problem the target does not have, which is why the first four research columns are about qualifying the account rather than flattering it. If I ran this again I would generate a landing page only for tier-one accounts. Generating one per row is a nice demo and a bad budget.",
+    figures: [
+      {
+        src: "gravitee-clay-board.png",
+        caption:
+          "The Clay board: company and people tables, with the research, tiering and generation columns.",
+      },
+    ],
+  },
+  {
     id: "investor-sourcing",
     title: "Fundraising as an outbound problem",
     tag: "Clay workflow",

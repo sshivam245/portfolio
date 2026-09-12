@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Figure from "@/components/dossier/Figure";
 import { caseStudies } from "@/content/caseStudies";
+import { asset } from "@/lib/basePath";
 import { CaseStudySchema } from "@/components/dossier/StructuredData";
 
 export function generateStaticParams() {
@@ -72,7 +73,11 @@ export default function CaseStudyPage({
 
         {cs.link ? (
           <a
-            href={cs.link.href}
+            /* A root-relative href points at a file in /public and needs the
+               basePath; a plain <a> does not get it the way next/link does. */
+            href={
+              cs.link.href.startsWith("/") ? asset(cs.link.href) : cs.link.href
+            }
             target="_blank"
             rel="noreferrer noopener"
             className="label label-tap group mt-6 inline-flex items-center gap-2 text-ink"
