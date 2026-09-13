@@ -80,13 +80,16 @@ export default function CaseStudyPage({
             }
             target="_blank"
             rel="noreferrer noopener"
-            className="label label-tap group mt-6 inline-flex items-center gap-2 text-ink"
+            /*
+             * Body size and the .link underline, not .label. As a label it
+             * rendered identically to "Outcome", "Context" and "Stack", so
+             * the one genuinely clickable thing on the page read as a section
+             * heading and nobody found it.
+             */
+            className="link label-tap press mt-6 inline-flex items-center gap-2 text-body"
           >
-            {cs.link.label} ↗
-            <span
-              aria-hidden
-              className="h-px w-12 origin-left scale-x-50 bg-accent transition-transform duration-200 group-hover:scale-x-100"
-            />
+            {cs.link.label}
+            <span aria-hidden>↗</span>
           </a>
         ) : null}
       </header>
