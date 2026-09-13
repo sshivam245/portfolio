@@ -33,6 +33,17 @@ export default function WorkIndex() {
                   {cs.tag}
                   <span className="mx-2">·</span>
                   {cs.org}, {cs.timeframe}
+                  {/*
+                    A badge, not a link: the whole row is already an <a>, and
+                    nesting one inside another is invalid. This just tells the
+                    reader there is something live behind the click.
+                  */}
+                  {cs.link ? (
+                    <>
+                      <span className="mx-2">·</span>
+                      <span className="text-accent">Live ↗</span>
+                    </>
+                  ) : null}
                 </p>
 
                 <div className="sm:col-span-7">
