@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 648 218" width="648" height="218" role="img" aria-label="segments then campaigns then leverage points then dashboards">
+  <style>
+    .ink   { fill: #16161a; }
+    .muted { fill: #6b6b72; }
+    .accf  { fill: #b4451f; }
+    .acc   { stroke: #b4451f; }
+    .box   { fill: none; stroke: #cfcec9; stroke-width: 1; }
+    .rule  { stroke: #cfcec9; }
+    text   { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+    .lbl   { font-size: 10px; letter-spacing: 0.08em; }
+    .sub   { font-size: 9px; }
+    .tiny  { font-size: 8px; }
+    @media (prefers-color-scheme: dark) {
+      .ink   { fill: #e8e8e3; }
+      .muted { fill: #8a8a93; }
+      .accf  { fill: #e8703a; }
+      .acc   { stroke: #e8703a; }
+      .box, .rule { stroke: #3a3a40; }
+    }
+  </style>
+
+  <text class="lbl muted" x="8" y="18">FIRST GTM HIRE</text>
+  <rect class="box" x="8" y="30" width="140" height="50"/>
+  <text class="sub ink" x="19" y="51">segments</text>
+  <text class="tiny muted" x="19" y="67">5 priority, 3 regions</text>
+  <rect class="box" x="172" y="30" width="140" height="50"/>
+  <text class="sub ink" x="183" y="51">campaigns</text>
+  <text class="tiny muted" x="183" y="67">multi-channel</text>
+  <rect class="box" x="336" y="30" width="140" height="50" stroke-width="1.7"/>
+  <text class="sub ink" x="347" y="51">leverage points</text>
+  <text class="tiny accf" x="347" y="67">3 leaks in the funnel</text>
+  <rect class="box" x="500" y="30" width="140" height="50"/>
+  <text class="sub ink" x="511" y="51">dashboards</text>
+  <text class="tiny muted" x="511" y="67">8+, decisions on data</text>
+  <path class="acc" d="M148 55.0 H166" stroke-width="1"/>
+  <path class="accf" d="M172 55.0 l-6 -3 v6 z"/>
+  <path class="acc" d="M312 55.0 H330" stroke-width="1"/>
+  <path class="accf" d="M336 55.0 l-6 -3 v6 z"/>
+  <path class="acc" d="M476 55.0 H494" stroke-width="1"/>
+  <path class="accf" d="M500 55.0 l-6 -3 v6 z"/>
+  <line class="rule" x1="8" y1="96" x2="640" y2="96" stroke-width="1"/>
+  <text class="lbl muted" x="8" y="114">WITHOUT IT</text>
+  <text class="sub muted" x="8" y="132">campaigns run on instinct</text>
+  <text class="sub muted" x="8" y="146">no way to tell what worked</text>
+  <text class="lbl accf" x="312" y="114">WITH IT</text>
+  <text class="sub ink" x="312" y="132">100+ qualified leads in 6 months,</text>
+  <text class="sub ink" x="312" y="146">+25% conversion</text>
+  <line class="rule" x1="8" y1="176" x2="640" y2="176" stroke-width="1"/>
+  <text class="lbl muted" x="8" y="196">FIND THE LEAK BEFORE BUYING MORE TRAFFIC</text>
+</svg>

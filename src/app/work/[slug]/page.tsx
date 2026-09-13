@@ -142,12 +142,28 @@ export default function CaseStudyPage({
             <p className="font-mono text-small text-ink-muted">
               {cs.stack.join("  ·  ")}
             </p>
-            {cs.figures?.map((f) => (
-              <Figure key={f.src} figure={f} />
-            ))}
           </aside>
         </div>
       </section>
+
+      {/*
+        Figures get the full shell width and their own section. They used to
+        sit in the 5-column aside, which rendered a 640-wide diagram at about
+        400px — the labels were unreadable, which defeats the point of a
+        diagram explaining a mechanism.
+      */}
+      {cs.figures?.length ? (
+        <section className="rule-t">
+          <div className="shell py-12">
+            <h2 className="label mb-6">How it works</h2>
+            <div className="space-y-12">
+              {cs.figures.map((f) => (
+                <Figure key={f.src} figure={f} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Next case study, so the page doesn't dead-end. */}
       <section className="rule-t">

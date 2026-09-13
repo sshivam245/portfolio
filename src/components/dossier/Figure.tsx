@@ -37,7 +37,15 @@ export default function Figure({ figure }: { figure: FigureData }) {
          * the box was 0px tall, never entered the viewport, and so never
          * loaded at all. With the real dimensions declared the browser
          * reserves the space (no layout shift) and lazy works as intended. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {/*
+        A diagram scrolls inside its own container rather than shrinking to
+        fit. At 375px a 648-wide diagram renders at 0.53x, which takes its
+        9px labels down to about 5px and makes the thing it exists to explain
+        unreadable. Screenshots are fine scaled down, so only diagrams get
+        the minimum width.
+      */}
+      <div className={figure.diagram ? "overflow-x-auto" : undefined}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           ref={imgRef}
           src={asset(`/figures/${figure.src}`)}
@@ -48,10 +56,16 @@ export default function Figure({ figure }: { figure: FigureData }) {
           decoding="async"
           onError={() => setFailed(true)}
           className="h-auto w-full border"
-          style={{ borderColor: "var(--rule)" }}
-      />
+          style={{
+            borderColor: "var(--rule)",
+            minWidth: figure.diagram ? `${figure.w ?? 640}px` : undefined,
+          }}
+        />
+      </div>
       <figcaption className="label mt-3 flex gap-2">
-        {figure.diagram ? <span className="text-accent">DIAGRAM</span> : null}
+        {figure.diagram ? (
+          <span className="text-accent">DIAGRAM</span>
+        ) : null}
         <span>{figure.caption}</span>
       </figcaption>
     </figure>

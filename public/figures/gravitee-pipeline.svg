@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 648 312" width="648" height="312" role="img" aria-label="companies then enrich then tech stack then pain point then relevance then account tier then people then 1:1 landing page">
+  <style>
+    .ink   { fill: #16161a; }
+    .muted { fill: #6b6b72; }
+    .accf  { fill: #b4451f; }
+    .acc   { stroke: #b4451f; }
+    .box   { fill: none; stroke: #cfcec9; stroke-width: 1; }
+    .rule  { stroke: #cfcec9; }
+    text   { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+    .lbl   { font-size: 10px; letter-spacing: 0.08em; }
+    .sub   { font-size: 9px; }
+    .tiny  { font-size: 8px; }
+    @media (prefers-color-scheme: dark) {
+      .ink   { fill: #e8e8e3; }
+      .muted { fill: #8a8a93; }
+      .accf  { fill: #e8703a; }
+      .acc   { stroke: #e8703a; }
+      .box, .rule { stroke: #3a3a40; }
+    }
+  </style>
+
+  <text class="lbl muted" x="8" y="18">ICP</text>
+  <rect class="box" x="8" y="30" width="140" height="50"/>
+  <text class="sub ink" x="19" y="51">companies</text>
+  <text class="tiny muted" x="19" y="67">API + cloud infra</text>
+  <rect class="box" x="172" y="30" width="140" height="50"/>
+  <text class="sub ink" x="183" y="51">enrich</text>
+  <text class="tiny muted" x="183" y="67">34 research columns</text>
+  <rect class="box" x="336" y="30" width="140" height="50"/>
+  <text class="sub ink" x="347" y="51">tech stack</text>
+  <text class="tiny muted" x="347" y="67">what they actually run</text>
+  <rect class="box" x="500" y="30" width="140" height="50"/>
+  <text class="sub ink" x="511" y="51">pain point</text>
+  <text class="tiny muted" x="511" y="67">inferred, per account</text>
+  <path class="acc" d="M148 55.0 H166" stroke-width="1"/>
+  <path class="accf" d="M172 55.0 l-6 -3 v6 z"/>
+  <path class="acc" d="M312 55.0 H330" stroke-width="1"/>
+  <path class="accf" d="M336 55.0 l-6 -3 v6 z"/>
+  <path class="acc" d="M476 55.0 H494" stroke-width="1"/>
+  <path class="accf" d="M500 55.0 l-6 -3 v6 z"/>
+  <path class="acc" d="M570.0 80 V118" stroke-width="1"/>
+  <path class="accf" d="M570.0 124 l-3 -6 h6 z"/>
+  <rect class="box" x="500" y="124" width="140" height="50"/>
+  <text class="sub ink" x="511" y="145">relevance</text>
+  <text class="tiny muted" x="511" y="161">why this account</text>
+  <rect class="box" x="336" y="124" width="140" height="50" stroke-width="1.7"/>
+  <text class="sub ink" x="347" y="145">account tier</text>
+  <text class="tiny accf" x="347" y="161">how much effort it earns</text>
+  <rect class="box" x="172" y="124" width="140" height="50"/>
+  <text class="sub ink" x="183" y="145">people</text>
+  <text class="tiny muted" x="183" y="161">technical executives</text>
+  <rect class="box" x="8" y="124" width="140" height="50"/>
+  <text class="sub ink" x="19" y="145">1:1 landing page</text>
+  <text class="tiny muted" x="19" y="161">named to their stack</text>
+  <path class="acc" d="M500 149.0 H482" stroke-width="1"/>
+  <path class="accf" d="M476 149.0 l6 -3 v6 z"/>
+  <path class="acc" d="M336 149.0 H318" stroke-width="1"/>
+  <path class="accf" d="M312 149.0 l6 -3 v6 z"/>
+  <path class="acc" d="M172 149.0 H154" stroke-width="1"/>
+  <path class="accf" d="M148 149.0 l6 -3 v6 z"/>
+  <line class="rule" x1="8" y1="190" x2="640" y2="190" stroke-width="1"/>
+  <text class="lbl muted" x="8" y="208">WITHOUT IT</text>
+  <text class="sub muted" x="8" y="226">one template, every account</text>
+  <text class="sub muted" x="8" y="240">named the wrong runtime</text>
+  <text class="lbl accf" x="312" y="208">WITH IT</text>
+  <text class="sub ink" x="312" y="226">research that earns the right to</text>
+  <text class="sub ink" x="312" y="240">send, and an asset per account</text>
+  <line class="rule" x1="8" y1="270" x2="640" y2="270" stroke-width="1"/>
+  <text class="lbl muted" x="8" y="290">TIER FIRST. GENERATING A PAGE PER ROW IS A BAD BUDGET.</text>
+</svg>

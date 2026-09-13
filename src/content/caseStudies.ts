@@ -76,7 +76,13 @@ export const caseStudies: CaseStudy[] = [
     stack: ["Next.js", "Tailwind", "Framer Motion", "GitHub Actions", "Deliverability", "Positioning"],
     reflection: "",
     figures: [
-      { src: "mintnova-home.png", caption: "The offer, the process, and the ROI calculator." },
+      {
+        src: "mintnova-process.svg",
+        w: 648,
+        h: 218,
+        diagram: true,
+        caption: "strategy call → research and setup → launch → booked meetings, in 14 days",
+      },
     ],
   },
   {
@@ -113,6 +119,13 @@ export const caseStudies: CaseStudy[] = [
     reflection:
       "The thing that moved the needle was not writing more, it was writing shorter. Every claim that got picked up was a sentence that survives being lifted out of its paragraph and still makes sense on its own. Long, hedged prose ranks fine and never gets quoted.",
     figures: [
+      {
+        src: "aeo-mechanism.svg",
+        w: 648,
+        h: 312,
+        diagram: true,
+        caption: "how a page becomes the source an answer engine quotes, rather than a result it ranks",
+      },
       {
         src: "cloudsheer-ai-overview.png",
         w: 1400,
@@ -164,6 +177,13 @@ export const caseStudies: CaseStudy[] = [
     reflection:
       "Spec work is the most honest sales pitch available: it removes the argument about whether you could do the thing. The risk is building something impressive that solves a problem the target does not have, which is why the first four research columns are about qualifying the account rather than flattering it. If I ran this again I would generate a landing page only for tier-one accounts. Generating one per row is a nice demo and a bad budget.",
     figures: [
+      {
+        src: "gravitee-pipeline.svg",
+        w: 648,
+        h: 312,
+        diagram: true,
+        caption: "ICP → enrichment → pain point → relevance → tier → people → a page per account",
+      },
       {
         src: "gravitee-clay-board.png",
         w: 1500,
@@ -244,7 +264,13 @@ export const caseStudies: CaseStudy[] = [
     stack: ["Positioning", "Messaging", "Channel strategy", "Partnerships"],
     reflection: "",
     figures: [
-      { src: "descipher-positioning.png", caption: "Positioning and messaging architecture." },
+      {
+        src: "descipher-launch.svg",
+        w: 648,
+        h: 312,
+        diagram: true,
+        caption: "segment → positioning → messaging → presence → channels → partnerships",
+      },
     ],
   },
   {
@@ -272,7 +298,13 @@ export const caseStudies: CaseStudy[] = [
     stack: ["HubSpot", "Apollo", "Clay", "Tableau", "SQL"],
     reflection: "",
     figures: [
-      { src: "nuvia-funnel.png", caption: "Funnel leverage points and campaign performance." },
+      {
+        src: "nuvia-funnel.svg",
+        w: 648,
+        h: 218,
+        diagram: true,
+        caption: "segments → campaigns → the three leaks → dashboards that made the next call",
+      },
     ],
   },
   {
