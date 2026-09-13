@@ -79,9 +79,9 @@ export const caseStudies: CaseStudy[] = [
       {
         src: "mintnova-process.svg",
         w: 648,
-        h: 218,
+        h: 208,
         diagram: true,
-        caption: "strategy call → research and setup → launch → booked meetings, in 14 days",
+        caption: "Tight enough to repeat per client rather than rebuild, which is what makes pay-per-result survivable.",
       },
     ],
   },
@@ -122,9 +122,9 @@ export const caseStudies: CaseStudy[] = [
       {
         src: "aeo-mechanism.svg",
         w: 648,
-        h: 312,
+        h: 302,
         diagram: true,
-        caption: "how a page becomes the source an answer engine quotes, rather than a result it ranks",
+        caption: "The FAQPage step is the one that matters: an answer engine wants a question paired with a liftable answer.",
       },
       {
         src: "cloudsheer-ai-overview.png",
@@ -180,9 +180,9 @@ export const caseStudies: CaseStudy[] = [
       {
         src: "gravitee-pipeline.svg",
         w: 648,
-        h: 312,
+        h: 302,
         diagram: true,
-        caption: "ICP → enrichment → pain point → relevance → tier → people → a page per account",
+        caption: "Account tier decides how much effort each row earns; without it, every account gets a landing page.",
       },
       {
         src: "gravitee-clay-board.png",
@@ -267,9 +267,9 @@ export const caseStudies: CaseStudy[] = [
       {
         src: "descipher-launch.svg",
         w: 648,
-        h: 312,
+        h: 302,
         diagram: true,
-        caption: "segment → positioning → messaging → presence → channels → partnerships",
+        caption: "Positioning came before anything was built, because it decides what the rest of the sequence is for.",
       },
     ],
   },
@@ -301,9 +301,9 @@ export const caseStudies: CaseStudy[] = [
       {
         src: "nuvia-funnel.svg",
         w: 648,
-        h: 218,
+        h: 208,
         diagram: true,
-        caption: "segments → campaigns → the three leaks → dashboards that made the next call",
+        caption: "Finding where qualified volume leaked came before spending more on traffic.",
       },
     ],
   },
