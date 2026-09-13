@@ -22,6 +22,8 @@ export default function Figure({ figure }: { figure: FigureData }) {
    * charts) keep the full width, where the extra pixels buy legibility.
    */
   const aspect = figure.w && figure.h ? figure.w / figure.h : 2;
+  // Only bites for a tall figure rendered full-bleed; inside the aside the
+  // column is already narrower than this.
   const tall = aspect < 1.6;
 
   // A 404 can resolve before hydration, leaving onError unattached — see

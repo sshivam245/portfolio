@@ -48,6 +48,8 @@ export default function CaseStudyPage({
   if (index === -1) notFound();
   const cs = caseStudies[index];
   const next = caseStudies[(index + 1) % caseStudies.length];
+  const diagrams = cs.figures?.filter((f) => f.diagram) ?? [];
+  const shots = cs.figures?.filter((f) => !f.diagram) ?? [];
 
   return (
     <article>
@@ -110,62 +112,62 @@ export default function CaseStudyPage({
               </div>
             ))}
           </dl>
-
-          <div className="rule-t mt-8 flex flex-wrap items-baseline gap-x-3 gap-y-1 pt-5">
-            <h2 className="label">Stack</h2>
-            <p className="font-mono text-small text-ink-muted">
-              {cs.stack.join("  \u00b7  ")}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* One column at a readable measure, rather than a 7/5 split with a
-          near-empty right-hand side. */}
-      <section className="rule-t">
-        <div className="shell py-12">
-          <h2 className="label mb-3">Context</h2>
-          <p className="max-w-prose text-body text-ink-muted">{cs.context}</p>
-
-          <h2 className="label mb-4 mt-10">What I built</h2>
-          <ul className="max-w-prose space-y-3">
-            {cs.built.map((b) => (
-              <li key={b} className="flex gap-3 text-body text-ink-muted">
-                <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0 bg-accent" />
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
       {/*
-        Figures get the full shell width and their own section. They used to
-        sit in the 5-column aside, which rendered a 640-wide diagram at about
-        400px — the labels were unreadable, which defeats the point of a
-        diagram explaining a mechanism.
+        Diagrams run inline under the context, where the flow explains the
+        argument being made right above it. Screenshots go in the right
+        column: they are evidence to glance at, not a step to follow, and
+        they give the column something to hold.
       */}
-      {cs.figures?.length ? (
-        <section className="rule-t">
-          <div className="shell py-12">
-            <h2 className="label mb-6">How it works</h2>
-            <div className="space-y-12">
-              {cs.figures.map((f) => (
-                <Figure key={f.src} figure={f} />
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
+      <section className="rule-t">
+        <div className="shell grid gap-10 py-12 lg:grid-cols-12 lg:gap-12">
+          {/*
+            min-w-0: a grid item defaults to min-width:auto, so the diagram's
+            648px min-width was forcing the whole grid wider than the phone
+            and pushing the page into horizontal scroll. With this the column
+            can shrink and the diagram scrolls inside its own wrapper instead.
+          */}
+          <div className="min-w-0 lg:col-span-7">
+            <h2 className="label mb-3">Context</h2>
+            <p className="max-w-prose text-body text-ink-muted">{cs.context}</p>
 
-      {cs.reflection ? (
-        <section className="rule-t">
-          <div className="shell py-12">
-            <h2 className="label mb-3">What I&apos;d do differently</h2>
-            <p className="max-w-prose text-body text-ink-muted">{cs.reflection}</p>
+            {diagrams.map((f) => (
+              <Figure key={f.src} figure={f} />
+            ))}
+
+            <h2 className="label mb-4 mt-10">What I built</h2>
+            <ul className="max-w-prose space-y-3">
+              {cs.built.map((b) => (
+                <li key={b} className="flex gap-3 text-body text-ink-muted">
+                  <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0 bg-accent" />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            {cs.reflection ? (
+              <>
+                <h2 className="label mb-3 mt-10">What I&apos;d do differently</h2>
+                <p className="max-w-prose text-body text-ink-muted">
+                  {cs.reflection}
+                </p>
+              </>
+            ) : null}
           </div>
-        </section>
-      ) : null}
+
+          <aside className="min-w-0 lg:col-span-5">
+            <h2 className="label mb-2">Stack</h2>
+            <p className="font-mono text-small text-ink-muted">
+              {cs.stack.join("  \u00b7  ")}
+            </p>
+            {shots.map((f) => (
+              <Figure key={f.src} figure={f} />
+            ))}
+          </aside>
+        </div>
+      </section>
 
       {/* Next case study, so the page doesn't dead-end. */}
       <section className="rule-t">
