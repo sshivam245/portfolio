@@ -302,7 +302,7 @@
      * become pure ratios and hold at every size by construction:
      *
      *   0.43 + 0.115/2 = 0.4875  <= 0.5     outer chip inside the box
-     *   0.43 - 0.27    = 0.16    >  0.115   rings never collide
+     *   0.43 - 0.26    = 0.17    >  0.125   rings never collide
      *
      * 0.30 satisfied the inequality but left only 7px of visible space
      * between the rings once chip width is subtracted; 0.27 gives 22px.
@@ -313,8 +313,8 @@
      * rem, so text zoom still cannot desynchronise it from the radii.
      */
     --orbit-size: clamp(328px, 38vw, 480px);
-    --orbit-chip: calc(var(--orbit-size) * 0.115);
-    --orbit-r-inner: calc(var(--orbit-size) * 0.27);
+    --orbit-chip: calc(var(--orbit-size) * 0.125);
+    --orbit-r-inner: calc(var(--orbit-size) * 0.26);
     --orbit-r-outer: calc(var(--orbit-size) * 0.43);
     position: relative;
     width: var(--orbit-size);
@@ -350,9 +350,11 @@
     width: var(--orbit-chip);
     height: var(--orbit-chip);
   }
+  /* 0.58 of the chip, up from 0.5: the marks read as small at 0.5, and the
+     ring padding is what was eating the space rather than the chip. */
   .orbit-chip-mark {
-    width: calc(var(--orbit-chip) * 0.5);
-    height: calc(var(--orbit-chip) * 0.5);
+    width: calc(var(--orbit-chip) * 0.58);
+    height: calc(var(--orbit-chip) * 0.58);
   }
 
   .orbit-guide {
