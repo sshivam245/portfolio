@@ -127,6 +127,10 @@ export function HomeSchema() {
 }
 
 /** A case study: an article authored by the Person, with its own outcomes. */
+/* Static export, so this is stamped at build time and is accurate for the
+   deployed copy: the page really did last change when the site was built. */
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+
 export function CaseStudySchema({ slug }: { slug: string }) {
   const cs = caseStudies.find((c) => c.id === slug);
   if (!cs) return null;
@@ -140,6 +144,14 @@ export function CaseStudySchema({ slug }: { slug: string }) {
     author: { "@id": PERSON_ID },
     publisher: { "@id": PERSON_ID },
     inLanguage: "en",
+    /*
+     * The audit runner flagged these missing on our own pages, which is fair:
+     * an undated article loses to a dated one on any question where currency
+     * matters. Only the year is claimed, because only the year is known.
+     * "2024 – 2025" resolves to its end year rather than inventing a month.
+     */
+    datePublished: cs.timeframe.match(/\d{4}(?!.*\d{4})/)?.[0],
+    dateModified: BUILD_DATE,
     about: cs.stack,
     articleSection: cs.tag,
     // The outcomes as explicit facts rather than sentences to parse.

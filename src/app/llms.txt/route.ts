@@ -56,6 +56,24 @@ export function GET() {
     push("");
   }
 
+  push("## Tools", "");
+  push(`### Which GTM agent should you build?`);
+  push(`- URL: ${url("/tools/agent-fit")}`);
+  push(`- What it is: a free interactive tool. Five questions about go-to-market motion,`);
+  push(`  deal size, team size, bottlenecks and existing stack return a ranked shortlist of`);
+  push(`  GTM agent archetypes worth building, each with its trigger, its operating loop,`);
+  push(`  the tools it would sit on, and its failure mode.`);
+  push(`- Cost: free, runs in the browser, no email required.`);
+  push("");
+  push(`### Free AEO audit`);
+  push(`- URL: ${url("/tools/aeo-audit")}`);
+  push(`- What it is: submit a website URL and receive a written answer-engine`);
+  push(`  optimisation report within one day, covering 23 checks across machine`);
+  push(`  readability, answer shape, attribution and retrievability, with three`);
+  push(`  prioritised fixes and an explicit list of what to leave alone.`);
+  push(`- Cost: free. Written by Shivam Goel, not generated.`);
+  push("");
+
   push("## Experience", "");
   for (const job of experience) {
     push(`- ${job.role}, ${job.company} (${job.start}–${job.end})`);
@@ -92,6 +110,9 @@ export function GET() {
   push(`- ${url("/")}: overview, headline results, work index`);
   push(`- ${url("/about")}: full history, capabilities, education, publications`);
   push(`- ${url("/writing")}: articles`);
+  push(`- ${url("/tools")}: free tools`);
+  push(`- ${url("/tools/agent-fit")}: which GTM agent to build, interactive`);
+  push(`- ${url("/tools/aeo-audit")}: free AEO audit request`);
   for (const cs of caseStudies) push(`- ${url(`/work/${cs.id}`)}: ${cs.title}`);
   push("");
 

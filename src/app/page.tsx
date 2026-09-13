@@ -1,6 +1,7 @@
 import Masthead from "@/components/dossier/Masthead";
 import Ticker from "@/components/dossier/Ticker";
 import WorkIndex from "@/components/dossier/WorkIndex";
+import ToolsTeaser from "@/components/dossier/ToolsTeaser";
 import Writing from "@/components/dossier/Writing";
 import AboutTeaser from "@/components/dossier/AboutTeaser";
 import Contact from "@/components/dossier/Contact";
@@ -18,9 +19,10 @@ export default function Home() {
       <Masthead />
       <Ticker />
       <WorkIndex />
-      <Writing index="02" limit={2} />
-      <AboutTeaser index="03" />
-      <Contact index="04" />
+      <ToolsTeaser index="02" />
+      <Writing index="03" limit={2} />
+      <AboutTeaser index="04" />
+      <Contact index="05" />
       <Wordmark />
     </>
   );

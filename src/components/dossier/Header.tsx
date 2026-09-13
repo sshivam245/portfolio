@@ -15,7 +15,8 @@ import { asset } from "@/lib/basePath";
  */
 const nav = [
   { label: "Work", href: "/#work" },
-  { label: "Writing", href: "/writing" },
+  { label: "Tools", href: "/tools" },
+  { label: "Writing", href: "/writing", secondary: true },
   { label: "About", href: "/about", secondary: true },
   { label: "Contact", href: "/#contact" },
 ];

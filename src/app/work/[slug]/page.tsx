@@ -10,6 +10,18 @@ export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.id }));
 }
 
+/**
+ * Meta descriptions get truncated around 160 characters. Several summaries
+ * run past 240 and were being cut mid-clause, so the snippet ended on a
+ * fragment. Cut at the last word boundary instead, and only for the tag:
+ * the full summary still renders on the page.
+ */
+function metaDescription(summary: string) {
+  if (summary.length <= 160) return summary;
+  const cut = summary.slice(0, 157);
+  return `${cut.slice(0, cut.lastIndexOf(" "))}…`;
+}
+
 export function generateMetadata({
   params,
 }: {
@@ -17,13 +29,14 @@ export function generateMetadata({
 }): Metadata {
   const cs = caseStudies.find((c) => c.id === params.slug);
   if (!cs) return {};
+  const description = metaDescription(cs.summary);
   return {
     title: cs.title,
-    description: cs.summary,
+    description,
     alternates: { canonical: `/work/${cs.id}` },
     openGraph: {
       title: cs.title,
-      description: cs.summary,
+      description,
       type: "article",
       url: `/work/${cs.id}`,
       // Defining openGraph here REPLACES the layout's, images included —
@@ -33,7 +46,7 @@ export function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: cs.title,
-      description: cs.summary,
+      description,
       images: ["/og.png"],
     },
   };
