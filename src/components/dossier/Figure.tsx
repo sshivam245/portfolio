@@ -5,15 +5,24 @@ import { asset } from "@/lib/basePath";
 import type { Figure as FigureData } from "@/content/caseStudies";
 
 /**
- * Renders a real artifact from /public/figures. If the file isn't there yet,
- * it falls back to a labelled placeholder frame rather than a broken image —
- * so the site ships before every screenshot has been collected.
+ * Renders an artifact from /public/figures.
  *
- * A `diagram` figure is labelled as drawn, never presented as a screenshot.
+ * A missing file renders nothing rather than a broken image. A `diagram`
+ * figure is labelled as drawn and never passed off as a screenshot: it is
+ * evidence of how something works, not that it worked.
  */
 export default function Figure({ figure }: { figure: FigureData }) {
   const [failed, setFailed] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
+
+  /*
+   * A tall figure gets a narrower column. At the full 1152px the AI Overview
+   * screenshot rendered 1103px tall — one image filling an entire viewport,
+   * which reads as a mistake rather than emphasis. Wide figures (diagrams,
+   * charts) keep the full width, where the extra pixels buy legibility.
+   */
+  const aspect = figure.w && figure.h ? figure.w / figure.h : 2;
+  const tall = aspect < 1.6;
 
   // A 404 can resolve before hydration, leaving onError unattached — see
   // the same guard in Portrait.tsx.
@@ -32,19 +41,24 @@ export default function Figure({ figure }: { figure: FigureData }) {
 
   return (
     <figure className="mt-6">
-      {/* width/height are what make lazy loading safe here. An earlier
-         * version dropped loading="lazy" because, with no intrinsic size,
-         * the box was 0px tall, never entered the viewport, and so never
-         * loaded at all. With the real dimensions declared the browser
-         * reserves the space (no layout shift) and lazy works as intended. */}
       {/*
-        A diagram scrolls inside its own container rather than shrinking to
-        fit. At 375px a 648-wide diagram renders at 0.53x, which takes its
-        9px labels down to about 5px and makes the thing it exists to explain
-        unreadable. Screenshots are fine scaled down, so only diagrams get
-        the minimum width.
+        Two sizing rules, both learned the hard way:
+        - A diagram keeps its native width and scrolls, because at 375px a
+          648-wide diagram renders at 0.53x and its 9px labels become 5px.
+        - A tall figure is capped, because at full width the AI Overview
+          screenshot was 1103px tall and filled the viewport on its own.
+        width/height are declared so the browser reserves space (no layout
+        shift) and loading="lazy" actually fires — without them the box is
+        0px tall, never enters the viewport, and never loads.
       */}
-      <div className={figure.diagram ? "overflow-x-auto" : undefined}>
+      <div
+        className={[
+          figure.diagram ? "overflow-x-auto" : "",
+          tall ? "mx-auto max-w-[760px]" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           ref={imgRef}
