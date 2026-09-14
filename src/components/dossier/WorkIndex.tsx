@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Section from "./Section";
 import { caseStudies } from "@/content/caseStudies";
+import CountUp from "@/components/motion/CountUp";
+import { indexLine } from "@/lib/text";
 
 /**
  * Compact index of the case studies for the homepage.
@@ -25,10 +27,10 @@ export default function WorkIndex() {
             <li key={cs.id} className="stagger-item" style={{ "--i": i } as React.CSSProperties}>
               <Link
                 href={`/work/${cs.id}`}
-                className="press group grid items-baseline gap-x-6 gap-y-3 rule-b py-7 sm:grid-cols-12"
+                className="work-row press group grid items-baseline gap-x-6 gap-y-3 rule-b py-7 sm:grid-cols-12"
               >
                 <p className="label sm:col-span-12">
-                  <span className="tnum">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="tnum work-row-n">{String(i + 1).padStart(2, "0")}</span>
                   <span className="mx-2 text-accent">·</span>
                   {cs.tag}
                   <span className="mx-2">·</span>
@@ -51,13 +53,13 @@ export default function WorkIndex() {
                     {cs.title}
                   </h3>
                   <p className="mt-3 max-w-prose text-small text-ink-muted">
-                    {cs.summary}
+                    {indexLine(cs.summary)}
                   </p>
                 </div>
 
                 <div className="flex min-w-0 items-baseline gap-4 sm:col-span-5 sm:justify-end">
                   <span className="t-metric-sm break-words text-accent">
-                    {headline.value}
+                    <CountUp value={headline.value} />
                   </span>
                   <span className="max-w-[18ch] text-small text-ink-muted">
                     {headline.label}

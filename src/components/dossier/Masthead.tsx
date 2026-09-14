@@ -1,5 +1,6 @@
 import { profile, headlineMetrics } from "@/content/profile";
 import Orbit from "./Orbit";
+import CountUp from "@/components/motion/CountUp";
 
 /**
  * Left-aligned, no gradient, no rotating text, no status pill.
@@ -66,8 +67,7 @@ export default function Masthead() {
             <dt className="label mb-2">{m.label}</dt>
             <dd>
               <span className="t-metric block break-words">
-                {m.value}
-                {m.unit}
+                <CountUp value={`${m.value}${m.unit}`} />
               </span>
               <span className="mt-1 block text-small text-ink-muted">
                 {m.note}

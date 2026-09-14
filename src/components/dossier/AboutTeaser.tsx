@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Section from "./Section";
 import { profile } from "@/content/profile";
+import { indexLine } from "@/lib/text";
 
 /**
  * One paragraph on the homepage, with the full history a click away.
@@ -11,8 +12,10 @@ export default function AboutTeaser({ index = "03" }: { index?: string }) {
   return (
     <Section id="about" index={index} title="About">
       <div className="grid gap-x-10 gap-y-6 lg:grid-cols-12">
+        {/* Trimmed here, whole on /about. Seven stacked paragraphs of this
+            length is what made the homepage read as a wall. */}
         <p className="max-w-prose text-body lg:col-span-8">
-          {profile.about[0]}
+          {indexLine(profile.about[0])}
         </p>
         <div className="lg:col-span-4 lg:text-right">
           <Link href="/about" className="label label-tap group inline-flex items-center gap-2 text-ink">

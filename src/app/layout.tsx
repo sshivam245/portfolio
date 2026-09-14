@@ -114,6 +114,8 @@ export default function RootLayout({
           >
             Skip to content
           </a>
+          {/* Hairline fill showing scroll depth. CSS-only, no listener. */}
+          <div className="scroll-progress" aria-hidden />
           <Header />
           <main id="main">{children}</main>
           <Footer />

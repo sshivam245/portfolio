@@ -577,3 +577,147 @@
     @apply inline-block h-2 w-2 shrink-0;
   }
 }
+
+/* ------------------------------------------------------------- diagrams --
+   Inlined SVGs, so two things become possible that an <img> cannot do:
+   they follow the page's theme live (the toggle now repaints them), and
+   their strokes can draw themselves in the order the flow runs.
+
+   These selectors beat the SVG file's own <style> block on specificity,
+   which is what lets the tokens win.
+*/
+@layer components {
+  .diagram svg { display: block; }
+  .diagram svg .ink   { fill: var(--ink); }
+  .diagram svg .muted { fill: var(--ink-muted); }
+  .diagram svg .accf  { fill: var(--accent); }
+  .diagram svg .acc   { stroke: var(--accent); }
+  .diagram svg .box,
+  .diagram svg .rule  { stroke: var(--rule); }
+
+  /* Armed only once the client has measured and staggered the elements, so
+     a diagram is never left invisible if that script does not run. */
+  .diagram-armed .d-stroke { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .diagram-armed .d-fill,
+  .diagram-armed .d-text   { opacity: 0; }
+
+  /*
+   * The drawn state sets the finished values directly and the animation only
+   * supplies the journey to them, with fill-mode `backwards` holding the
+   * hidden state during the stagger delay.
+   *
+   * Written this way round on purpose: if animations never run — a browser
+   * that blocks them, a tab that is not compositing, an extension — the
+   * element still lands on the final rule and the diagram is simply visible
+   * with no animation. The alternative, animating to a value that is only
+   * held by fill-mode `forwards`, leaves an invisible diagram whenever the
+   * animation does not play. Motion must never be load-bearing for content.
+   */
+  .diagram.drawn .d-stroke {
+    stroke-dashoffset: 0;
+    animation: dg-draw 700ms cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
+    animation-delay: calc(var(--d, 0) * 1ms);
+  }
+  .diagram.drawn .d-fill {
+    opacity: 1;
+    animation: dg-pop 320ms cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
+    animation-delay: calc(var(--d, 0) * 1ms);
+    /* SVG transforms resolve against the viewport origin without this, so a
+       scale sends the arrowhead across the diagram instead of growing it. */
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .diagram.drawn .d-text {
+    opacity: 1;
+    animation: dg-fade 420ms ease-out backwards;
+    animation-delay: calc(var(--d, 0) * 1ms);
+  }
+
+  @keyframes dg-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes dg-pop  { from { opacity: 0; transform: scale(0.4); }
+                       to   { opacity: 1; transform: scale(1); } }
+  @keyframes dg-fade { from { opacity: 0; transform: translateY(3px); }
+                       to   { opacity: 1; transform: translateY(0); } }
+
+  /* ----------------------------------------------------------- progress --
+     A hairline that fills as the page scrolls. Uses the scroll-driven
+     timeline where it exists and simply stays invisible where it does not,
+     so there is no scroll listener on the main thread either way. */
+  .scroll-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 2px;
+    transform-origin: 0 50%;
+    background: var(--accent);
+    z-index: 50;
+    transform: scaleX(0);
+  }
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: sp-grow linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+  @keyframes sp-grow { to { transform: scaleX(1); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagram-armed .d-stroke { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .diagram-armed .d-fill,
+  .diagram-armed .d-text { opacity: 1; }
+  .diagram.drawn .d-stroke,
+  .diagram.drawn .d-fill,
+  .diagram.drawn .d-text { animation: none; }
+  .scroll-progress { display: none; }
+}
+
+/* ------------------------------------------------------------ work rows --
+   The index is the most-clicked thing on the site and it had one hover
+   state: the title changed colour. Now the row itself responds — an accent
+   rule wipes down the left edge and the content steps aside for it.
+
+   Driven off :hover and :focus-visible together so it reads the same by
+   keyboard, and the padding is the only thing that moves, so no sibling
+   row shifts.
+*/
+@layer components {
+  .work-row {
+    position: relative;
+    transition: padding-left 240ms cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+  .work-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+    transition: transform 260ms cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+  .work-row-n {
+    display: inline-block;
+    transition: color 180ms, transform 240ms cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+
+  .work-row:focus-visible { padding-left: 1.25rem; }
+  .work-row:focus-visible::before { transform: scaleY(1); }
+  .work-row:focus-visible .work-row-n { color: var(--accent); }
+
+  @media (hover: hover) {
+    .work-row:hover { padding-left: 1.25rem; }
+    .work-row:hover::before { transform: scaleY(1); }
+    .work-row:hover .work-row-n {
+      color: var(--accent);
+      transform: translateX(2px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-row,
+  .work-row::before,
+  .work-row-n { transition: none; }
+}

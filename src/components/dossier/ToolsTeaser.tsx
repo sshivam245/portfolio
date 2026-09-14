@@ -11,15 +11,13 @@ const items = [
     href: "/tools/agent-fit",
     kicker: "Instant, no email",
     title: "Which GTM agent should you build?",
-    blurb:
-      "Five questions. A ranked shortlist with each agent's trigger, loop and failure mode, weighed against the tools you already run.",
+    blurb: "Five questions. A ranked shortlist, wired to the tools you already run.",
   },
   {
     href: "/tools/aeo-audit",
     kicker: "Free, back within a day",
     title: "What can an answer engine do with your site?",
-    blurb:
-      "Send a URL. I read the pages against 23 checks and reply with three fixes in priority order, plus what to leave alone.",
+    blurb: "Send a URL. I read the pages and reply with three fixes, in order.",
   },
 ];
 

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Figure from "@/components/dossier/Figure";
+import InlineDiagram from "@/components/dossier/InlineDiagram";
 import { caseStudies } from "@/content/caseStudies";
+import CountUp from "@/components/motion/CountUp";
 import { asset } from "@/lib/basePath";
 import { CaseStudySchema } from "@/components/dossier/StructuredData";
 
@@ -120,7 +122,9 @@ export default function CaseStudyPage({
           <dl className="grid grid-cols-2 gap-x-6 gap-y-6 lg:grid-cols-4">
             {cs.outcomes.map((o) => (
               <div key={o.label} className="min-w-0">
-                <dd className="t-metric break-words text-accent">{o.value}</dd>
+                <dd className="t-metric break-words text-accent">
+                  <CountUp value={o.value} />
+                </dd>
                 <dt className="mt-2 text-small text-ink-muted">{o.label}</dt>
               </div>
             ))}
@@ -147,7 +151,7 @@ export default function CaseStudyPage({
             <p className="max-w-prose text-body text-ink-muted">{cs.context}</p>
 
             {diagrams.map((f) => (
-              <Figure key={f.src} figure={f} />
+              <InlineDiagram key={f.src} figure={f} />
             ))}
 
             <h2 className="label mb-4 mt-10">What I built</h2>
