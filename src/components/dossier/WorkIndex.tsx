@@ -27,11 +27,30 @@ export default function WorkIndex() {
             <li key={cs.id} className="stagger-item" style={{ "--i": i } as React.CSSProperties}>
               <Link
                 href={`/work/${cs.id}`}
-                className="work-row press group grid items-baseline gap-x-6 gap-y-3 rule-b py-7 sm:grid-cols-12"
+                className="work-row press group grid gap-x-8 gap-y-4 rule-b py-8 sm:grid-cols-12"
               >
-                <p className="label sm:col-span-12">
-                  <span className="tnum work-row-n">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="mx-2 text-accent">·</span>
+                {/*
+                  The index number, pulled out of the meta line into its own
+                  gutter. Buried inline in 11px mono it was invisible and the
+                  rows had no anchor, so seven of them read as one undivided
+                  stack. At display size, muted, it gives each row a mark to
+                  scan down and makes the section read as an index.
+
+                  Hidden below sm: the gutter costs a whole line of its own
+                  once the grid collapses, which is a poor trade on a phone.
+                */}
+                <span
+                  aria-hidden
+                  className="work-row-n tnum hidden text-ink-muted sm:col-span-1 sm:block sm:text-[2rem] sm:leading-none"
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <p className="label sm:col-span-10 sm:col-start-2">
+                  <span className="tnum sm:hidden">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="mx-2 text-accent sm:hidden">·</span>
                   {cs.tag}
                   <span className="mx-2">·</span>
                   {cs.org}, {cs.timeframe}
@@ -48,7 +67,7 @@ export default function WorkIndex() {
                   ) : null}
                 </p>
 
-                <div className="sm:col-span-7">
+                <div className="sm:col-span-6 sm:col-start-2">
                   <h3 className="t-heading transition-colors duration-150 group-hover:text-accent">
                     {cs.title}
                   </h3>
@@ -57,22 +76,35 @@ export default function WorkIndex() {
                   </p>
                 </div>
 
-                <div className="flex min-w-0 items-baseline gap-4 sm:col-span-5 sm:justify-end">
-                  <span className="t-metric-sm break-words text-accent">
+                {/*
+                  The outcome sits in its own column, left-aligned so the
+                  seven rows form a vertical spine. It used to be baseline-
+                  flexed beside its caption and right-aligned, which meant a
+                  long value like "AI Overview" ate the width and pushed the
+                  caption into a three-line ribbon.
+
+                  Size is chosen by length, because these values are not all
+                  numbers. "68.7k" and "#1" carry the big mono treatment;
+                  "AI Overview" would shout at that size and wrap, so
+                  anything longer drops a step. The label above it is what
+                  tells you the column is evidence rather than a stray line.
+                */}
+                <div className="min-w-0 sm:col-span-4 sm:col-start-9">
+                  <p className="label mb-2">Outcome</p>
+                  <p
+                    className={`${
+                      headline.value.length <= 7 ? "t-metric-sm" : "t-subhead"
+                    } break-words text-accent`}
+                  >
+                    {/* Non-numeric values ("AI Overview", "Live") fall through
+                        CountUp untouched; only the numbers animate. */}
                     <CountUp value={headline.value} />
-                  </span>
-                  <span className="max-w-[18ch] text-small text-ink-muted">
+                  </p>
+                  <p className="mt-2 text-small text-ink-muted">
                     {headline.label}
-                  </span>
+                  </p>
                 </div>
 
-                <span className="label flex items-center gap-2 sm:col-span-12">
-                  Read the case study
-                  <span
-                    aria-hidden
-                    className="h-px w-12 origin-left scale-x-50 bg-accent transition-transform duration-200 group-hover:scale-x-100"
-                  />
-                </span>
               </Link>
             </li>
           );

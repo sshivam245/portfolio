@@ -119,13 +119,26 @@ export default function CaseStudyPage({
       <section className="rule-t">
         <div className="shell py-8">
           <h2 className="label mb-6">Outcome</h2>
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-6 lg:grid-cols-4">
+          {/*
+            Two rows shared by every cell, via subgrid. "AI Overview" wraps to
+            two lines where "#1" takes one, so laying each cell out on its own
+            left all four labels at different heights and the row read as
+            ragged. Spanning the parent's rows makes the value row as tall as
+            the tallest value and starts every label on the same line.
+
+            Falls back to the previous stacked behaviour where subgrid is not
+            supported, which is the same ragged layout, not a broken one.
+          */}
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
             {cs.outcomes.map((o) => (
-              <div key={o.label} className="min-w-0">
+              <div
+                key={o.label}
+                className="row-span-2 grid min-w-0 grid-rows-subgrid gap-y-2"
+              >
                 <dd className="t-metric break-words text-accent">
                   <CountUp value={o.value} />
                 </dd>
-                <dt className="mt-2 text-small text-ink-muted">{o.label}</dt>
+                <dt className="text-small text-ink-muted">{o.label}</dt>
               </div>
             ))}
           </dl>

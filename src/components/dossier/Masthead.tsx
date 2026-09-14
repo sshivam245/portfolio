@@ -57,15 +57,29 @@ export default function Masthead() {
       </div>
 
       {/* Evidence, as an aligned table — not as cards. */}
+      {/*
+        Four shared rows via subgrid: hairline, label, metric, note. A label
+        that wraps to two lines ("Google + AI Overview") otherwise pushes only
+        its own metric down, and the numbers stop sitting on one line. Each
+        cell spans the parent's rows so every track is as tall as its tallest
+        occupant and all four cells agree.
+
+        The <dd> is a nested subgrid rather than display:contents, which keeps
+        the dt/dd pairing intact for assistive tech while still letting the
+        metric and the note line up as separate rows.
+      */}
       <dl className="mt-14 grid grid-cols-2 gap-x-6 lg:grid-cols-4">
         {headlineMetrics.map((m) => (
-          <div key={m.label} className="min-w-0 rule-b py-5 lg:py-6">
+          <div
+            key={m.label}
+            className="row-span-4 grid min-w-0 grid-rows-subgrid rule-b py-5 lg:py-6"
+          >
             <span
               aria-hidden
               className="draw mb-4 block h-px w-full bg-accent/40"
             />
             <dt className="label mb-2">{m.label}</dt>
-            <dd>
+            <dd className="row-span-2 grid grid-rows-subgrid">
               <span className="t-metric block break-words">
                 <CountUp value={`${m.value}${m.unit}`} />
               </span>
