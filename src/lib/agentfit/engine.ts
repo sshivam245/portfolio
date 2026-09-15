@@ -315,6 +315,11 @@ const ARCHETYPES: Archetype[] = [
   },
 ];
 
+/** For the page's own copy, so the figure cannot drift from the list. */
+export const ARCHETYPE_COUNT = ARCHETYPES.length;
+export const TOOL_COUNT = TOOLS.length;
+export const QUESTION_COUNT = 5;
+
 export type Result = {
   id: string;
   name: string;

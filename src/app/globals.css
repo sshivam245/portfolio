@@ -850,3 +850,13 @@
   .flow-out::before,
   .flow-out::after { transition: none; }
 }
+
+/* The hairline box, shared by the index's output node and the case-study
+   hero panel. Same border, same padding rhythm, so following an arrow from
+   the work list opens the box it pointed at. */
+@layer components {
+  .panel {
+    border: 1px solid var(--rule);
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+}

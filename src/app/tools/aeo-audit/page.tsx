@@ -34,16 +34,39 @@ export default function AeoAuditPage() {
           BACK WITHIN A DAY
         </p>
 
-        <h1 className="t-title mt-4 max-w-[16ch]">
-          What can an answer engine actually do with your site?
-        </h1>
+        {/* Same two-column hero as the case studies: the claim on the left,
+            the shape of the thing in figures on the right, instead of 40% of
+            the width left blank. */}
+        <div className="mt-4 grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="min-w-0 lg:col-span-7">
+            <h1 className="t-title">
+              What can an answer engine actually do with your site?
+            </h1>
 
-        <p className="mt-6 max-w-prose text-body text-ink-muted">
-          Search is being answered, not just listed. A page can rank perfectly well
-          and still never be quoted, because the thing that gets quoted is a passage,
-          and most pages do not contain one. Send me a URL and I&apos;ll tell you where
-          yours stands.
-        </p>
+            <p className="mt-6 max-w-prose text-body text-ink-muted">
+              Search is being answered, not listed. A page can rank perfectly well
+              and never be quoted, because what gets quoted is a passage and most
+              pages do not contain one. Send a URL and I will tell you where yours
+              stands.
+            </p>
+          </div>
+
+          <div className="min-w-0 lg:col-span-4 lg:col-start-9">
+            <dl className="panel">
+              {[
+                [String(CHECK_SPECS.length), "checks, listed below"],
+                [String(CATEGORIES.length), "groups, from parsing to permission"],
+                ["1 day", "turnaround, written by hand"],
+                ["0", "sequences you get added to"],
+              ].map(([v, l], i) => (
+                <div key={l} className={i > 0 ? "rule-t mt-5 pt-5" : undefined}>
+                  <dt className="t-metric-sm text-accent">{v}</dt>
+                  <dd className="mt-2 text-small text-ink-muted">{l}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
       </header>
 
       <section className="rule-t">

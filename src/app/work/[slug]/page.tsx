@@ -69,81 +69,80 @@ export default function CaseStudyPage({
   return (
     <article>
       <CaseStudySchema slug={cs.id} />
+      {/*
+        The hero carries the proof panel rather than sitting above it.
+
+        As a single left column it filled about 40% of the width and left the
+        rest blank on all seven pages, and the outcomes sat in a separate band
+        underneath, so the claim and the evidence for it were never in view
+        together. The panel is deliberately the same hairline box the index
+        draws at the end of each arrow: follow one from the work list and the
+        box you clicked is what opens.
+      */}
       <header className="shell py-12 sm:py-16">
         <Link href="/#work" className="label label-tap hover:text-accent transition-colors">
           ← Selected work
         </Link>
 
-        <p className="label label-tap mt-8">
-          <span className="tnum">{String(index + 1).padStart(2, "0")}</span>
-          <span className="mx-2 text-accent">·</span>
-          {cs.tag}
-          <span className="mx-2">·</span>
-          {cs.org}, {cs.timeframe}
-        </p>
+        <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="min-w-0 lg:col-span-7">
+            <p className="label label-tap">
+              <span className="tnum">{String(index + 1).padStart(2, "0")}</span>
+              <span className="mx-2 text-accent">·</span>
+              {cs.tag}
+              <span className="mx-2">·</span>
+              {cs.org}, {cs.timeframe}
+            </p>
 
-        <h1 className="t-title mt-4 max-w-[18ch]">
-          {cs.title}
-        </h1>
+            {/* The column constrains the measure now, so no max-w in ch. */}
+            <h1 className="t-title mt-4">{cs.title}</h1>
 
-        <p className="mt-6 max-w-prose text-body">{cs.summary}</p>
+            <p className="mt-6 max-w-prose text-body">{cs.summary}</p>
 
-        {cs.link ? (
-          <a
-            /* A root-relative href points at a file in /public and needs the
-               basePath; a plain <a> does not get it the way next/link does. */
-            href={
-              cs.link.href.startsWith("/") ? asset(cs.link.href) : cs.link.href
-            }
-            target="_blank"
-            rel="noreferrer noopener"
-            /*
-             * Body size and the .link underline, not .label. As a label it
-             * rendered identically to "Outcome", "Context" and "Stack", so
-             * the one genuinely clickable thing on the page read as a section
-             * heading and nobody found it.
-             */
-            className="link label-tap press mt-6 inline-flex items-center gap-2 text-body"
-          >
-            {cs.link.label}
-            <span aria-hidden>↗</span>
-          </a>
-        ) : null}
-      </header>
-
-      {/*
-        Outcomes and stack share one band. Stack was a 5-column aside holding
-        two lines of text, which left roughly 40% of the page empty down the
-        whole length of the article. It is a list of tools, not a column.
-      */}
-      <section className="rule-t">
-        <div className="shell py-8">
-          <h2 className="label mb-6">Outcome</h2>
-          {/*
-            Two rows shared by every cell, via subgrid. "AI Overview" wraps to
-            two lines where "#1" takes one, so laying each cell out on its own
-            left all four labels at different heights and the row read as
-            ragged. Spanning the parent's rows makes the value row as tall as
-            the tallest value and starts every label on the same line.
-
-            Falls back to the previous stacked behaviour where subgrid is not
-            supported, which is the same ragged layout, not a broken one.
-          */}
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
-            {cs.outcomes.map((o) => (
-              <div
-                key={o.label}
-                className="row-span-2 grid min-w-0 grid-rows-subgrid gap-y-2"
+            {cs.link ? (
+              <a
+                /* A root-relative href points at a file in /public and needs
+                   the basePath; a plain <a> does not get it the way next/link
+                   does. */
+                href={
+                  cs.link.href.startsWith("/") ? asset(cs.link.href) : cs.link.href
+                }
+                target="_blank"
+                rel="noreferrer noopener"
+                /*
+                 * Body size and the .link underline, not .label. As a label it
+                 * rendered identically to "Outcome", "Context" and "Stack", so
+                 * the one genuinely clickable thing on the page read as a
+                 * section heading and nobody found it.
+                 */
+                className="link label-tap press mt-8 inline-flex items-center gap-2 text-body"
               >
-                <dd className="t-metric break-words text-accent">
-                  <CountUp value={o.value} />
-                </dd>
-                <dt className="text-small text-ink-muted">{o.label}</dt>
-              </div>
-            ))}
-          </dl>
+                {cs.link.label}
+                <span aria-hidden>↗</span>
+              </a>
+            ) : null}
+          </div>
+
+          <div className="min-w-0 lg:col-span-4 lg:col-start-9">
+            <div className="panel">
+              <p className="label mb-5">Outcome</p>
+              <dl>
+                {cs.outcomes.map((o, i) => (
+                  <div
+                    key={o.label}
+                    className={i > 0 ? "rule-t mt-5 pt-5" : undefined}
+                  >
+                    <dd className="t-metric-sm break-words text-accent">
+                      <CountUp value={o.value} />
+                    </dd>
+                    <dt className="mt-2 text-small text-ink-muted">{o.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
         </div>
-      </section>
+      </header>
 
       {/*
         Diagrams run inline under the context, where the flow explains the
