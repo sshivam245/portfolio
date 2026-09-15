@@ -880,3 +880,26 @@
     }
   }
 }
+
+/* The live link on a case study: a ruled row spanning the page rather than a
+   floating link. The arrow is pushed to the far margin by ml-auto, so the row
+   has two ends and reads as a record entry. */
+@layer components {
+  .live-arrow {
+    display: inline-block;
+    transition: transform 200ms cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+  @media (hover: hover) {
+    .live-bar:hover .live-arrow {
+      /* Follows the glyph: up and to the right. */
+      transform: translate(3px, -3px);
+    }
+  }
+  .live-bar:focus-visible .live-arrow {
+    transform: translate(3px, -3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-arrow { transition: none; }
+}

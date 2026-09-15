@@ -99,34 +99,45 @@ export default function CaseStudyPage({
         {/* No ch cap. The shell is the measure. */}
         <h1 className="t-display mt-5">{cs.title}</h1>
 
-        <div className="mt-8 grid gap-x-12 gap-y-6 lg:grid-cols-12">
-          <p className="max-w-prose text-body lg:col-span-7">{cs.summary}</p>
+        <p className="mt-8 max-w-prose text-body">{cs.summary}</p>
 
-          {cs.link ? (
-            <div className="lg:col-span-4 lg:col-start-9">
-              <a
-                /* A root-relative href points at a file in /public and needs
-                   the basePath; a plain <a> does not get it the way next/link
-                   does. */
-                href={
-                  cs.link.href.startsWith("/") ? asset(cs.link.href) : cs.link.href
-                }
-                target="_blank"
-                rel="noreferrer noopener"
-                /*
-                 * Body size and the .link underline, not .label. As a label it
-                 * rendered identically to "Outcome", "Context" and "Stack", so
-                 * the one genuinely clickable thing on the page read as a
-                 * section heading and nobody found it.
-                 */
-                className="link label-tap press inline-flex items-center gap-2 text-body"
-              >
-                {cs.link.label}
-                <span aria-hidden>↗</span>
-              </a>
-            </div>
-          ) : null}
-        </div>
+        {/*
+          The live link as a ruled row across the page, not a lone underlined
+          string parked in a right-hand column with nothing near it. Label on
+          the left, URL next to it, arrow driven out to the far margin, so the
+          row reads as an entry rather than something left behind.
+        */}
+        {cs.link ? (
+          <a
+            /* A root-relative href points at a file in /public and needs the
+               basePath; a plain <a> does not get it the way next/link does. */
+            href={
+              cs.link.href.startsWith("/") ? asset(cs.link.href) : cs.link.href
+            }
+            target="_blank"
+            rel="noreferrer noopener"
+            className="live-bar rule-t press mt-10 flex items-baseline gap-x-5 pt-5"
+          >
+            <span className="label shrink-0 text-accent">Live</span>
+            {/*
+              Body size with the .link underline, not .label. As a label it
+              rendered identically to "Outcome", "Context" and "Stack", so the
+              one genuinely clickable thing here read as a section heading.
+            */}
+            {/*
+              flex-1 + min-w-0 + break-all: the URL takes whatever is left on
+              the row and wraps inside itself. As an auto-width item it
+              claimed a whole flex line at 375px, which stranded the arrow
+              alone on a third line.
+            */}
+            <span className="link min-w-0 flex-1 break-all text-body">
+              {cs.link.label}
+            </span>
+            {/* Sits at the far margin on every width, because the URL now
+                grows to fill rather than wrapping past it. */}
+            <span aria-hidden className="live-arrow shrink-0 text-accent">↗</span>
+          </a>
+        ) : null}
       </header>
 
       <section className="rule-t">
