@@ -851,12 +851,32 @@
   .flow-out::after { transition: none; }
 }
 
-/* The hairline box, shared by the index's output node and the case-study
-   hero panel. Same border, same padding rhythm, so following an arrow from
-   the work list opens the box it pointed at. */
+/* ---------------------------------------------------------- the ledger --
+   Figures ruled off in columns, full width, under a hero.
+
+   The divider is on the left of each column rather than the right, so the
+   run of rules sits between the figures and never trails off the end of the
+   row. Which column starts a row changes with the breakpoint, so the reset
+   has to change with it: at two columns every odd child begins a row, at
+   four only the first does.
+*/
 @layer components {
-  .panel {
-    border: 1px solid var(--rule);
-    padding: 1.25rem 1.5rem 1.5rem;
+  .ledger > * {
+    border-left: 1px solid var(--rule);
+    padding-left: 1.25rem;
+  }
+  .ledger > *:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  @media (min-width: 1024px) {
+    .ledger > *:nth-child(odd) {
+      border-left: 1px solid var(--rule);
+      padding-left: 1.25rem;
+    }
+    .ledger > *:first-child {
+      border-left: 0;
+      padding-left: 0;
+    }
   }
 }

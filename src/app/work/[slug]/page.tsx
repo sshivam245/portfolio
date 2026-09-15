@@ -3,8 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Figure from "@/components/dossier/Figure";
 import InlineDiagram from "@/components/dossier/InlineDiagram";
+import Ledger from "@/components/dossier/Ledger";
 import { caseStudies } from "@/content/caseStudies";
-import CountUp from "@/components/motion/CountUp";
 import { asset } from "@/lib/basePath";
 import { CaseStudySchema } from "@/components/dossier/StructuredData";
 
@@ -70,36 +70,40 @@ export default function CaseStudyPage({
     <article>
       <CaseStudySchema slug={cs.id} />
       {/*
-        The hero carries the proof panel rather than sitting above it.
+        The title carries the hero, at display size and the full width of the
+        page.
 
-        As a single left column it filled about 40% of the width and left the
-        rest blank on all seven pages, and the outcomes sat in a separate band
-        underneath, so the claim and the evidence for it were never in view
-        together. The panel is deliberately the same hairline box the index
-        draws at the end of each arrow: follow one from the work list and the
-        box you clicked is what opens.
+        Every version before this constrained it to 18 characters and then
+        tried to fill the leftover 45% with something: first nothing, then a
+        bordered panel of outcomes, which was a card this design does not use
+        and which, being taller than the text beside it, only moved the empty
+        space underneath. The hole was never on the right. It was that the
+        largest thing on the page had been told not to grow.
+
+        The figures run underneath as a full-width ledger instead, which is
+        where four numbers read best anyway.
       */}
       <header className="shell py-12 sm:py-16">
         <Link href="/#work" className="label label-tap hover:text-accent transition-colors">
           ← Selected work
         </Link>
 
-        <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className="min-w-0 lg:col-span-7">
-            <p className="label label-tap">
-              <span className="tnum">{String(index + 1).padStart(2, "0")}</span>
-              <span className="mx-2 text-accent">·</span>
-              {cs.tag}
-              <span className="mx-2">·</span>
-              {cs.org}, {cs.timeframe}
-            </p>
+        <p className="label label-tap mt-10">
+          <span className="tnum">{String(index + 1).padStart(2, "0")}</span>
+          <span className="mx-2 text-accent">·</span>
+          {cs.tag}
+          <span className="mx-2">·</span>
+          {cs.org}, {cs.timeframe}
+        </p>
 
-            {/* The column constrains the measure now, so no max-w in ch. */}
-            <h1 className="t-title mt-4">{cs.title}</h1>
+        {/* No ch cap. The shell is the measure. */}
+        <h1 className="t-display mt-5">{cs.title}</h1>
 
-            <p className="mt-6 max-w-prose text-body">{cs.summary}</p>
+        <div className="mt-8 grid gap-x-12 gap-y-6 lg:grid-cols-12">
+          <p className="max-w-prose text-body lg:col-span-7">{cs.summary}</p>
 
-            {cs.link ? (
+          {cs.link ? (
+            <div className="lg:col-span-4 lg:col-start-9">
               <a
                 /* A root-relative href points at a file in /public and needs
                    the basePath; a plain <a> does not get it the way next/link
@@ -115,34 +119,22 @@ export default function CaseStudyPage({
                  * the one genuinely clickable thing on the page read as a
                  * section heading and nobody found it.
                  */
-                className="link label-tap press mt-8 inline-flex items-center gap-2 text-body"
+                className="link label-tap press inline-flex items-center gap-2 text-body"
               >
                 {cs.link.label}
                 <span aria-hidden>↗</span>
               </a>
-            ) : null}
-          </div>
-
-          <div className="min-w-0 lg:col-span-4 lg:col-start-9">
-            <div className="panel">
-              <p className="label mb-5">Outcome</p>
-              <dl>
-                {cs.outcomes.map((o, i) => (
-                  <div
-                    key={o.label}
-                    className={i > 0 ? "rule-t mt-5 pt-5" : undefined}
-                  >
-                    <dd className="t-metric-sm break-words text-accent">
-                      <CountUp value={o.value} />
-                    </dd>
-                    <dt className="mt-2 text-small text-ink-muted">{o.label}</dt>
-                  </div>
-                ))}
-              </dl>
             </div>
-          </div>
+          ) : null}
         </div>
       </header>
+
+      <section className="rule-t">
+        <div className="shell py-10">
+          <h2 className="label mb-8">Outcome</h2>
+          <Ledger items={cs.outcomes} />
+        </div>
+      </section>
 
       {/*
         Diagrams run inline under the context, where the flow explains the

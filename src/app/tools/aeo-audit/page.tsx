@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AeoAuditForm from "@/components/tools/AeoAuditForm";
+import Ledger from "@/components/dossier/Ledger";
 import { CATEGORIES, CHECK_SPECS } from "@/lib/aeo/checks";
 
 export const metadata: Metadata = {
@@ -34,40 +35,32 @@ export default function AeoAuditPage() {
           BACK WITHIN A DAY
         </p>
 
-        {/* Same two-column hero as the case studies: the claim on the left,
-            the shape of the thing in figures on the right, instead of 40% of
-            the width left blank. */}
-        <div className="mt-4 grid gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className="min-w-0 lg:col-span-7">
-            <h1 className="t-title">
-              What can an answer engine actually do with your site?
-            </h1>
+        {/* No ch cap, and the figures run underneath rather than standing
+            in a bordered panel beside a shorter column. */}
+        <h1 className="t-title mt-5">
+          What can an answer engine actually do with your site?
+        </h1>
 
-            <p className="mt-6 max-w-prose text-body text-ink-muted">
-              Search is being answered, not listed. A page can rank perfectly well
-              and never be quoted, because what gets quoted is a passage and most
-              pages do not contain one. Send a URL and I will tell you where yours
-              stands.
-            </p>
-          </div>
-
-          <div className="min-w-0 lg:col-span-4 lg:col-start-9">
-            <dl className="panel">
-              {[
-                [String(CHECK_SPECS.length), "checks, listed below"],
-                [String(CATEGORIES.length), "groups, from parsing to permission"],
-                ["1 day", "turnaround, written by hand"],
-                ["0", "sequences you get added to"],
-              ].map(([v, l], i) => (
-                <div key={l} className={i > 0 ? "rule-t mt-5 pt-5" : undefined}>
-                  <dt className="t-metric-sm text-accent">{v}</dt>
-                  <dd className="mt-2 text-small text-ink-muted">{l}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </div>
+        <p className="mt-6 max-w-prose text-body text-ink-muted">
+          Search is being answered, not listed. A page can rank perfectly well
+          and never be quoted, because what gets quoted is a passage and most
+          pages do not contain one. Send a URL and I will tell you where yours
+          stands.
+        </p>
       </header>
+
+      <section className="rule-t">
+        <div className="shell py-10">
+          <Ledger
+            items={[
+              { value: String(CHECK_SPECS.length), label: "checks, listed below" },
+              { value: String(CATEGORIES.length), label: "groups, from parsing to permission" },
+              { value: "1 day", label: "turnaround, written by hand" },
+              { value: "0", label: "sequences you get added to" },
+            ]}
+          />
+        </div>
+      </section>
 
       <section className="rule-t">
         <div className="shell grid gap-10 py-12 lg:grid-cols-12 lg:gap-12">
