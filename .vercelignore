@@ -1,0 +1,4 @@
+# Built output. Vercel runs the build itself; uploading these wastes time and
+# risks shipping a stale local export.
+out
+.next
