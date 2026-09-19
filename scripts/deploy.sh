@@ -1,28 +1,38 @@
 #!/usr/bin/env bash
-# Deploy to Vercel production and move the public alias onto the new build.
+# Deploy to Vercel production and prove the public URL actually moved.
 #
-# The second step is not optional. shivamgoel.vercel.app is a *.vercel.app
-# subdomain, which Vercel pins to one specific deployment rather than
-# treating as a project domain that follows production. Deploy without
-# re-aliasing and the nice URL keeps serving the previous build until that
-# build ages out, at which point Vercel decides it is no longer current and
-# answers with an SSO login redirect instead of the site. That failure is
-# silent: the deploy reports success and the URL people actually have breaks.
-#
-# Connecting the GitHub repo in the Vercel dashboard makes production domains
-# follow deploys automatically and retires this script.
+# Vercel now treats shivamgoel.vercel.app as a project domain and reassigns it
+# on each production deploy, so the alias step below is a fallback rather than
+# the normal path. It stays because the failure it guards against is silent:
+# a *.vercel.app subdomain pinned to one deployment keeps serving the old
+# build, and once that build is no longer current Vercel answers with an SSO
+# login redirect instead of the site — while the deploy reports success.
 set -euo pipefail
 
 ALIAS="${VERCEL_ALIAS:-shivamgoel.vercel.app}"
 
-url=$(vercel deploy --prod --yes | tail -1 | tr -d '[:space:]')
-case "$url" in
-  https://*) ;;
-  *) echo "deploy did not return a URL: $url" >&2; exit 1 ;;
-esac
+out=$(vercel deploy --prod --yes 2>&1 | tee /dev/stderr)
 
-vercel alias set "$url" "$ALIAS"
+# The URL is on the "Production" line. `tail -1` looked obvious and was wrong:
+# the CLI prints a trailing JSON hint block, so the last line is a brace.
+url=$(printf '%s\n' "$out" \
+  | grep -oE 'https://[a-z0-9-]+\.vercel\.app' \
+  | grep -v "$ALIAS" | tail -1)
+
+[ -n "$url" ] || { echo "could not find a deployment URL in the output" >&2; exit 1; }
+
+# Only reassign if the alias is not already on this deployment.
+if ! curl -sI "https://$ALIAS/" | grep -qi '^HTTP/2 200'; then
+  echo "alias is not serving 200, reassigning to $url"
+  vercel alias set "$url" "$ALIAS"
+fi
 
 code=$(curl -sL -o /dev/null -w '%{http_code}' "https://$ALIAS/")
-[ "$code" = "200" ] || { echo "$ALIAS returned $code after aliasing" >&2; exit 1; }
+[ "$code" = "200" ] || { echo "$ALIAS returned $code" >&2; exit 1; }
+
+# The demo page is linked from a case study and 404'd on the first deploy,
+# because Vercel serves clean URLs and the link carries .html.
+demo=$(curl -sL -o /dev/null -w '%{http_code}' "https://$ALIAS/demos/gravitee-streamnative.html")
+[ "$demo" = "200" ] || { echo "demo page returned $demo" >&2; exit 1; }
+
 echo "live: https://$ALIAS  ->  $url"
