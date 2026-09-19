@@ -26,7 +26,16 @@ jobs:
 
       - run: npm ci
 
+      # GitHub Pages serves this repo under /portfolio. Vercel serves at a
+      # domain root and sets neither of these, so it gets the defaults.
       - run: npm run build
+        env:
+          # Assets still live under /portfolio here. NEXT_PUBLIC_SITE_URL is
+          # deliberately NOT set: this copy inherits the Vercel default, so
+          # its canonicals point at the primary site instead of competing
+          # with it. Two live copies each declaring themselves canonical is
+          # duplicate content, which is a bad look on a site that sells SEO.
+          NEXT_PUBLIC_BASE_PATH: /portfolio
 
       - uses: actions/upload-pages-artifact@v3
         with:
