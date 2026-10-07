@@ -2,7 +2,6 @@ import Link from "next/link";
 import Section from "./Section";
 import { caseStudies } from "@/content/caseStudies";
 import CountUp from "@/components/motion/CountUp";
-import { indexLine } from "@/lib/text";
 
 /**
  * The case studies, drawn as a flow rather than listed as rows.
@@ -68,9 +67,14 @@ export default function WorkIndex() {
                   <h3 className="t-heading mt-4 transition-colors duration-150 group-hover:text-accent">
                     {cs.title}
                   </h3>
-                  <p className="mt-3 max-w-prose text-small text-ink-muted">
-                    {indexLine(cs.summary)}
-                  </p>
+                  {/*
+                    No summary line here any more. Seven of them was 126 words,
+                    the largest single block on the homepage, and on rows like
+                    "Cited by Google's AI Overview" the sentence underneath
+                    restated the headline. An index needs to answer "is this
+                    worth opening": the title, the tag and the outcome do that.
+                    The full summary still opens every case study.
+                  */}
                 </div>
 
                 {/*

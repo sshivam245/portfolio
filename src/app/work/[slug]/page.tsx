@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Figure from "@/components/dossier/Figure";
+import BuildFlow from "@/components/dossier/BuildFlow";
 import InlineDiagram from "@/components/dossier/InlineDiagram";
 import Ledger from "@/components/dossier/Ledger";
 import { caseStudies } from "@/content/caseStudies";
@@ -169,15 +170,8 @@ export default function CaseStudyPage({
               <InlineDiagram key={f.src} figure={f} />
             ))}
 
-            <h2 className="label mb-4 mt-10">What I built</h2>
-            <ul className="max-w-prose space-y-3">
-              {cs.built.map((b) => (
-                <li key={b} className="flex gap-3 text-body text-ink-muted">
-                  <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0 bg-accent" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
+            <h2 className="label mb-6 mt-10">What I built</h2>
+            <BuildFlow steps={cs.built} />
 
             {cs.reflection ? (
               <>

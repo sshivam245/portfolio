@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Section from "./Section";
 import { publishedPosts, formatDate } from "@/content/writing";
+import { indexLine } from "@/lib/text";
 
 /**
  * Numbered list of posts, same dossier grammar as the work index.
@@ -60,8 +61,11 @@ export default function Writing({
                   ) : null}
                 </span>
 
+                {/* One line on the homepage, the whole blurb on /writing.
+                    `limit` is what distinguishes the two, and an index does
+                    not need the paragraph the page itself opens with. */}
                 <span className="mt-2 block max-w-prose text-small text-ink-muted">
-                  {post.blurb}
+                  {limit ? indexLine(post.blurb) : post.blurb}
                 </span>
 
                 <span className="label mt-3 block">

@@ -903,3 +903,45 @@
 @media (prefers-reduced-motion: reduce) {
   .live-arrow { transition: none; }
 }
+
+/* --------------------------------------------------------- build steps --
+   "What I built" as a sequence on a spine, in the same hairline-and-node
+   language as the work index and the case-study diagrams. Smaller nodes
+   than the index: these sit inside a body column, not across the page.
+
+   Same geometry trick as the index — the list owns the gutter, the spine
+   steps back out of it to the node's centre line, and the last entry's
+   spine stops at its own node so the flow closes instead of trailing.
+*/
+@layer components {
+  .build-flow > li::before {
+    content: "";
+    position: absolute;
+    left: -2.5rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+  .build-flow > li:last-child::before {
+    bottom: auto;
+    height: 2.75rem;
+  }
+  .build-node {
+    position: absolute;
+    left: -3.5rem;
+    top: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink-muted);
+    font-size: 0.6875rem;
+  }
+
+  /* No gutter on a phone, so no spine to hang off it. */
+  @media (max-width: 639px) {
+    .build-flow > li::before { display: none; }
+  }
+}

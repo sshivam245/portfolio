@@ -98,25 +98,38 @@ export default function AeoAuditPage() {
         <div className="shell py-12">
           <h2 className="t-subhead">What gets checked</h2>
           <p className="mt-3 max-w-prose text-body text-ink-muted">
-            {CHECK_SPECS.length} checks in four groups. None of them reverse-engineer a
-            ranking, because no engine publishes one. Each is something that
-            demonstrably changes whether a passage can be retrieved, attributed
-            and quoted.
+            {CHECK_SPECS.length} checks, four groups. None reverse-engineer a ranking,
+            because no engine publishes one.
           </p>
 
-          <div className="mt-10 grid gap-10 sm:grid-cols-2">
+          {/*
+            The grid used to carry a sentence under every check explaining why
+            it matters: 23 of them, 292 words, more than a third of the page.
+            It read as an essay about auditing rather than a scope.
+
+            The reasoning has not been deleted, it has moved to where it is
+            actually useful: runChecks still attaches each spec's `why` to the
+            finding, so it reaches the reader inside the report, next to what
+            their own page did. On this page the job is to show the shape and
+            the coverage, which a dense grid of names does better than prose.
+          */}
+          <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {CATEGORIES.map((c) => (
-              <div key={c.id}>
+              <div key={c.id} className="rule-t pt-5">
                 <h3 className="label text-accent">{c.label}</h3>
                 <p className="mt-2 text-small text-ink-muted">{c.blurb}</p>
-                <dl className="mt-5 space-y-4">
+                <ul className="mt-5 space-y-2">
                   {CHECK_SPECS.filter((s) => s.category === c.id).map((s) => (
-                    <div key={s.id}>
-                      <dt className="text-body text-ink">{s.label}</dt>
-                      <dd className="mt-1 text-small text-ink-muted">{s.why}</dd>
-                    </div>
+                    <li key={s.id} className="flex items-baseline gap-2.5 text-small text-ink">
+                      <span
+                        aria-hidden
+                        className="dot mt-[0.45em]"
+                        style={{ background: "var(--rule)" }}
+                      />
+                      {s.label}
+                    </li>
                   ))}
-                </dl>
+                </ul>
               </div>
             ))}
           </div>

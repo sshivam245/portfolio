@@ -27,6 +27,15 @@ export type Figure = {
   h?: number;
 };
 
+/**
+ * One step of the build, split so the page can draw it as a sequence instead
+ * of printing it as a paragraph. `step` is the thing; `detail` is the terse
+ * line under it. Both stay real text in the DOM: baking them into an image
+ * would make the most substantive content on the site unretrievable, which
+ * is a strange thing to do on a site whose case study is about being quoted.
+ */
+export type BuildStep = { step: string; detail?: string };
+
 export type CaseStudy = {
   id: string;
   title: string;
@@ -37,7 +46,7 @@ export type CaseStudy = {
   link?: { href: string; label: string };
   summary: string;
   context: string;
-  built: string[];
+  built: BuildStep[];
   outcomes: { value: string; label: string }[];
   stack: string[];
   reflection?: string;
@@ -55,14 +64,14 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "A productised outbound agency on a pay-per-result model: offer, pricing, positioning and the site itself. The whole thing is the GTM artefact, not a description of one.",
     context:
-      "Outbound agencies mostly sell retainers, which puts the risk on the buyer and rewards activity over meetings booked. I wanted to test whether the opposite offer, where the client pays only when a qualified meeting lands, could be packaged tightly enough to sell without a sales team, and built the company to find out.",
+      "Outbound agencies sell retainers, which puts the risk on the buyer and rewards activity over meetings booked. I built the company to test the opposite: the client pays only when a qualified meeting lands.",
     built: [
-      "The offer itself: pay-per-result rather than a retainer, so the pricing model is the differentiator rather than the copy.",
-      "Positioning and messaging built around six specific failure modes of in-house outbound: time to launch, SDR cost, reply rates, bad data, deliverability, unclear ROI, so the pitch names the buyer's problem before naming the service.",
-      "A four-step delivery process, from strategy call to booked meetings in 14 days, defined tightly enough to be repeatable rather than bespoke per client.",
-      "An interactive ROI calculator on the site, so a prospect can price the offer against their own numbers before ever talking to me.",
-      "The service architecture behind it: list building and verification, domain and deliverability setup (SPF/DKIM/DMARC, warmup, rotation), multi-step sequences, and weekly reporting.",
-      "The site itself, built in Next.js, Tailwind and Framer Motion, deployed from GitHub Actions.",
+      { step: "Pay-per-result pricing", detail: "The pricing model is the differentiator, not the copy" },
+      { step: "Positioning on six failure modes", detail: "Launch time · SDR cost · reply rates · bad data · deliverability · unclear ROI" },
+      { step: "A four-step delivery process", detail: "Strategy call to booked meetings in 14 days. Repeatable, not bespoke per client." },
+      { step: "An ROI calculator on the site", detail: "A prospect prices the offer against their own numbers before talking to me" },
+      { step: "The service architecture", detail: "List building · SPF, DKIM, DMARC · warmup and rotation · sequences · weekly reporting" },
+      { step: "The site itself", detail: "Next.js, Tailwind, Framer Motion, deployed from GitHub Actions" },
     ],
     // TODO: confirm which of these are real, achieved results before publishing.
     // The figures on the live site (500+ meetings, 4.8% reply rate, 3.2x ROI,
@@ -98,14 +107,14 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "I built Cloudsheer's site from nothing and owned its search strategy. It now ranks first organically for “salesforce partner miami” and is named directly inside Google's AI Overview for the same query, which is the outcome AEO is actually for.",
     context:
-      "Salesforce implementation is a crowded, expensive category to buy keywords in, and a growing share of buyers were asking an assistant instead of scrolling results. Ranking was no longer sufficient: if the AI Overview answers the question and names two firms, being the third blue link is being invisible. So the target was not a position, it was being the source the answer is assembled from.",
+      "Salesforce implementation is expensive to buy keywords in, and buyers increasingly ask an assistant instead of scrolling. If the AI Overview names two firms, the third blue link is invisible. The target was never a position. It was being the source the answer is built from.",
     built: [
-      "The site itself, from zero: architecture, pages and copy, not just an optimisation pass on someone else's build.",
-      "An entity layer in structured data: Organization, WebSite, ProfessionalService and BreadcrumbList, so the firm is machine-legible as a specific local business rather than a set of pages.",
-      "FAQPage schema on the money pages. An answer engine assembling a response wants a question paired with a short, liftable answer, and this hands it exactly that.",
-      "Headings written as the questions buyers actually ask, like “what we deliver for Miami teams”, “how we wire your whole stack together”, so each section is a clean extract rather than a paragraph to summarise.",
-      "Geo-specific pages targeting Miami and South Florida intent, with the bilingual English-Spanish angle stated plainly enough to be quoted, which is the line the AI Overview ended up using.",
-      "Tracking that separates AI-browser referrals from conventional organic, so the effect is measurable rather than assumed.",
+      { step: "The site, from zero", detail: "Architecture, pages and copy. Not an optimisation pass on someone else's build." },
+      { step: "An entity layer in structured data", detail: "Organization · WebSite · ProfessionalService · BreadcrumbList" },
+      { step: "FAQPage schema on the money pages", detail: "An engine assembling an answer wants a question paired with a liftable answer" },
+      { step: "Headings as the questions buyers ask", detail: "Each section is a clean extract, not a paragraph to summarise" },
+      { step: "Geo pages for Miami and South Florida", detail: "The bilingual angle stated plainly enough to quote. That is the line the AI Overview used." },
+      { step: "Referral tracking", detail: "Separates AI-browser traffic from conventional organic, so the effect is measured" },
     ],
     // Search Console figures are for the cloudsheer.com property,
     // 29 May – 28 Aug 2026. Average CTR is deliberately not reported here.
@@ -157,14 +166,14 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "Nobody asked for this. I built a working 1:1 ABM engine for Gravitee, an API management company, and generated a bespoke landing page for one of their target accounts. The pitch was the artefact.",
     context:
-      "API management is sold to platform and infrastructure teams, where the buying committee is technical and allergic to generic outbound. A template cold email naming the wrong runtime is worse than no email. That means the research has to be real and per-account, which is exactly the work that does not scale by hiring more SDRs. I picked Gravitee, built the engine I would have built if they had hired me, and used it on a real target so the output could be judged rather than described.",
+      "API management is sold to technical buyers allergic to generic outbound. A cold email naming the wrong runtime is worse than no email, so the research has to be real and per-account, which is the part that does not scale by hiring SDRs. I built the engine I would have built if Gravitee had hired me, and ran it on a real target.",
     built: [
-      "Two linked Clay tables: companies matching an API-platform and cloud-infrastructure ICP, and the technical executives inside them.",
-      "Thirty-four enrichment and research columns on the company table, including a technology-stack lookup, because the whole pitch depends on knowing what a prospect actually runs.",
-      "Research columns that produce judgement rather than data: “API Infrastructure Pain Point”, “Why This Account”, “Gravitee Relevance” and “Account Tier”. The tier is what decides how much effort an account is worth.",
-      "A people layer that resolves the right technical executives per account and joins them back to the company research.",
-      "Drafting columns for a personalised opener and cold email, each grounded in that account's stack rather than a merge field.",
-      "A “Personalized HTML Landing” column that generates a bespoke page per account. The StreamNative one names their real infrastructure: AWS, GCP, Azure and Alibaba Cloud, service meshes on Istio and Envoy, edge security via Cloudflare.",
+      { step: "Two linked Clay tables", detail: "Companies on an API-platform and cloud-infrastructure ICP, and the technical executives inside them" },
+      { step: "34 enrichment columns", detail: "Including a technology-stack lookup: the whole pitch depends on what they actually run" },
+      { step: "Research that produces judgement", detail: "API Infrastructure Pain Point · Why This Account · Gravitee Relevance · Account Tier" },
+      { step: "A people layer", detail: "Resolves the right technical executives per account and joins them back to the research" },
+      { step: "Grounded drafting", detail: "Opener and cold email built on that account's stack rather than a merge field" },
+      { step: "A personalised HTML landing page", detail: "One per account. StreamNative's names AWS, GCP, Azure, Alibaba, Istio, Envoy and Cloudflare." },
     ],
     // Spec work, so there are no campaign metrics. The outcomes describe what
     // the engine produces; the two figures and the live page are the proof.
@@ -204,16 +213,16 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "A Clay workflow that turns one startup profile into a ranked investor pipeline with outreach already written: research, thesis fit, partner selection, enrichment and personalisation in a single automated run.",
     context:
-      "Founders raise the way bad SDRs prospect: a long list, the same deck, and hope. The expensive part isn't sending the emails, it's the judgement before them: which firms actually invest at this stage in this space, which partner owns the thesis, and whether they've already backed a competitor. That research is what founders skip when they're busy, and skipping it is what makes the outreach ignorable. It is an outbound problem, so I built it like one.",
+      "Founders raise the way bad SDRs prospect: a long list, the same deck, and hope. The expensive part is not the sending, it is the judgement before it. Which firms invest at this stage, which partner owns the thesis, whether they already backed a competitor. Skipping that is what makes outreach ignorable.",
     // Step names below match the actual Clay canvas in the screenshot, so a
     // reader comparing the two finds them consistent.
     built: [
-      "“Read our positioning”: one input. The startup's own profile drives everything downstream, so a founder isn't assembling a list by hand before the automation can help.",
-      "“Research investor firms”: sources firms against that space and stage, filtering the universe to investors whose thesis actually matches rather than every fund in a directory. Prior investments are checked here: a partner who has already backed an adjacent company is a conflict, not a lead.",
-      "“Find partners at firm”: funds don't write cheques, partners do. Runs per firm to resolve who owns the relevant thesis.",
-      "“Build investor list”: a Python handler I wrote inside Clay rather than a drag-and-drop step. It normalises firm names against a stopword list (“partners”, “vc”, “fund”, “group”, “management”, “llc”) and walks nested people objects, because the enrichment sources disagree about how a firm is spelled and dedupe fails without it.",
-      "“Find investor work email”: contact enrichment per partner, so the pipeline ends with a reachable person rather than a firm name.",
-      "“Draft email and LinkedIn”: personalised drafts written from both sides of the match: the startup's specifics and the partner's own portfolio, so the opening line has a real reason to exist.",
+      { step: "Read our positioning", detail: "One input. The startup's own profile drives everything downstream." },
+      { step: "Research investor firms", detail: "Filtered to a matching thesis. A partner who already backed an adjacent company is a conflict, not a lead." },
+      { step: "Find partners at firm", detail: "Funds do not write cheques, partners do. Runs per firm to resolve who owns the thesis." },
+      { step: "Build investor list", detail: "A Python handler I wrote inside Clay: normalises firm names and walks nested people objects, because the sources disagree and dedupe fails without it." },
+      { step: "Find investor work email", detail: "The pipeline ends with a reachable person rather than a firm name" },
+      { step: "Draft email and LinkedIn", detail: "Written from both sides of the match: the startup's specifics and the partner's own portfolio" },
     ],
     // Mechanism only for now; no outcome metrics supplied yet.
     outcomes: [
@@ -252,10 +261,10 @@ export const caseStudies: CaseStudy[] = [
     context:
       "Cloudsheer wanted a separate vertical brand rather than another service line under the existing name. That meant starting from nothing: who it was for, what it claimed, why anyone would believe it, and where it would show up.",
     built: [
-      "Positioning and messaging: the segment, the alternative we were displacing, and the claim we could actually defend.",
-      "The full GTM plan: channel selection, sequencing, and what counted as a signal worth chasing.",
-      "The digital presence from scratch, so the brand had somewhere to land traffic on day one.",
-      "An early partnership motion in the Middle East to test regional demand before committing spend.",
+      { step: "Positioning and messaging", detail: "The segment, the alternative we displaced, and the claim we could defend" },
+      { step: "The full GTM plan", detail: "Channel selection, sequencing, and what counted as a signal worth chasing" },
+      { step: "Digital presence from scratch", detail: "Somewhere to land traffic on day one" },
+      { step: "A Middle East partnership motion", detail: "Tested regional demand before committing spend" },
     ],
     outcomes: [
       { value: "0→1", label: "Brand launched from inception" },
@@ -284,10 +293,10 @@ export const caseStudies: CaseStudy[] = [
     context:
       "Nuvia had a product and no repeatable way to get in front of buyers. As founding GTM I owned finding the segments worth serving, then building something that could run more than once.",
     built: [
-      "Mapped the funnel and found 3 leverage points where qualified volume was leaking.",
-      "Ran multi-channel campaigns against 5 priority segments across 3 regions.",
-      "Built 8+ performance dashboards so campaign decisions were made on data rather than instinct.",
-      "Competitive analysis across 5 competitors that fed directly into positioning and two major strategic calls.",
+      { step: "Mapped the funnel", detail: "Found three leverage points where qualified volume was leaking" },
+      { step: "Multi-channel campaigns", detail: "Five priority segments across three regions" },
+      { step: "Eight performance dashboards", detail: "Campaign decisions made on data rather than instinct" },
+      { step: "Competitive analysis", detail: "Five competitors, feeding positioning and two strategic calls" },
     ],
     outcomes: [
       { value: "100+", label: "Qualified leads in 6 months" },
@@ -316,14 +325,14 @@ export const caseStudies: CaseStudy[] = [
     summary:
       "A daily job that scans public ATS boards, scores every role against my resume with an LLM, drafts a tailored cover note for strong fits, and emails me a digest. Same shape as any outbound engine, except the ICP happens to be me.",
     context:
-      "Job hunting is an outbound problem in reverse: a noisy top of funnel, a scoring step, a personalisation step, and a review queue. I'd rather build the machine once than do the work daily, and it's the most direct proof I can offer that I build GTM systems rather than describe them.",
+      "Job hunting is an outbound problem in reverse: a noisy top of funnel, a scoring step, a personalisation step, and a review queue. I would rather build the machine once than do the work daily.",
     built: [
-      "Fetchers against the public Greenhouse, Lever, Ashby and Workable board APIs, plus RemoteOK. No scraping, no LinkedIn.",
-      "A normalise-and-dedupe layer with a local database, so a role is never surfaced twice.",
-      "A cheap deterministic filter (remote, seniority, title) before any model call, so the expensive step only sees candidates worth scoring.",
-      "An LLM scoring pass against a rubric built from my actual resume, with a tunable fit threshold.",
-      "A drafting pass that writes a tailored cover note for strong fits only, then emails a single digest.",
-      "Scheduled on GitHub Actions. Draft mode by design, so nothing is ever submitted without me reading it.",
+      { step: "Board API fetchers", detail: "Greenhouse · Lever · Ashby · Workable · RemoteOK. No scraping, no LinkedIn." },
+      { step: "Normalise and dedupe", detail: "A local database, so a role is never surfaced twice" },
+      { step: "A deterministic prefilter", detail: "Remote, seniority, title. Runs before any model call, so the expensive step only sees candidates worth scoring." },
+      { step: "LLM scoring", detail: "Against a rubric built from my actual resume, with a tunable fit threshold" },
+      { step: "Drafting for strong fits only", detail: "A tailored cover note, then a single digest email" },
+      { step: "Scheduled on GitHub Actions", detail: "Draft mode by design. Nothing is ever submitted without me reading it." },
     ],
     outcomes: [
       { value: "5", label: "Job sources unified into one queue" },

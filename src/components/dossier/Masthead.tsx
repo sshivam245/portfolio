@@ -32,9 +32,8 @@ export default function Masthead() {
           </h1>
 
           <p className="mt-6 max-w-prose text-body text-ink-muted">
-            Currently Growth &amp; Strategy at Cloudsheer Consulting. Previously
-            the first GTM hire at Nuvia AI. Looking for a founding-GTM or
-            growth-engineering role.
+            Growth &amp; Strategy at Cloudsheer. First GTM hire at Nuvia AI.
+            Looking for a founding-GTM role.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
