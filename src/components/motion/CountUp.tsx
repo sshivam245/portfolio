@@ -33,7 +33,15 @@ export default function CountUp({
 
   const target = m ? Number(m[2].replace(/,/g, "")) : NaN;
   const decimals = m && m[2].includes(".") ? m[2].split(".")[1].length : 0;
-  const animatable = !!m && Number.isFinite(target);
+  /*
+   * Only count a number large enough for counting to read as counting.
+   * Below ten the animation is not a flourish, it is a wrong number on
+   * screen: "#1" was being parsed to prefix "#" plus 1 and animated from
+   * zero, so the site's rank rendered as "#0" for most of the sweep. A rank
+   * counting up from zero is meaningless, and the same went for "5", "1:1"
+   * and "1 input".
+   */
+  const animatable = !!m && Number.isFinite(target) && Math.abs(target) >= 10;
 
   useEffect(() => {
     if (!animatable) return;

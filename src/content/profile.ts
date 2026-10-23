@@ -107,7 +107,7 @@ export const skills = [
   },
   {
     group: "Systems & Automation",
-    items: ["Python", "SQL", "HubSpot", "Clay AI", "Apollo AI", "CRM Workflows", "Email Automation", "GitHub Actions"],
+    items: ["Python", "SQL", "HubSpot", "Clay", "Apollo", "CRM Workflows", "Email Automation", "GitHub Actions"],
   },
   {
     group: "Analytics",

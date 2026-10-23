@@ -43,7 +43,7 @@ function ThemeToggle() {
 
 export default function Header() {
   return (
-    <header className="rule-b sticky top-0 z-40 bg-paper/95 backdrop-blur-[2px]">
+    <header className="rule-b sticky top-0 z-40 bg-paper/95">
       {/* Wraps rather than overflowing: at 375px with 200% text the row
           needs 696px, which is a WCAG 1.4.10 reflow failure. Height grows
           instead, and the sticky offset is generous enough to absorb it. */}

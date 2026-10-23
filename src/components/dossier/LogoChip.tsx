@@ -33,7 +33,7 @@ export default function LogoChip({ logo }: { logo: Logo }) {
       className={`orbit-chip flex items-center justify-center rounded-full border transition-colors duration-200 hover:border-accent ${
         logo.tile
           ? "overflow-hidden"
-          : "bg-paper/90 backdrop-blur-sm"
+          : "bg-paper/90"
       }`}
       style={{ borderColor: "var(--rule)" }}
     >

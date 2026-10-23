@@ -136,7 +136,12 @@
     /* At 200% text zoom a single long word is wider than its column. */
     overflow-wrap: break-word;
     font-size: 1.375rem;
-    line-height: 1.15;
+    /* 1.25, not 1.15: at 22px this is the smallest of the display
+       faces and carries two-line post titles, where 1.15 reads cramped.
+       .t-display and .t-heading keep their tight leading on purpose: a
+       52px serif headline at 0.95 is correct display typography, and the
+       detector's 1.3 floor is a body-copy rule. */
+    line-height: 1.25;
     letter-spacing: -0.012em;
   }
   .t-metric {
