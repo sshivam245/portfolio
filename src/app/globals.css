@@ -328,7 +328,10 @@
      * both ends. Being a multiple of the box, it is px-derived rather than
      * rem, so text zoom still cannot desynchronise it from the radii.
      */
-    --orbit-size: clamp(328px, 38vw, 480px);
+    /* Floor lowered from 328px, max unchanged. The desktop size was asked
+       for deliberately and stays; it was only the mobile floor that pushed
+       the headline metrics to y=937 against an 812px fold. */
+    --orbit-size: clamp(236px, 38vw, 480px);
     --orbit-chip: calc(var(--orbit-size) * 0.125);
     --orbit-r-inner: calc(var(--orbit-size) * 0.26);
     --orbit-r-outer: calc(var(--orbit-size) * 0.43);

@@ -18,7 +18,7 @@ export default function Home() {
       <HomeSchema />
       <Masthead />
       <Ticker />
-      <WorkIndex />
+      <WorkIndex limit={3} />
       <ToolsTeaser index="02" />
       <Writing index="03" limit={2} />
       <AboutTeaser index="04" />

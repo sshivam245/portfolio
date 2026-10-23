@@ -49,53 +49,22 @@ export type CaseStudy = {
   built: BuildStep[];
   outcomes: { value: string; label: string }[];
   stack: string[];
+  /**
+   * True when a stranger can verify the headline outcome without taking the
+   * site's word for it. Only aeo-geo qualifies: the AI Overview citation and
+   * the #1 ranking are checkable from outside. The rest are self-reported,
+   * honestly labelled, and not the same kind of claim. The index ranks on
+   * this instead of painting all seven outcomes with the same accent.
+   */
+  verified?: boolean;
   reflection?: string;
   figures?: Figure[];
 };
 
 export const caseStudies: CaseStudy[] = [
   {
-    id: "mintnovalabs",
-    title: "MintNovaLabs, built from nothing",
-    tag: "0 → 1 venture",
-    timeframe: "2026",
-    org: "Founder",
-    link: { href: "https://www.mintnovalabs.com/", label: "mintnovalabs.com" },
-    summary:
-      "A productised outbound agency on a pay-per-result model: offer, pricing, positioning and the site itself. The whole thing is the GTM artefact, not a description of one.",
-    context:
-      "Outbound agencies sell retainers, which puts the risk on the buyer and rewards activity over meetings booked. I built the company to test the opposite: the client pays only when a qualified meeting lands.",
-    built: [
-      { step: "Pay-per-result pricing", detail: "The pricing model is the differentiator, not the copy" },
-      { step: "Positioning on six failure modes", detail: "Launch time · SDR cost · reply rates · bad data · deliverability · unclear ROI" },
-      { step: "A four-step delivery process", detail: "Strategy call to booked meetings in 14 days. Repeatable, not bespoke per client." },
-      { step: "An ROI calculator on the site", detail: "A prospect prices the offer against their own numbers before talking to me" },
-      { step: "The service architecture", detail: "List building · SPF, DKIM, DMARC · warmup and rotation · sequences · weekly reporting" },
-      { step: "The site itself", detail: "Next.js, Tailwind, Framer Motion, deployed from GitHub Actions" },
-    ],
-    // TODO: confirm which of these are real, achieved results before publishing.
-    // The figures on the live site (500+ meetings, 4.8% reply rate, 3.2x ROI,
-    // 14 days) sit alongside a demo activity feed, so I have not presented them
-    // as outcomes here. Replace with numbers you can stand behind.
-    outcomes: [
-      { value: "Live", label: "Shipped and taking clients at mintnovalabs.com" },
-      { value: "0→1", label: "Offer, pricing, positioning and site, all from scratch" },
-      { value: "14 days", label: "Defined time from kickoff to first meetings" },
-    ],
-    stack: ["Next.js", "Tailwind", "Framer Motion", "GitHub Actions", "Deliverability", "Positioning"],
-    reflection: "",
-    figures: [
-      {
-        src: "mintnova-process.svg",
-        w: 648,
-        h: 208,
-        diagram: true,
-        caption: "Tight enough to repeat per client rather than rebuild, which is what makes pay-per-result survivable.",
-      },
-    ],
-  },
-  {
     id: "aeo-geo",
+    verified: true,
     title: "Cited by Google's AI Overview",
     tag: "SEO / AEO / GEO",
     timeframe: "2025",
@@ -148,6 +117,46 @@ export const caseStudies: CaseStudy[] = [
         h: 560,
         caption:
           "Search Console, 29 May – 28 Aug 2026: 68.7k impressions, with the step-change at the end of August.",
+      },
+    ],
+  },
+  {
+    id: "mintnovalabs",
+    title: "MintNovaLabs, built from nothing",
+    tag: "0 → 1 venture",
+    timeframe: "2026",
+    org: "Founder",
+    link: { href: "https://www.mintnovalabs.com/", label: "mintnovalabs.com" },
+    summary:
+      "A productised outbound agency on a pay-per-result model: offer, pricing, positioning and the site itself. The whole thing is the GTM artefact, not a description of one.",
+    context:
+      "Outbound agencies sell retainers, which puts the risk on the buyer and rewards activity over meetings booked. I built the company to test the opposite: the client pays only when a qualified meeting lands.",
+    built: [
+      { step: "Pay-per-result pricing", detail: "The pricing model is the differentiator, not the copy" },
+      { step: "Positioning on six failure modes", detail: "Launch time · SDR cost · reply rates · bad data · deliverability · unclear ROI" },
+      { step: "A four-step delivery process", detail: "Strategy call to booked meetings in 14 days. Repeatable, not bespoke per client." },
+      { step: "An ROI calculator on the site", detail: "A prospect prices the offer against their own numbers before talking to me" },
+      { step: "The service architecture", detail: "List building · SPF, DKIM, DMARC · warmup and rotation · sequences · weekly reporting" },
+      { step: "The site itself", detail: "Next.js, Tailwind, Framer Motion, deployed from GitHub Actions" },
+    ],
+    // TODO: confirm which of these are real, achieved results before publishing.
+    // The figures on the live site (500+ meetings, 4.8% reply rate, 3.2x ROI,
+    // 14 days) sit alongside a demo activity feed, so I have not presented them
+    // as outcomes here. Replace with numbers you can stand behind.
+    outcomes: [
+      { value: "Live", label: "Shipped and taking clients at mintnovalabs.com" },
+      { value: "0→1", label: "Offer, pricing, positioning and site, all from scratch" },
+      { value: "14 days", label: "Defined time from kickoff to first meetings" },
+    ],
+    stack: ["Next.js", "Tailwind", "Framer Motion", "GitHub Actions", "Deliverability", "Positioning"],
+    reflection: "",
+    figures: [
+      {
+        src: "mintnova-process.svg",
+        w: 648,
+        h: 208,
+        diagram: true,
+        caption: "Tight enough to repeat per client rather than rebuild, which is what makes pay-per-result survivable.",
       },
     ],
   },

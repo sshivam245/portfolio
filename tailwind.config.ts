@@ -8,10 +8,26 @@ import type { Config } from "tailwindcss";
  * typecheck. The cast is on the published type, not on the behaviour.
  */
 const alpha = (name: string) =>
-  (({ opacityValue }: { opacityValue?: string }) =>
-    opacityValue === undefined
-      ? `var(--${name})`
-      : `color-mix(in srgb, var(--${name}) ${Number(opacityValue) * 100}%, transparent)`) as unknown as string;
+  (({ opacityValue }: { opacityValue?: string }) => {
+    /*
+     * opacityValue is NOT just a number or undefined. For an unmodified
+     * utility like `text-accent`, Tailwind passes the string
+     * "var(--tw-text-opacity)" so the colour can take part in its opacity
+     * variable system. An earlier version of this only checked for
+     * `undefined`, so that string went through `Number()`, became NaN, and
+     * emitted `color-mix(in srgb, var(--accent) NaN%, transparent)` — an
+     * invalid declaration Tailwind drops. The result was every plain
+     * `.text-accent`, `.text-ink` and `.bg-accent` compiling to nothing:
+     * the same silent-failure class this helper was written to fix.
+     *
+     * So: a real number means a modifier was used; anything else means hand
+     * back the bare custom property.
+     */
+    const ratio = Number(opacityValue);
+    return opacityValue !== undefined && opacityValue !== "" && Number.isFinite(ratio)
+      ? `color-mix(in srgb, var(--${name}) ${ratio * 100}%, transparent)`
+      : `var(--${name})`;
+  }) as unknown as string;
 
 const config: Config = {
   future: {

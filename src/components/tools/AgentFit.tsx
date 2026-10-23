@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ACVS, BOTTLENECKS, MOTIONS, TEAMS, TOOLS, recommend,
   type Acv, type Answers, type Bottleneck, type Motion, type Result, type Team,
@@ -114,6 +114,21 @@ function Card({ r, rank }: { r: Result; rank: number }) {
 
 export default function AgentFit() {
   const [motion, setMotion] = useState<Motion>("sales");
+
+  /*
+   * The homepage asks question 01 inline and links here with the answer, so
+   * arriving from it should land one question in rather than on a blank form.
+   *
+   * Read from window.location rather than useSearchParams: this is a static
+   * export, where useSearchParams forces the whole route into a Suspense
+   * boundary and opts it out of static generation. An effect reads the same
+   * value after mount with no such cost, and the default still stands for
+   * anyone who arrives without a param.
+   */
+  useEffect(() => {
+    const m = new URLSearchParams(window.location.search).get("motion");
+    if (m && MOTIONS.some((x) => x.id === m)) setMotion(m as Motion);
+  }, []);
   const [acv, setAcv] = useState<Acv>("high");
   const [team, setTeam] = useState<Team>("small");
   const [bottlenecks, setBottlenecks] = useState<Bottleneck[]>([]);

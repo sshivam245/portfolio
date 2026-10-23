@@ -70,7 +70,7 @@ export default function Writing({
 
                 <span className="label mt-3 block">
                   {formatDate(post.date)}
-                  <span className="mx-2 text-accent">·</span>
+                  <span className="mx-2">·</span>
                   {post.tags.join(" · ")}
                 </span>
               </span>

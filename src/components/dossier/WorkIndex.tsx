@@ -12,20 +12,40 @@ import CountUp from "@/components/motion/CountUp";
  * is the shape every portfolio already uses; this one is built out of the
  * thing the work is actually about.
  *
- * The full write-ups live at /work/<slug>. Each entry shows only what is
- * needed to decide whether to open one: what it was, where, and the result.
+ * `limit` shows the first few, for the homepage; /work shows all of them.
+ * The reader on the homepage is deciding whether to open anything at all,
+ * and seven identically weighted rows is seven ways to open the wrong one.
  */
-export default function WorkIndex() {
+export default function WorkIndex({
+  index = "01",
+  heading = "Selected work",
+  limit,
+}: {
+  index?: string;
+  heading?: string;
+  limit?: number;
+}) {
+  const shown = limit ? caseStudies.slice(0, limit) : caseStudies;
+  const hasMore = limit != null && caseStudies.length > limit;
+
   return (
     <Section
       id="work"
-      index="01"
-      title="Selected work"
-      aside={`${caseStudies.length} case studies`}
+      index={index}
+      title={heading}
+      aside={
+        hasMore ? (
+          <Link href="/work" className="label-tap hover:text-accent transition-colors">
+            All {caseStudies.length} →
+          </Link>
+        ) : (
+          `${caseStudies.length} case studies`
+        )
+      }
     >
       {/* The padding is what the spine and the nodes live in. */}
       <ol className="flow-index sm:pl-[4.5rem]">
-        {caseStudies.map((cs, i) => {
+        {shown.map((cs, i) => {
           const headline = cs.outcomes[0];
           const n = String(i + 1).padStart(2, "0");
 
@@ -47,7 +67,12 @@ export default function WorkIndex() {
                   <p className="label">
                     {/* The node carries the number from sm up. */}
                     <span className="tnum sm:hidden">{n}</span>
-                    <span className="mx-2 text-accent sm:hidden">·</span>
+                    {/*
+                      Separators are punctuation, not evidence. They used to be
+                      accent, and across the page that was 11 of the 80 accent
+                      nodes competing with the figures the accent is for.
+                    */}
+                    <span className="mx-2 sm:hidden">·</span>
                     {cs.tag}
                     <span className="mx-2">·</span>
                     {cs.org}, {cs.timeframe}
@@ -84,11 +109,23 @@ export default function WorkIndex() {
                   beside "Live" and "1:1" in mono.
                 */}
                 <div className="flow-out min-w-0 self-start sm:col-span-4 sm:col-start-9">
-                  <p className="label mb-2">Outcome</p>
+                  <p className="label mb-2">
+                    Outcome
+                    {/*
+                      The one outcome a stranger can check without taking this
+                      site's word for it. Every value used to be accent, so the
+                      AI Overview citation carried exactly the weight of a
+                      number from a personal script. Now the accent marks the
+                      difference instead of decorating all seven equally.
+                    */}
+                    {cs.verified ? (
+                      <span className="ml-2 text-accent">· Verifiable</span>
+                    ) : null}
+                  </p>
                   <p
                     className={`${
                       headline.value.length <= 7 ? "t-metric-sm" : "t-metric-xs"
-                    } break-words text-accent`}
+                    } break-words ${cs.verified ? "text-accent" : "text-ink"}`}
                   >
                     {/* Words pass through untouched; only numbers count up. */}
                     <CountUp value={headline.value} />

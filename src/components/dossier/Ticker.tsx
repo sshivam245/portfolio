@@ -19,7 +19,7 @@ export default function Ticker() {
       {items.map((item) => (
         <li key={item} className="label flex shrink-0 items-center gap-8">
           <span>{item}</span>
-          <span aria-hidden className="text-accent">
+          <span aria-hidden className="">
             ◆
           </span>
         </li>

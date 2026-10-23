@@ -30,14 +30,28 @@ export const profile = {
 } as const;
 
 /** Headline metrics. Shown as an aligned table, never as cards. */
-export const headlineMetrics = [
+/**
+ * `verified` marks the one figure a stranger can check without taking this
+ * site's word for it. Typed explicitly rather than inferred: as a bare
+ * `as const` array TypeScript narrows each entry to its own shape, so a key
+ * present on only one member is a type error everywhere else.
+ */
+export type HeadlineMetric = {
+  value: string;
+  unit: string;
+  label: string;
+  note: string;
+  verified?: boolean;
+};
+
+export const headlineMetrics: HeadlineMetric[] = [
   { value: "100+", unit: "", label: "Qualified leads", note: "in 6 months, Nuvia AI" },
   // The AI Overview citation is the strongest single proof point on the
   // site — a verifiable outcome, not a self-reported percentage.
-  { value: "#1", unit: "", label: "Google + AI Overview", note: "“salesforce partner miami”" },
+  { value: "#1", unit: "", label: "Google + AI Overview", note: "“salesforce partner miami”", verified: true },
   { value: "25", unit: "%", label: "Conversion lift", note: "multi-channel campaigns" },
   { value: "0→1", unit: "", label: "Brand launched", note: "Descipher OS, from scratch" },
-] as const;
+];
 
 export const experience = [
   {

@@ -9,7 +9,7 @@ export default function Footer() {
         </p>
         <p className="label">
           Built with Next.js
-          <span className="mx-2 text-accent">·</span>
+          <span className="mx-2">·</span>
           {new Date().getFullYear()}
         </p>
       </div>
