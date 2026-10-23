@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FORM_ENDPOINT, normaliseUrl, type SubmitState } from "@/lib/forms";
 import { profile } from "@/content/profile";
 
@@ -10,6 +10,22 @@ export default function AeoAuditForm() {
   const [state, setState] = useState<SubmitState>("idle");
   const [engines, setEngines] = useState<string[]>([ENGINES[0]]);
   const [err, setErr] = useState<string | null>(null);
+  const urlRef = useRef<HTMLInputElement>(null);
+
+  /*
+   * The homepage teaser is a GET form pointing here, so an arrival carrying
+   * ?url= has already answered the first field. Prefill it rather than make
+   * them type it twice.
+   *
+   * window.location, not useSearchParams: this is a static export, where
+   * useSearchParams pushes the route into a Suspense boundary and out of
+   * static generation. Uncontrolled input, so writing the DOM value directly
+   * is the whole job.
+   */
+  useEffect(() => {
+    const u = new URLSearchParams(window.location.search).get("url");
+    if (u && urlRef.current) urlRef.current.value = u;
+  }, []);
 
   const toggle = (e: string) =>
     setEngines((cur) => (cur.includes(e) ? cur.filter((x) => x !== e) : [...cur, e]));
@@ -78,6 +94,7 @@ export default function AeoAuditForm() {
             Your site <span className="text-accent">*</span>
           </label>
           <input
+            ref={urlRef}
             id="url" name="url" required autoComplete="url"
             placeholder="yourcompany.com"
             aria-invalid={err ? true : undefined}

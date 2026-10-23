@@ -547,8 +547,21 @@
 
   /* A chip is a real checkbox with a visually-hidden input, so it stays
      keyboard reachable and announces its state. */
+  /*
+   * inline-flex, not the default inline.
+   *
+   * Every caller writes `chip flex-col items-start` to stack a label over a
+   * hint, and those utilities are inert without a flex display. As an inline
+   * box with a block-level hint inside it, the border split in two around the
+   * block and the hint rendered outside the box entirely: a stray border
+   * fragment above, loose text below, on both the homepage and agent-fit.
+   *
+   * Declared here rather than at each call site because the stacked label and
+   * hint is what a chip IS, not something a caller opts into.
+   */
   .chip {
-    @apply label label-tap cursor-pointer border px-3 py-2 transition-colors;
+    @apply label label-tap inline-flex cursor-pointer flex-col items-start
+           border px-3 py-2 transition-colors;
     border-color: var(--rule);
   }
   .chip:hover {

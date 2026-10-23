@@ -15,7 +15,7 @@ function Chip({
   type: "radio" | "checkbox"; name: string;
 }) {
   return (
-    <label className={`chip ${on ? "chip-on" : ""} flex-col items-start !py-2`}>
+    <label className={`chip ${on ? "chip-on" : ""}`}>
       <input
         type={type} name={name} checked={on} onChange={onChange}
         className="chip-input sr-only"

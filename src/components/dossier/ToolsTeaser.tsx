@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Section from "./Section";
 import { MOTIONS } from "@/lib/agentfit/engine";
+import { BASE_PATH } from "@/lib/basePath";
 
 /**
  * The homepage's one interactive door. Everything else here describes a
@@ -45,7 +46,7 @@ export default function ToolsTeaser({ index = "02" }: { index?: string }) {
               <li key={m.id}>
                 <Link
                   href={`/tools/agent-fit?motion=${m.id}`}
-                  className="chip label-tap press flex-col items-start !py-2"
+                  className="chip press"
                 >
                   <span>{m.label}</span>
                   <span className="mt-1 block font-sans text-[0.7rem] normal-case tracking-normal text-ink-muted">
@@ -58,20 +59,42 @@ export default function ToolsTeaser({ index = "02" }: { index?: string }) {
         </li>
 
         <li className="stagger-item">
-          <Link href={audit.href} className="group block">
-            <p className="label text-accent">{audit.kicker}</p>
-            <h3 className="t-subhead mt-3 transition-colors duration-150 group-hover:text-accent">
-              {audit.title}
-            </h3>
-            <p className="mt-3 max-w-prose text-body text-ink-muted">{audit.blurb}</p>
-            <p className="label mt-5 inline-flex items-center gap-2 text-ink">
-              Open
-              <span
-                aria-hidden
-                className="h-px w-12 origin-left scale-x-50 bg-accent transition-transform duration-200 group-hover:scale-x-100"
+          <p className="label text-accent">{audit.kicker}</p>
+          <h3 className="t-subhead mt-3">{audit.title}</h3>
+          <p className="mt-3 max-w-prose text-body text-ink-muted">{audit.blurb}</p>
+
+          {/*
+            A plain GET form, so this starts the tool instead of linking to it.
+            No client component, no state and no JavaScript: the browser turns
+            the field into /tools/aeo-audit?url=... on submit, which the audit
+            form reads and prefills. That matters on a static export, and it
+            means the control still works if the JS never loads.
+
+            The action carries BASE_PATH by hand. next/link adds it for us; a
+            raw form action is not a Link, so on the GitHub Pages copy this
+            would post to the wrong origin without it.
+          */}
+          <form
+            action={`${BASE_PATH}/tools/aeo-audit`}
+            method="get"
+            className="mt-6"
+          >
+            <label htmlFor="teaser-url" className="label block">
+              Your site
+            </label>
+            <div className="mt-3 flex flex-wrap items-end gap-3">
+              <input
+                id="teaser-url"
+                name="url"
+                autoComplete="url"
+                placeholder="yourcompany.com"
+                className="field min-w-0 flex-1"
               />
-            </p>
-          </Link>
+              <button type="submit" className="btn-ghost shrink-0">
+                Check it
+              </button>
+            </div>
+          </form>
         </li>
       </ul>
     </Section>
