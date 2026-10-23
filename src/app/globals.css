@@ -252,18 +252,30 @@
   }
 
   /* Masthead entrance. Pure CSS, runs once on load, staggered by depth. */
+  /*
+   * TRANSFORM ONLY, and no fill-mode. Never opacity, never `both`.
+   *
+   * This faded in from opacity 0 with fill-mode `both`, which made the
+   * masthead fail closed: an animation whose clock does not advance sits at
+   * playState "running" and holds its `from` state indefinitely, so the role
+   * line, the headline, the positioning line and both calls to action all
+   * computed to opacity 0. The four most important elements on the site were
+   * gated on a compositor frame with no fallback, and a screenshot during
+   * this session caught exactly that, a blank masthead under a visible nav.
+   *
+   * `both` made it worse: the staggered delays held each block invisible
+   * before its turn, so the window was the full 300ms of stagger on top of
+   * however long the first frame took.
+   *
+   * Animating only the transform means the worst case is a headline that did
+   * not slide. It is never a headline that is not there.
+   */
   @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+    from { transform: translateY(12px); }
+    to   { transform: none; }
   }
   .rise > * {
-    animation: rise 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: rise 460ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   /* ~100ms between chunks: better-ui's figure for a staged entrance where
      the sequence itself communicates hierarchy. */
@@ -965,4 +977,55 @@
   @media (max-width: 639px) {
     .build-flow > li::before { display: none; }
   }
+}
+
+/* Third-party marks, desaturated. The only saturated colour on the homepage
+   used to come from other companies' logos, which made the loudest thing on
+   the page someone else's brand. The names carry the information; the marks
+   only need to be recognisable. */
+@layer components {
+  .mark {
+    filter: grayscale(1);
+    opacity: 0.6;
+  }
+}
+
+/* The homepage specimen: the same diagram the case study carries, scaled to
+   the full measure instead of its native 648px. The file's own width/height
+   attributes are stripped before inlining so the viewBox governs, which is
+   what lets a 9px label land near 16px here. */
+@layer components {
+  .specimen svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* ------------------------------------------------------------- figures --
+   A figure rises into place at its true value. It never counts: the digits
+   used to interpolate from zero, which put "3+" on screen where the number
+   is 100+ and "1%" where it is 25%.
+
+   TRANSFORM ONLY. Never opacity.
+
+   The first version of this faded in from opacity 0 with fill-mode
+   backwards, and that is fail-closed: an animation whose clock does not
+   advance sits at playState "running" and holds its `from` state forever,
+   so every headline figure computed to opacity 0 and the masthead rendered
+   four invisible numbers. The same trap the diagrams hit.
+
+   Animating only the transform means the worst case is a figure that did not
+   slide. It is never a figure that is not there. */
+@layer components {
+  .figure-shown {
+    animation: fig-rise 520ms cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+  @keyframes fig-rise {
+    from { transform: translateY(0.2em); }
+    to   { transform: translateY(0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figure-shown { animation: none; }
 }

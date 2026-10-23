@@ -1,5 +1,5 @@
 import { profile, headlineMetrics } from "@/content/profile";
-import Orbit from "./Orbit";
+import Marks from "./Marks";
 import CountUp from "@/components/motion/CountUp";
 
 /**
@@ -9,8 +9,7 @@ import CountUp from "@/components/motion/CountUp";
 export default function Masthead() {
   return (
     <section id="top" className="shell pb-14 pt-16 sm:pb-20 sm:pt-24">
-      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-        <div className="rise lg:col-span-6">
+      <div className="rise">
           <p className="label">
             {profile.role}
             <span className="mx-2">/</span>
@@ -25,7 +24,10 @@ export default function Masthead() {
             Serif display at low weight against the mono labels. This contrast
             is what stops the page reading as a generic Tailwind template.
           */}
-          <h1 className="t-display mt-6 max-w-[16ch]">
+          {/* No ch cap: with the orbit gone the shell is the measure, the
+              way it is on a case study. Capped at 22ch it ran to three lines
+              and pushed the figures off a 714px viewport. */}
+          <h1 className="t-display mt-6">
             I build{" "}
             <span className="italic text-accent">acquisition engines</span>, and
             the automation underneath them.
@@ -56,19 +58,7 @@ export default function Masthead() {
           </div>
         </div>
 
-        {/*
-          Ordered last below lg. Stacked in source order, the orbit sat
-          between the headline and the evidence, so at 375x812 the metrics
-          began at y=937 against an 812px fold and at 1366x768 their numbers
-          were clipped. The first screen on a phone was a claim plus a ring of
-          other companies' logos. The reader arrives from a CV with other tabs
-          open; the proof has to be on the screen they actually get.
-        */}
-        <div className="order-last lg:order-none lg:col-span-6">
-          <Orbit />
-        </div>
-
-        {/* Evidence, as an aligned table, not as cards. */}
+      {/* Evidence, as an aligned table, not as cards. */}
         {/*
         Four shared rows via subgrid: hairline, label, metric, note. A label
         that wraps to two lines ("Google + AI Overview") otherwise pushes only
@@ -80,7 +70,7 @@ export default function Masthead() {
         the dt/dd pairing intact for assistive tech while still letting the
         metric and the note line up as separate rows.
       */}
-        <dl className="grid grid-cols-2 gap-x-6 lg:order-last lg:col-span-12 lg:mt-2 lg:grid-cols-4">
+        <dl className="mt-14 grid grid-cols-2 gap-x-6 lg:grid-cols-4">
           {headlineMetrics.map((m) => (
             <div
               key={m.label}
@@ -112,7 +102,8 @@ export default function Masthead() {
             </div>
           ))}
         </dl>
-      </div>
+
+      <Marks />
     </section>
   );
 }

@@ -1,103 +1,82 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
- * Counts a metric up when it first scrolls into view.
+ * Reveals a figure when it scrolls into view. It does not count.
  *
- * The value is authored as a display string ("3.2x", "40%", "$1.2M", "18"),
- * so this splits off whatever wraps the number and animates only the number.
- * Anything it cannot parse renders unchanged rather than guessing.
+ * It used to interpolate the digits from zero, and that was a mistake on this
+ * site specifically. A screenshot of the masthead caught "3+" where the figure
+ * is 100+ and "1%" where it is 25%. Assessment A caught the same thing at
+ * 375px, reading "74+" and "18%". PRODUCT.md's fourth principle is that
+ * honesty is load-bearing, and the figures are the one place on a portfolio
+ * not to spend a flourish: a hiring manager who glances during the sweep, or
+ * screenshots it, has been shown a number that is not true.
  *
- * The final string is in the DOM from the first paint, which matters twice:
- * a crawler that does not run the observer still reads the real figure, and
- * the box never resizes mid-count.
+ * A first attempt only refused to animate values below ten, which fixed "#1"
+ * counting from "#0" and left the real problem untouched, because the figures
+ * that matter are all comfortably above ten.
+ *
+ * So the motion stays and the lying stops: the figure rises into place at its
+ * true value, and at no instant does it display anything else. The name is
+ * kept because three call sites use it and the behaviour, not the import, is
+ * what was wrong.
+ *
+ * There is no armed state and nothing is ever hidden. The reveal animates
+ * transform only, so a figure that never animates is simply a figure that did
+ * not slide.
  */
-const PARSE = /^([^\d-]*)(-?[\d,]*\.?\d+)(.*)$/;
-
-// Fast out of the gate, long settle. Linear counting reads like a loading bar.
-const easeOut = (t: number) => 1 - Math.pow(1 - t, 4);
-
 export default function CountUp({
   value,
   className,
-  duration = 1100,
 }: {
   value: string;
   className?: string;
-  duration?: number;
 }) {
-  const m = PARSE.exec(value.trim());
   const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState<string | null>(null);
-
-  const target = m ? Number(m[2].replace(/,/g, "")) : NaN;
-  const decimals = m && m[2].includes(".") ? m[2].split(".")[1].length : 0;
-  /*
-   * Only count a number large enough for counting to read as counting.
-   * Below ten the animation is not a flourish, it is a wrong number on
-   * screen: "#1" was being parsed to prefix "#" plus 1 and animated from
-   * zero, so the site's rank rendered as "#0" for most of the sweep. A rank
-   * counting up from zero is meaningless, and the same went for "5", "1:1"
-   * and "1 input".
-   */
-  const animatable = !!m && Number.isFinite(target) && Math.abs(target) >= 10;
 
   useEffect(() => {
-    if (!animatable) return;
     const node = ref.current;
     if (!node) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
 
-    let raf = 0;
-    let done = false;
+    const show = () => node.classList.add("figure-shown");
+
+    // Unconditional, so nothing can strand a figure invisible: a frozen
+    // observer, a background tab, a browser without IntersectionObserver.
+    const failsafe = window.setTimeout(show, 2000);
+
+    if (node.getBoundingClientRect().top < window.innerHeight * 0.9) {
+      show();
+      window.clearTimeout(failsafe);
+      return () => window.clearTimeout(failsafe);
+    }
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting || done) return;
-        done = true;
+        if (!entry.isIntersecting) return;
+        show();
         io.disconnect();
-
-        const start = performance.now();
-        const tick = (now: number) => {
-          const t = Math.min(1, (now - start) / duration);
-          const n = target * easeOut(t);
-          setDisplay(
-            n.toLocaleString(undefined, {
-              minimumFractionDigits: decimals,
-              maximumFractionDigits: decimals,
-            }),
-          );
-          if (t < 1) raf = requestAnimationFrame(tick);
-          else setDisplay(null); // hand the authored string back, commas and all
-        };
-        raf = requestAnimationFrame(tick);
+        window.clearTimeout(failsafe);
       },
-      // Start once it is properly on screen, not as it clips the bottom edge.
       { threshold: 0.4 },
     );
-
     io.observe(node);
+
     return () => {
       io.disconnect();
-      cancelAnimationFrame(raf);
+      window.clearTimeout(failsafe);
     };
-  }, [animatable, target, decimals, duration]);
+  }, []);
 
-  if (!animatable) return <span className={className}>{value}</span>;
-
+  // The authored string, always. tabular-nums keeps columns of figures
+  // aligned across the ledger.
   return (
-    <span ref={ref} className={className}>
-      {/* Hidden from the reader so the count is not announced digit by digit;
-          the authored string is exposed once, below, instead. */}
-      <span aria-hidden>
-        {m![1]}
-        {/* tabular-nums stops the width jittering as digits change. */}
-        <span className="tnum">{display === null ? m![2] : display}</span>
-        {m![3]}
-      </span>
-      <span className="sr-only">{value}</span>
+    <span ref={ref} className={`tnum ${className ?? ""}`}>
+      {value}
     </span>
   );
 }
