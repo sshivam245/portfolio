@@ -1,4 +1,4 @@
-import { profile, headlineMetrics } from "@/content/profile";
+import { headlineMetrics } from "@/content/profile";
 import Marks from "./Marks";
 import CountUp from "@/components/motion/CountUp";
 
