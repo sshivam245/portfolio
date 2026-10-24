@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Link from "next/link";
 import Section from "./Section";
-import DrawSvg from "@/components/motion/DrawSvg";
+import SpecimenFlow, { type SpecimenStep } from "./SpecimenFlow";
 
 /**
  * One real system, drawn at full width, as the homepage's main visual.
@@ -51,6 +51,31 @@ export default function Specimen({ index = "01" }: { index?: string }) {
     .replace(/<svg([^>]*?)\swidth="[^"]*"/, "<svg$1")
     .replace(/<svg([^>]*?)\sheight="[^"]*"/, "<svg$1");
 
+  /*
+   * The step list is parsed from the SVG rather than written alongside it.
+   * The generator emits one `rect.box` per node followed by its title and
+   * subtitle, in flow order, so the drawing is the single source for both.
+   */
+  const steps: SpecimenStep[] = [];
+  const all = (re: RegExp) => {
+    const out: RegExpExecArray[] = [];
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(markup)) !== null) out.push(m);
+    return out;
+  };
+  const boxes = all(/<rect class="box" x="([\d.]+)" y="([\d.]+)"/g);
+  const labels = all(
+    /<text class="(?:sub ink|tiny (?:accf|muted))" x="([\d.]+)" y="([\d.]+)">([^<]*)<\/text>/g,
+  );
+  for (const b of boxes) {
+    const bx = Number(b[1]);
+    const by = Number(b[2]);
+    const mine = labels
+      .filter((l) => Math.abs(Number(l[1]) - bx) < 30 && Number(l[2]) > by && Number(l[2]) - by < 50)
+      .map((l) => l[3]);
+    if (mine.length) steps.push({ title: mine[0], detail: mine[1] ?? "" });
+  }
+
   return (
     <Section
       id="specimen"
@@ -59,7 +84,7 @@ export default function Specimen({ index = "01" }: { index?: string }) {
       aside="Drawn, not described"
     >
       <figure>
-        <DrawSvg markup={markup} className="specimen" />
+        <SpecimenFlow markup={markup} steps={steps} />
         <figcaption className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
           <span className="max-w-prose text-small text-ink-muted">
             {SPECIMEN.caption}

@@ -1051,3 +1051,84 @@
 @media (prefers-reduced-motion: reduce) {
   .mark { transition: none; }
 }
+
+/* ---------------------------------------------------- browser surfaces --
+   The parts nobody draws still carry the design. Selection, the caret, the
+   scrollbar and form accents ship with browser defaults that belong to no
+   design system, and leaving them is the clearest tell that a page was
+   assembled rather than built. All four come from the palette here. */
+@layer base {
+  ::selection {
+    background: var(--accent);
+    /* Not --paper: the accent is mid-tone in light mode, and paper on it
+       fails contrast. White clears both themes. */
+    color: #fff;
+  }
+
+  :root {
+    caret-color: var(--accent);
+    /* Checkboxes, radios and the focus ring's default. */
+    accent-color: var(--accent);
+    scrollbar-color: var(--rule) transparent;
+    scrollbar-width: thin;
+  }
+
+  /* WebKit ignores scrollbar-color, so it needs the old properties too. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--rule);
+    border: 3px solid var(--paper);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-muted);
+  }
+}
+
+/* ------------------------------------------------------ the specimen ----
+   The one place on the site that responds rather than just renders.
+   Pointing at a step lights its node and dims the rest; pointing at a node
+   lights its step. Everything is transform- and colour-free of opacity
+   tricks on content that must stay readable: the dim is a deliberate state
+   with a pointer driving it, not an entrance that can strand content. */
+@layer components {
+  .specimen svg [data-step] {
+    transition: opacity 180ms ease-out, stroke 180ms ease-out,
+      fill 180ms ease-out, stroke-width 180ms ease-out;
+  }
+  .specimen.has-active svg [data-step]:not([data-on]) {
+    opacity: 0.22;
+  }
+  .specimen svg rect[data-on] {
+    stroke: var(--accent);
+    stroke-width: 1.8;
+  }
+  .specimen svg text[data-on] {
+    fill: var(--accent);
+  }
+
+  .step-btn {
+    border-top: 1px solid var(--rule);
+    padding-top: 0.75rem;
+    transition: border-color 180ms ease-out;
+  }
+  .step-btn:hover,
+  .step-btn:focus-visible,
+  .step-on {
+    border-top-color: var(--accent);
+  }
+  .step-on .label {
+    color: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .specimen svg [data-step],
+  .step-btn { transition: none; }
+}

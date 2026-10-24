@@ -22,8 +22,10 @@ export default function Home() {
       <ToolsTeaser index="03" />
       <Writing index="04" limit={2} />
       <AboutTeaser index="05" />
-      <Contact index="06" />
+      {/* Wordmark before Contact, not after. The last screen should be the
+          ask, not an ornament that repeats a name already in the header. */}
       <Wordmark />
+      <Contact index="06" />
     </>
   );
 }
