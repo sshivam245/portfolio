@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import AgentFit from "@/components/tools/AgentFit";
 import Ledger from "@/components/dossier/Ledger";
+import { AgentFitSchema } from "@/components/dossier/StructuredData";
 import {
   ARCHETYPE_COUNT,
   QUESTION_COUNT,
@@ -19,13 +20,14 @@ export const metadata: Metadata = {
       "Five questions, a ranked shortlist of GTM agents worth building, and an honest note on where each one breaks.",
     type: "website",
     url: "/tools/agent-fit",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Which GTM agent should you build?" }],
+    images: [{ url: "/og/tools-agent-fit.png", width: 1200, height: 630, alt: "Which GTM agent should you build?" }],
   },
 };
 
 export default function AgentFitPage() {
   return (
     <article>
+      <AgentFitSchema />
       <header className="shell py-12 sm:py-16">
         <Link href="/tools" className="label label-tap hover:text-accent transition-colors">
           ← Tools

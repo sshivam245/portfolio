@@ -44,13 +44,13 @@ export function generateMetadata({
       url: `/work/${cs.id}`,
       // Defining openGraph here REPLACES the layout's, images included —
       // so it has to be restated or shares render blank.
-      images: [{ url: "/og.png", width: 1200, height: 630, alt: cs.title }],
+      images: [{ url: `/og/work-${cs.id}.png`, width: 1200, height: 630, alt: cs.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: cs.title,
       description,
-      images: ["/og.png"],
+      images: [`/og/work-${cs.id}.png`],
     },
   };
 }

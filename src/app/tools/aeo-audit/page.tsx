@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import AeoAuditForm from "@/components/tools/AeoAuditForm";
 import Ledger from "@/components/dossier/Ledger";
+import { AeoAuditSchema } from "@/components/dossier/StructuredData";
 import { CATEGORIES, CHECK_SPECS } from "@/lib/aeo/checks";
 
 export const metadata: Metadata = {
@@ -15,13 +16,14 @@ export const metadata: Metadata = {
       "Send a URL, get a written report within a day on what answer engines can do with your pages.",
     type: "website",
     url: "/tools/aeo-audit",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Free AEO audit" }],
+    images: [{ url: "/og/tools-aeo-audit.png", width: 1200, height: 630, alt: "Free AEO audit" }],
   },
 };
 
 export default function AeoAuditPage() {
   return (
     <article>
+      <AeoAuditSchema />
       <header className="shell py-12 sm:py-16">
         <Link href="/tools" className="label label-tap hover:text-accent transition-colors">
           ← Tools

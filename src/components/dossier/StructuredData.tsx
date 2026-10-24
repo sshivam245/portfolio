@@ -1,6 +1,7 @@
 import { profile, experience, education, skills, recognition } from "@/content/profile";
 import { caseStudies } from "@/content/caseStudies";
 import { publishedPosts } from "@/content/writing";
+import { CATEGORIES, CHECK_SPECS } from "@/lib/aeo/checks";
 import { SITE_NAME, SITE_URL, url } from "@/lib/site";
 
 /**
@@ -202,4 +203,104 @@ export function AboutSchema() {
       <Script data={data} />
     </>
   );
+}
+
+/**
+ * The tool pages.
+ *
+ * These were the only pages on the site carrying no JSON-LD at all, which is
+ * a strange omission on the two pages most likely to be retrieved: they are
+ * the only ones phrased as a question somebody actually asks, rather than as
+ * a name nobody searches for.
+ *
+ * The FAQ entries are the four category questions the audit page already
+ * prints, answered by naming the checks in each group. Only marked up because
+ * the question and its answer are both visible on the page; schema for
+ * content a reader cannot see is the kind of thing that gets a site ignored,
+ * which would be a poor advertisement for an AEO audit.
+ */
+export function AeoAuditSchema() {
+  const service = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url("/tools/aeo-audit")}#service`,
+    name: "Free AEO audit",
+    serviceType: "Answer engine optimisation audit",
+    url: url("/tools/aeo-audit"),
+    provider: { "@id": PERSON_ID },
+    areaServed: "Worldwide",
+    description:
+      `A written answer-engine optimisation report on a submitted URL, covering ${CHECK_SPECS.length} checks across ${CATEGORIES.length} groups, returned within a day.`,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+  };
+
+  const faq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${url("/tools/aeo-audit")}#faq`,
+    mainEntity: CATEGORIES.map((c) => ({
+      "@type": "Question",
+      name: c.blurb,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `${c.label}. Checked by: ${CHECK_SPECS.filter((s) => s.category === c.id)
+          .map((s) => s.label)
+          .join(", ")}.`,
+      },
+    })),
+  };
+
+  return (
+    <>
+      <Script data={service} />
+      <Script data={faq} />
+      <Script data={toolBreadcrumb("Free AEO audit", "/tools/aeo-audit")} />
+    </>
+  );
+}
+
+/** agent-fit runs entirely in the browser, so it is an application, not a service. */
+export function AgentFitSchema() {
+  const app = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": `${url("/tools/agent-fit")}#app`,
+    name: "Which GTM agent should you build?",
+    url: url("/tools/agent-fit"),
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Any",
+    browserRequirements: "Runs in the browser. No account, no email, no server.",
+    author: { "@id": PERSON_ID },
+    description:
+      "Five questions about go-to-market motion, deal size, team size, bottlenecks and existing stack return a ranked shortlist of GTM agent archetypes, each with its trigger, its operating loop and its failure mode.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  };
+
+  return (
+    <>
+      <Script data={app} />
+      <Script data={toolBreadcrumb("Which GTM agent should you build?", "/tools/agent-fit")} />
+    </>
+  );
+}
+
+function toolBreadcrumb(name: string, path: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: url("/") },
+      { "@type": "ListItem", position: 2, name: "Tools", item: url("/tools") },
+      { "@type": "ListItem", position: 3, name, item: url(path) },
+    ],
+  };
 }

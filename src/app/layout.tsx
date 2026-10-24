@@ -76,13 +76,13 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Shivam Goel",
     locale: "en_GB",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shivam Goel · Marketing Engineer" }],
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Shivam Goel · Marketing Engineer" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Shivam Goel · Marketing Engineer, Growth & GTM",
     description: "I build acquisition engines, and the automation underneath them.",
-    images: ["/og.png"],
+    images: ["/og/home.png"],
   },
   robots: {
     index: true,
