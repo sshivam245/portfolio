@@ -1,4 +1,5 @@
 import { headlineMetrics } from "@/content/profile";
+import HeroWiring from "./HeroWiring";
 import Marks from "./Marks";
 import CountUp from "@/components/motion/CountUp";
 
@@ -68,13 +69,14 @@ export default function Masthead() {
         the dt/dd pairing intact for assistive tech while still letting the
         metric and the note line up as separate rows.
       */}
-      <dl className="mt-12 grid grid-cols-2 gap-x-6 lg:grid-cols-4">
+      <HeroWiring />
+
+      <dl className="mt-0 lg:-mt-1 grid grid-cols-2 gap-x-6 lg:grid-cols-4">
         {headlineMetrics.map((m) => (
           <div
             key={m.label}
-            className="row-span-4 grid min-w-0 grid-rows-subgrid rule-b py-5 lg:py-6"
+            className="row-span-3 grid min-w-0 grid-rows-subgrid rule-b pb-5 pt-4 lg:pb-6"
           >
-            <span aria-hidden className="draw mb-4 block h-px w-full bg-accent/40" />
             <dt className="label mb-2">{m.label}</dt>
             <dd className="row-span-2 grid grid-rows-subgrid">
               {/*

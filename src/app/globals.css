@@ -1129,3 +1129,82 @@
   .specimen svg [data-step],
   .step-btn { transition: none; }
 }
+
+/* ------------------------------------------------------- hero wiring ----
+   A bus leaving the headline, dropping an arrow into each figure. Same
+   connector language as the case-study diagrams: hairline in --rule, solid
+   arrowhead in --accent, nothing rounded and nothing filled.
+
+   The bus is the container's ::before so it spans the whole measure; each
+   cell owns its own drop, which is what keeps the arrows centred under their
+   columns at any width without percentages to maintain.
+
+   Animated with transform only. If the animation never runs the wiring is
+   simply there, already drawn, which is the rule the reveals here learned
+   the hard way. */
+@layer components {
+  .hero-wire {
+    position: relative;
+    height: 4rem;
+  }
+  /* The bus. Scales from the left, so it reads as leaving the headline. */
+  .hero-wire::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: color-mix(in srgb, var(--accent) 32%, transparent);
+    transform-origin: 0 50%;
+    animation: wire-bus 620ms cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+  .hero-wire-cell {
+    position: relative;
+  }
+  /* The drop, from the bus down toward its figure. */
+  .hero-wire-drop {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: calc(100% - 9px);
+    background: color-mix(in srgb, var(--accent) 55%, transparent);
+    transform-origin: 50% 0;
+    animation: wire-drop 420ms cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
+  }
+  /* The arrowhead: a CSS triangle, matching .accf in the diagrams. */
+  .hero-wire-head {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    margin-left: -5px;
+    border-top: 9px solid var(--accent);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    animation: wire-head 260ms cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
+  }
+
+  /* Each column fires a beat after the one before, left to right, so the
+     bus visibly distributes rather than everything appearing at once. */
+  .hero-wire-cell:nth-child(1) .hero-wire-drop { animation-delay: 420ms; }
+  .hero-wire-cell:nth-child(2) .hero-wire-drop { animation-delay: 520ms; }
+  .hero-wire-cell:nth-child(3) .hero-wire-drop { animation-delay: 620ms; }
+  .hero-wire-cell:nth-child(4) .hero-wire-drop { animation-delay: 720ms; }
+  .hero-wire-cell:nth-child(1) .hero-wire-head { animation-delay: 780ms; }
+  .hero-wire-cell:nth-child(2) .hero-wire-head { animation-delay: 880ms; }
+  .hero-wire-cell:nth-child(3) .hero-wire-head { animation-delay: 980ms; }
+  .hero-wire-cell:nth-child(4) .hero-wire-head { animation-delay: 1080ms; }
+
+  @keyframes wire-bus  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes wire-drop { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes wire-head { from { transform: scale(0); } to { transform: scale(1); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wire::before,
+  .hero-wire-drop,
+  .hero-wire-head { animation: none; }
+}
