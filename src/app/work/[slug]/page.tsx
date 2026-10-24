@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Figure from "@/components/dossier/Figure";
+import FigureHero from "@/components/dossier/FigureHero";
 import BuildFlow from "@/components/dossier/BuildFlow";
 import InlineDiagram from "@/components/dossier/InlineDiagram";
 import Ledger from "@/components/dossier/Ledger";
@@ -65,7 +66,9 @@ export default function CaseStudyPage({
   const cs = caseStudies[index];
   const next = caseStudies[(index + 1) % caseStudies.length];
   const diagrams = cs.figures?.filter((f) => f.diagram) ?? [];
-  const shots = cs.figures?.filter((f) => !f.diagram) ?? [];
+  const hero = cs.figures?.find((f) => f.hero && !f.diagram);
+  // The hero is shown in its own band, so it must not also appear in the aside.
+  const shots = cs.figures?.filter((f) => !f.diagram && !f.hero) ?? [];
 
   return (
     <article>
@@ -147,6 +150,19 @@ export default function CaseStudyPage({
           <Ledger items={cs.outcomes} />
         </div>
       </section>
+
+      {/*
+        The proof, immediately after the numbers that claim it. The reader has
+        just been told the outcome; this is the artefact, at a size that lets
+        them check it rather than take it on trust.
+      */}
+      {hero ? (
+        <section className="rule-t">
+          <div className="shell py-12">
+            <FigureHero figure={hero} />
+          </div>
+        </section>
+      ) : null}
 
       {/*
         Diagrams run inline under the context, where the flow explains the

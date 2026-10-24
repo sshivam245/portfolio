@@ -18,6 +18,12 @@ export type Figure = {
   /** true when this is a drawn diagram rather than a real screenshot */
   diagram?: boolean;
   /**
+   * The one artefact that IS the proof, shown at scale in its own band
+   * rather than at sidebar width. At most one per case study: the point is
+   * that it is the thing to look at, and a page with three of them has none.
+   */
+  hero?: boolean;
+  /**
    * Intrinsic pixel size. Set these: without width/height the <img> has no
    * height until it loads, which both shifts the layout (CLS) and stops
    * loading="lazy" ever firing, since a zero-height box never enters the
@@ -106,6 +112,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         src: "cloudsheer-ai-overview.png",
+        hero: true,
         w: 1400,
         h: 1340,
         caption:
