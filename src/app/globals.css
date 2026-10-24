@@ -81,7 +81,11 @@
 
   ::selection {
     background: var(--accent);
-    color: var(--paper);
+    /* #fff, not --paper. Both pass AA on the accent (paper on the light
+       accent measures 4.56:1), so this is a margin rather than a fix: white
+       sits a little clearer on both accents and does not change with the
+       theme. */
+    color: #fff;
   }
 
   :focus-visible {
@@ -1058,13 +1062,6 @@
    design system, and leaving them is the clearest tell that a page was
    assembled rather than built. All four come from the palette here. */
 @layer base {
-  ::selection {
-    background: var(--accent);
-    /* Not --paper: the accent is mid-tone in light mode, and paper on it
-       fails contrast. White clears both themes. */
-    color: #fff;
-  }
-
   :root {
     caret-color: var(--accent);
     /* Checkboxes, radios and the focus ring's default. */
