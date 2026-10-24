@@ -20,7 +20,7 @@ export default function Marks() {
       <p className="label">Previously</p>
       <ul className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-5">
         {orgLogos.map((logo) => (
-          <li key={logo.label} className="flex items-center gap-2.5">
+          <li key={logo.label} className="mark-item flex items-center gap-2.5">
             {logo.path ? (
               <svg
                 viewBox={logo.viewBox ?? "0 0 24 24"}

@@ -987,6 +987,24 @@
   .mark {
     filter: grayscale(1);
     opacity: 0.6;
+    transition: filter 260ms ease-out, opacity 260ms ease-out;
+  }
+
+  /*
+   * Hovering a mark lights it up: its real brand colour returns and it comes
+   * to full strength. That is the glow, done with the logo's own colour
+   * rather than a coloured box-shadow behind it, which DESIGN.md bans
+   * outright and the detector flags as `dark-glow`.
+   *
+   * The resting state stays desaturated on purpose. These are other
+   * companies' brands and the page's palette should be his; the colour is a
+   * reward for pointing at one, not the default state of the row.
+   */
+  @media (hover: hover) {
+    .mark-item:hover .mark {
+      filter: grayscale(0);
+      opacity: 1;
+    }
   }
 }
 
@@ -1028,4 +1046,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .figure-shown { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark { transition: none; }
 }
