@@ -1,4 +1,4 @@
-# Design direction — technical dossier
+# Design direction — two inks, out of register
 
 Portfolio for Shivam Goel. Audience: hiring managers and founders at startups
 recruiting for GTM Engineer / Growth Engineer / Founding GTM roles.
@@ -6,149 +6,167 @@ recruiting for GTM Engineer / Growth Engineer / Founding GTM roles.
 The job of this site is to make someone believe **"this person builds systems,"**
 not **"this person writes strategy decks."** Every decision below serves that.
 
----
-
-## The banned list
-
-These are the tells that make a site read as AI-generated. Do not reintroduce them.
-
-- Centered hero with a giant name and a gradient headline
-- "Available for opportunities" pills, pulsing green status dots
-- Typing / rotating word animations
-- `glass-card`, `backdrop-blur`, translucent floating panels
-- Indigo → purple → cyan gradients (or any gradient on text)
-- Three feature cards in a row, each with one icon at the top
-- `rounded-2xl` on everything; drop shadows used for hierarchy
-- Inter as the typeface
-- Scroll indicators, floating background particles, animated blobs
-- Vague verbs with no object: "Let's Build Something", "Crafting Experiences"
-
-If a section feels like it needs a card, it usually needs a **rule** instead.
+This replaced a near-monochrome technical dossier — cream paper, one orange
+accent, hairlines instead of containers, a serif/mono pair. That system was
+correct and competent and read as a template, which is a direction problem
+rather than a polish problem. The old banned list is retired with it; the
+constraints below are the live ones.
 
 ---
 
-## Principles
+## The world
 
-1. **Evidence over adjectives.** A number with its mechanism beats any claim.
-   `+15% generative-search traffic` is worth more than "growth expert".
-2. **Structure is the decoration.** Hierarchy comes from type scale, rules, and
-   whitespace — never from shadows, borders-as-boxes, or color fills.
-3. **Density is a feature.** This is a dossier. A hiring manager should be able
-   to scan the whole thing in 40 seconds and find proof in 10 more.
-4. **Motion is for orientation, not delight.** Opacity and 4–8px translate only.
-   No parallax, no scroll-jacking, no staggered reveals longer than 200ms.
+**Two spot inks on uncoated stock, printed slightly out of register.**
+
+The thesis is one sentence: *the third colour is not chosen, it is what the two
+plates do where they overlap.* So the overlap means something, and it means the
+same thing everywhere it appears.
+
+Why this world and not another: the strongest single fact on this site is that
+a page built here became the answer Google's AI Overview gives, with a citation
+pointing back. The site is therefore built out of **citation** — the superscript
+bracket, the numbered source, the mark for "you can check this from outside."
+A printed page is the only material where a citation is native rather than
+borrowed, and where two overlapping inks can carry an argument. Tube maps,
+terminal output and dashboards were all considered and are all either saturated
+in this category or, in the case of a dashboard, require invented data.
+
+---
+
+## Colour
+
+Edited in **`scripts/tokens.mjs` only**. `npm run tokens` writes it into
+`globals.css` (between sentinels) and into every figure SVG; `npm run
+tokens:check` runs in prebuild and fails the build if a consumer drifted. There
+is no second place to change a colour. There used to be three, and two of them
+had already drifted.
+
+| Token | Light | Dark | What it is for |
+|---|---|---|---|
+| `--paper` | `#efe9dd` | `#15131a` | the stock |
+| `--ink` | `#16161a` | `#f0ecf5` | soot; body and display |
+| `--ink-muted` | `#5a5460` | `#9a93a8` | soot, let down |
+| `--rule` | `#cdc4b2` | `#2e2838` | a pressed hairline |
+| `--ink-a` | `#1b30f0` | `#6b78ff` | **plate A.** Structure |
+| `--ink-b` | `#ff3d8f` | `#ff5fa2` | **plate B.** Never small text in light |
+| `--accent` | `#6b1f9e` | `#b47de8` | **the overlap.** Verification only |
+| `--grid` | blue 5% | pink 4.5% | the dot screen |
+
+### The two rules that matter
+
+**1. `--accent` marks a claim a stranger can confirm from outside this site.**
+Nothing else. Not a hover, not a focus ring, not a separator, not a section
+number, not an error. It was spent 92 times across the codebase before this
+redesign, which made it a brand colour and put the AI Overview citation at
+exactly the weight of a conversion lift `PRODUCT.md` records as unconfirmed.
+It now appears at seven sites: the verified source in the hero, the Verifiable
+tag and verified value in the work index, and the live links.
+
+Everything structural — links, focus rings, hovers, citations, diagram
+connectors, carets, section indices, the OG grid — is **`--ink-a`**.
+
+**2. `--ink-b` is 2.8:1 on light stock.** That is a real fluorescent ink and it
+is genuinely unreadable at text sizes on cream, exactly as it would be on
+press. It is a plate, a fill and a rule colour. It is never small text in light
+mode, and `npm run tokens:check` greps for `text-ink-b` outside a `dark:`
+prefix and fails the build.
+
+Measured contrasts, light stock: ink 14.6, muted 6.1, ink-a 6.4, accent 7.6,
+ink-b **2.8**. Dark stock: ink 16.9, muted 6.3, ink-a 5.1, ink-b 6.6,
+accent 6.3.
 
 ---
 
 ## Type
 
-Three families, all free on Google Fonts, deliberately not Inter/Geist.
-
-| Role | Family | Notes |
+| Face | Role | Notes |
 |---|---|---|
-| Display — h1, case-study & post titles, wordmark | **Instrument Serif 400** | The voice of the page. Low weight, tight tracking, italic for emphasis |
-| Body, sub-headings | **IBM Plex Sans** | Technical heritage, recedes behind the display face |
-| Labels, metrics, meta | **IBM Plex Mono** | All caps, `0.12em` tracking, for anything machine-ish |
+| **Anton** | display, and every figure | one weight, on purpose |
+| **Archivo** | body, UI | 400/500/600/700 |
+| **IBM Plex Mono** | labels, diagram labels, citations | |
 
-The serif is doing the same job Syne does on kevinshelly.com and Instrument
-Serif does on abhijeet-patil.com: a dossier built only from a neutral sans
-reads as competent and anonymous. The contrast between a serif display and
-mono labels is what gives it a voice.
+Anton has one weight by design. A condensed poster face with a weight axis
+invites a hierarchy built from weight, and this system builds hierarchy from
+size and from **which plate a thing is printed on**.
 
-**Oversized type is the only ornament.** The `Shivam Goel` wordmark at `15vw`
-in `text-ink/[0.09]` closes the page. At that scale type stops being text and
-becomes graphic — the cheapest way to look designed without adding decoration.
+A figure on this site is a solid area of ink, so the whole metric scale is
+Anton, not the mono. Size may vary across the metric classes; face may not —
+the index once reached for the display face on long values and the mono on
+short ones, so the typeface changed with the length of the string.
 
-**Scale** (rem, 1rem = 16px):
+**Anton stops at Latin-1.** It has no U+2192, and the `0→1` metric would fall
+through to a system face mid-number, so the `display` stack names the mono
+second. Per-glyph fallback keeps the digits either side in Anton.
 
-```
-display   3.5    600   -0.03em   headline only
-h1        2.25   600   -0.02em
-h2        1.5    600   -0.015em  section titles
-h3        1.125  600   -0.01em   case study / role titles
-body      1.0    400    0        max-width 68ch
-small     0.875  400    0        captions, secondary
-label     0.75   500    0.08em   MONO, UPPERCASE
-metric    2.75   600   -0.02em   MONO, tabular-nums
-```
-
-Numbers always use `font-variant-numeric: tabular-nums` so columns align.
+The `.t-*` classes live in `globals.css` rather than Tailwind `fontSize`
+tokens because a token cannot carry a breakpoint.
 
 ---
 
-## Color
+## The signature moves
 
-Warm paper, not blue-grey. One accent, used sparingly — if everything is
-accented, nothing is.
+**The two plates.** Display type is printed twice: the soot plate, and a second
+plate in `--ink-b` a hair off register. The offset is in `em` so it scales with
+the headline — at 52px a fixed 5px offset is twice the misregistration it is at
+88px and stops reading as printing. Light overprints with `multiply`; dark puts
+the plate behind, because multiply against a dark ground turns pink to mud.
 
-```
-              light         dark
---paper       #FBFBF9       #0C0C0E
---ink         #16161A       #E8E8E3
---ink-muted   #6B6B72       #8A8A93
---rule        #E2E1DC       #26262B     hairline borders
---accent      #B4451F       #E8703A     burnt orange
---accent-dim  #F5EDE9       #2A1A13     accent wash, used ~twice per page
-```
+Both plates must render from **one source**. The ghost is `aria-hidden`,
+unselectable and pointer-none, and its own citations are hidden with
+`visibility`, never `display` — it exists to break lines in exactly the same
+places as the live headline, and removing a bracket from the flow changes where
+it breaks.
 
-Accent is allowed on: active nav item, link underlines, the single most
-important metric per section, and section index numbers. Nowhere else.
+**The citation.** `[1]` in mono on plate A, as a real anchor into the source it
+names. Pointing at one lights its source. This is the site's one notation for
+"a thing you can go to", which is why section indices are bracketed too.
 
-**No gradients anywhere.** Not on text, not on backgrounds, not on borders.
+**The registration crosshair.** A printer's alignment mark, used only beside a
+claim that can be checked from outside, always in `--accent`.
 
----
-
-## Layout
-
-- 12-column grid, `1200px` max, `24px` gutters (`16px` under 640px).
-- **Left-aligned, always.** Centered text is banned outside the footer.
-- Sections separated by `1px solid var(--rule)`, not by whitespace alone.
-- Section headers use a mono index: `01 — SELECTED WORK`.
-- Metrics live in real definition lists / tables with aligned columns, never in cards.
-- Case studies: two-column on desktop — narrative left (68ch), evidence rail right.
+**The register shift.** A control that responds moves a plate rather than
+changing colour — see `.btn`. Every colour a button could swap to fails
+somewhere; moving a plate leaves the text on its own background, so contrast
+never changes.
 
 ---
 
-## Motion
+## Still banned
 
-Three pieces, in order of how much they matter:
+The old list is retired, but these are not tells of a style, they are tells of
+not having decided:
 
-1. **Masthead entrance** (`.rise`) — CSS keyframes, staggered 40/110/180/250ms,
-   460ms ease. Runs on load, needs no JS.
-2. **Section reveal** (`Reveal.tsx`) — 320ms fade + 14px rise as a section
-   scrolls in.
-3. **Hover states** — accent hairlines that extend, titles that take the accent
-   colour, the portrait desaturating on hover. 150–200ms.
+- A gradient on text, or a gradient used to make a flat thing look dimensional
+- `glass-card`, `backdrop-blur`, translucent floating panels
+- Shadows used for hierarchy (a flat offset plate is not a shadow)
+- Typing or rotating word animations, pulsing status dots
+- Three feature cards in a row with an icon on top of each
+- Vague verbs with no object: "Let's Build Something"
+- Inter
 
-**The reveal must never be able to blank the page.** Two earlier versions of it
-failed this: one hid every section in CSS and waited for hydration (blank for
-~3s, forever if JS failed); one used `animation-timeline`, which is Chromium
-only. The current version renders content visible and arms *only* sections
-already below the fold — measured after `document.fonts.ready`, because before
-the webfonts settle everything measures as above-the-fold — with a 4s failsafe
-that reveals regardless. If you rewrite it, keep that property.
-
-Respect `prefers-reduced-motion: reduce` — it disables all three.
+If a section feels like it needs a card, it needs a **rule**.
 
 ---
 
-## Figures
+## What must survive any future change
 
-Real artifacts (dashboard screenshots, workflow captures) go in
-`public/figures/`. See `docs/figures.md` for the naming convention and the
-checklist to run before publishing a screenshot.
+Each of these is a paid-for production failure. See the same list in
+`PRODUCT.md`.
 
-The `<Figure>` component degrades gracefully: if an image is missing it renders
-a labelled placeholder frame rather than a broken image. Never fabricate a
-screenshot of a real tool — if there's no asset, use a drawn SVG diagram and
-label it as a diagram.
-
----
-
-## Content rules
-
-- Every claim carries a number, a timeframe, or a mechanism. Preferably all three.
-- Write in first person, past tense, plain language. No "leveraged", "spearheaded",
-  "passionate about", "results-driven".
-- Case studies follow: **Context → What I built → Outcome → What I'd do differently.**
-  That last section is what separates a real engineer from a résumé.
+1. **Motion fails open.** Transform-only, never opacity, on anything carrying
+   content. The hidden state is added by JS *after* mount, never rendered.
+   Unconditional failsafe timers are set *before* the observer. React must
+   never re-render an inlined SVG subtree.
+2. **`CountUp` does not count.** It renders the authored string. Interpolating
+   digits once put "3+" on screen where the figure is 100+.
+3. **Accessibility.** `.label-tap`'s dual-axis 44px fix; a `:focus-visible`
+   twin for every `:hover`, with hover halves inside `@media (hover: hover)`;
+   every animation name in `globals.css` has a `prefers-reduced-motion`
+   override; reflow holds at 375px and 200% text zoom.
+4. **The diagram step parser.** `Specimen.tsx` and `SpecimenFlow.tsx` read the
+   step list out of the SVG by coordinate proximity, depending on exact class
+   names, attribute order and 30px/50px constants. There is no generator.
+   Do not reformat those files; verify 7 step buttons and 21 tagged nodes after
+   any change near them.
+5. **Static export.** No `next/image`; `basePath` threaded by hand through
+   `lib/basePath.ts`; no `useSearchParams`.
