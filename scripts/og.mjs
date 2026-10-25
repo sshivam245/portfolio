@@ -30,13 +30,19 @@ const { profile } = await import("../src/content/profile.ts");
 const serif = fs.readFileSync(path.join(here, "og-fonts/InstrumentSerif-Regular.ttf"));
 const mono = fs.readFileSync(path.join(here, "og-fonts/IBMPlexMono-Medium.ttf"));
 
-// The site's dark palette. OG previews sit on both light and dark chrome, and
-// the dark card is the one that reads as this site rather than as a default.
-const PAPER = "#08080a";
-const INK = "#f2f2ee";
-const MUTED = "#8e8e98";
-const ACCENT = "#ff6b35";
-const RULE = "#23232a";
+// The dark plates. OG previews sit on both light and dark chrome, and the
+// dark card is the one that reads as this site rather than as a default.
+// Imported, never copied: this block used to be a hand-kept second copy of
+// the palette, and the figure SVGs were a third that had already drifted.
+const { TOKENS } = await import("./tokens.mjs");
+const PAPER = TOKENS.dark["--paper"];
+const INK = TOKENS.dark["--ink"];
+const MUTED = TOKENS.dark["--ink-muted"];
+const ACCENT = TOKENS.dark["--accent"];
+const RULE = TOKENS.dark["--rule"];
+const INK_A = TOKENS.dark["--ink-a"];
+const INK_B = TOKENS.dark["--ink-b"];
+void INK_A; void INK_B;
 
 const W = 1200;
 const H = 630;

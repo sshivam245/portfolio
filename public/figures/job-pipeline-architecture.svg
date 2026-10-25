@@ -1,20 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" width="640" height="300" role="img" aria-label="Job pipeline architecture: fetchers to normalise and dedupe to filter to score to draft to digest">
   <style>
     .ink   { fill: #16161a; }
-    .muted { fill: #6b6b72; }
-    .rule  { stroke: #cfcec9; }
-    .acc   { stroke: #b4451f; }
-    .accf  { fill: #b4451f; }
-    .box   { fill: none; stroke: #cfcec9; stroke-width: 1; }
-    text   { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+    .muted { fill: #5a5460; }
+    .accf  { fill: #6b1f9e; }
+    .acc   { stroke: #6b1f9e; }
+    .box   { fill: none; stroke: #cdc4b2; stroke-width: 1; }
+    .rule  { stroke: #cdc4b2; }
+    text   { font-family: var(--font-plex-mono, "IBM Plex Mono"), ui-monospace, monospace; }
     .lbl   { font-size: 10px; letter-spacing: 0.08em; }
     .sub   { font-size: 9px; }
+    .tiny  { font-size: 8px; }
     @media (prefers-color-scheme: dark) {
-      .ink   { fill: #e8e8e3; }
-      .muted { fill: #8a8a93; }
-      .rule, .box { stroke: #3a3a40; }
-      .acc   { stroke: #e8703a; }
-      .accf  { fill: #e8703a; }
+      .ink   { fill: #f0ecf5; }
+      .muted { fill: #9a93a8; }
+      .accf  { fill: #b47de8; }
+      .acc   { stroke: #b47de8; }
+      .box, .rule { stroke: #2e2838; }
     }
   </style>
 

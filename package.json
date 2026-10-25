@@ -9,7 +9,10 @@
     "lint": "next lint",
     "deploy": "bash scripts/deploy.sh",
     "og": "tsx scripts/og.mjs",
-    "prebuild": "npm run og"
+    "prebuild": "npm run tokens:check && npm run og",
+    "tokens": "node scripts/sync-tokens.mjs",
+    "tokens:check": "node scripts/sync-tokens.mjs --check",
+    "postbuild": "node scripts/check-css.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

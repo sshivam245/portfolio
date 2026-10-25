@@ -1,21 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 648 302" width="648" height="302" role="img" aria-label="companies then enrich then tech stack then pain point then relevance then account tier then people then 1:1 landing page">
   <style>
     .ink   { fill: #16161a; }
-    .muted { fill: #6b6b72; }
-    .accf  { fill: #b4451f; }
-    .acc   { stroke: #b4451f; }
-    .box   { fill: none; stroke: #cfcec9; stroke-width: 1; }
-    .rule  { stroke: #cfcec9; }
-    text   { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+    .muted { fill: #5a5460; }
+    .accf  { fill: #6b1f9e; }
+    .acc   { stroke: #6b1f9e; }
+    .box   { fill: none; stroke: #cdc4b2; stroke-width: 1; }
+    .rule  { stroke: #cdc4b2; }
+    text   { font-family: var(--font-plex-mono, "IBM Plex Mono"), ui-monospace, monospace; }
     .lbl   { font-size: 10px; letter-spacing: 0.08em; }
     .sub   { font-size: 9px; }
     .tiny  { font-size: 8px; }
     @media (prefers-color-scheme: dark) {
-      .ink   { fill: #e8e8e3; }
-      .muted { fill: #8a8a93; }
-      .accf  { fill: #e8703a; }
-      .acc   { stroke: #e8703a; }
-      .box, .rule { stroke: #3a3a40; }
+      .ink   { fill: #f0ecf5; }
+      .muted { fill: #9a93a8; }
+      .accf  { fill: #b47de8; }
+      .acc   { stroke: #b47de8; }
+      .box, .rule { stroke: #2e2838; }
     }
   </style>
 

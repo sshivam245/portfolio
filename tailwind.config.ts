@@ -71,6 +71,19 @@ const config: Config = {
         ink: alpha("ink"),
         "ink-muted": alpha("ink-muted"),
         rule: alpha("rule"),
+        /*
+         * The two plates, and what they make where they overlap.
+         *
+         * `accent` is the overlap. It is not a free accent colour: it means
+         * "an outside system can confirm this" and is spent on nothing else.
+         *
+         * `ink-b` is 2.8:1 on light stock — a real fluorescent ink, as
+         * unreadable on cream here as it would be on press. Plates, fills
+         * and rules only; never small text in light mode. sync-tokens.mjs
+         * greps for `text-ink-b` outside a dark: prefix and fails the build.
+         */
+        "ink-a": alpha("ink-a"),
+        "ink-b": alpha("ink-b"),
         accent: alpha("accent"),
       },
       fontFamily: {
