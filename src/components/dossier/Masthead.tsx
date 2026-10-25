@@ -145,7 +145,17 @@ export default function Masthead() {
             <li
               key={m.label}
               id={`source-${i + 1}`}
-              className={`source rule-b grid grid-cols-[2.25rem_1fr] items-baseline gap-x-4 gap-y-1 py-4 lg:grid-cols-[2.25rem_7rem_1fr_auto] ${
+              /*
+               * min-w-0 on the content columns, and auto rather than a fixed
+               * 2.25rem for the bracket.
+               *
+               * At 375px with text zoomed to 200% the fixed column became
+               * 72px and the gap 32px, and the row overflowed the page by
+               * 10px — WCAG 1.4.10 reflow, failed. A grid track defaults to
+               * min-content, so a long note with nowhere to break pushes the
+               * track wider than its share however small 1fr claims to be.
+               */
+              className={`source rule-b grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 py-4 lg:grid-cols-[auto_7rem_minmax(0,1fr)_auto] ${
                 lit === i + 1 ? "source-on" : ""
               }`}
             >
@@ -161,17 +171,17 @@ export default function Masthead() {
                 PRODUCT.md records as unconfirmed.
               */}
               <span
-                className={`t-metric-sm col-start-2 ${m.verified ? "text-accent" : ""}`}
+                className={`t-metric-sm col-start-2 min-w-0 break-words ${m.verified ? "text-accent" : ""}`}
               >
                 {m.value}
                 {m.unit}
               </span>
 
-              <span className="label col-start-2 lg:col-start-3 lg:pt-1.5">
+              <span className="label col-start-2 min-w-0 break-words lg:col-start-3 lg:pt-1.5">
                 {m.label}
               </span>
 
-              <span className="col-start-2 text-small text-ink-muted lg:col-start-4 lg:pt-1 lg:text-right">
+              <span className="col-start-2 min-w-0 break-words text-small text-ink-muted lg:col-start-4 lg:pt-1 lg:text-right">
                 {m.note}
                 {m.verified ? (
                   <span className="ms-3 whitespace-nowrap text-accent">

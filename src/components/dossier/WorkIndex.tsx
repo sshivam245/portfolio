@@ -119,7 +119,12 @@ export default function WorkIndex({
                       difference instead of decorating all seven equally.
                     */}
                     {cs.verified ? (
-                      <span className="ml-2 text-accent">· Verifiable</span>
+                      <span className="ml-2 whitespace-nowrap text-accent">
+                        {/* The same registration crosshair the hero uses, so
+                            "you can check this yourself" looks identical
+                            wherever it appears. */}
+                        <span className="reg" aria-hidden /> Verifiable
+                      </span>
                     ) : null}
                   </p>
                   <p

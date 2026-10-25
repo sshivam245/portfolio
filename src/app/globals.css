@@ -112,7 +112,17 @@
     text-wrap: balance;
     /* At 200% text zoom a single long word is wider than its column. */
     overflow-wrap: break-word;
-    font-size: 3.25rem;
+    /*
+     * 2.75rem on a phone, not 3.25.
+     *
+     * Anton is condensed, which made 52px look affordable in the scale —
+     * but measured on a 375px screen this sentence ran to six lines and
+     * took 520px of an 812px viewport, putting the button at 1200px and
+     * the evidence entirely below the fold. On a page whose job is to get
+     * a founding-GTM conversation, the first screen cannot be only a
+     * headline. The desktop size is unchanged; it has the measure for it.
+     */
+    font-size: 2.75rem;
     line-height: 0.92;
     letter-spacing: 0;
   }
