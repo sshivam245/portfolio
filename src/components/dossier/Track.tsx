@@ -33,14 +33,14 @@ export function Experience({ index = "02" }: { index?: string }) {
                 <p className="label mt-2">
                   {job.start}–{job.end}
                   {"current" in job && job.current ? (
-                    <span className="ms-2 text-accent">CURRENT</span>
+                    <span className="ms-2 text-ink-a">CURRENT</span>
                   ) : null}
                 </p>
               </div>
               <ul className="max-w-prose space-y-2 lg:col-span-8">
                 {job.points.map((p) => (
                   <li key={p} className="flex gap-3 text-small text-ink-muted">
-                    <span aria-hidden className="mt-[0.65em] h-px w-3 shrink-0 bg-accent" />
+                    <span aria-hidden className="mt-[0.65em] h-px w-3 shrink-0 bg-ink-a" />
                     <span>{p}</span>
                   </li>
                 ))}

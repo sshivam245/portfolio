@@ -28,7 +28,7 @@ export default function ToolsTeaser({ index = "02" }: { index?: string }) {
     <Section id="tools" index={index} title="Tools" aside="Working, not described">
       <ul className="grid gap-x-10 gap-y-12 sm:grid-cols-2">
         <li className="stagger-item">
-          <p className="label text-accent">Instant, no email</p>
+          <p className="label text-ink-a">Instant, no email</p>
           <h3 className="t-subhead mt-3">Which GTM agent should you build?</h3>
           <p className="mt-3 max-w-prose text-body text-ink-muted">
             Five questions. A ranked shortlist, wired to the tools you already
@@ -59,7 +59,7 @@ export default function ToolsTeaser({ index = "02" }: { index?: string }) {
         </li>
 
         <li className="stagger-item">
-          <p className="label text-accent">{audit.kicker}</p>
+          <p className="label text-ink-a">{audit.kicker}</p>
           <h3 className="t-subhead mt-3">{audit.title}</h3>
           <p className="mt-3 max-w-prose text-body text-ink-muted">{audit.blurb}</p>
 

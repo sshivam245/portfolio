@@ -16,7 +16,7 @@ export default function RunPage() {
     <article>
       <header className="shell py-12">
         <p className="label label-tap">
-          <span className="text-accent">INTERNAL</span>
+          <span className="text-ink-a">INTERNAL</span>
           <span className="mx-2">·</span>
           UNLISTED
         </p>

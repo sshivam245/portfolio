@@ -24,11 +24,11 @@ export default function AboutPage() {
       <header className="shell py-12 sm:py-16">
         <p className="label mb-6">
           {profile.role}
-          <span className="mx-2 text-accent">/</span>
+          <span className="mx-2 text-ink-a">/</span>
           {profile.roleAlt}
-          <span className="mx-2 text-accent">/</span>
+          <span className="mx-2 text-ink-a">/</span>
           {profile.yearsExperience} yrs
-          <span className="mx-2 text-accent">/</span>
+          <span className="mx-2 text-ink-a">/</span>
           {profile.location}
         </p>
         <h1 className="t-title max-w-[16ch]">

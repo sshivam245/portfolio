@@ -25,12 +25,12 @@ export default function AeoAuditPage() {
     <article>
       <AeoAuditSchema />
       <header className="shell py-12 sm:py-16">
-        <Link href="/tools" className="label label-tap hover:text-accent transition-colors">
+        <Link href="/tools" className="label label-tap hover:text-ink-a transition-colors">
           ← Tools
         </Link>
 
         <p className="label label-tap mt-8">
-          <span className="text-accent">FREE</span>
+          <span className="text-ink-a">FREE</span>
           <span className="mx-2">·</span>
           WRITTEN BY A PERSON
           <span className="mx-2">·</span>
@@ -118,7 +118,7 @@ export default function AeoAuditPage() {
           <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {CATEGORIES.map((c) => (
               <div key={c.id} className="rule-t pt-5">
-                <h3 className="label text-accent">{c.label}</h3>
+                <h3 className="label text-ink-a">{c.label}</h3>
                 <p className="mt-2 text-small text-ink-muted">{c.blurb}</p>
                 <ul className="mt-5 space-y-2">
                   {CHECK_SPECS.filter((s) => s.category === c.id).map((s) => (
@@ -142,7 +142,7 @@ export default function AeoAuditPage() {
         <div className="shell py-10">
           <Link href="/work/aeo-geo" className="group block">
             <h2 className="label mb-2">Why take my word for it</h2>
-            <p className="t-heading transition-colors duration-150 group-hover:text-accent">
+            <p className="t-heading transition-colors duration-150 group-hover:text-ink-a">
               The case study where this got a page cited by Google&apos;s AI Overview
             </p>
           </Link>

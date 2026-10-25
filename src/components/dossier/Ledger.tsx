@@ -28,7 +28,7 @@ export default function Ledger({
           <dd
             className={`${
               o.value.length <= 7 ? "t-metric" : "t-metric-sm"
-            } break-words text-accent`}
+            } break-words text-ink-a`}
           >
             {/* Words pass through untouched; only numbers count up. */}
             <CountUp value={o.value} />

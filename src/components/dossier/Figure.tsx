@@ -80,7 +80,7 @@ export default function Figure({ figure }: { figure: FigureData }) {
       </div>
       <figcaption className="label mt-3 flex gap-2">
         {figure.diagram ? (
-          <span className="text-accent">DIAGRAM</span>
+          <span className="text-ink-a">DIAGRAM</span>
         ) : null}
         <span>{figure.caption}</span>
       </figcaption>

@@ -36,7 +36,7 @@ function Question({
   return (
     <fieldset className="rule-t pt-8">
       <legend className="label">
-        <span className="tnum text-accent">{String(n).padStart(2, "0")}</span>
+        <span className="tnum text-ink-a">{String(n).padStart(2, "0")}</span>
         <span className="mx-2">·</span>
         {title}
       </legend>
@@ -49,7 +49,7 @@ function Card({ r, rank }: { r: Result; rank: number }) {
   return (
     <li className="rule-t pt-8">
       <p className="label">
-        <span className="tnum text-accent">{String(rank).padStart(2, "0")}</span>
+        <span className="tnum text-ink-a">{String(rank).padStart(2, "0")}</span>
         {r.missing.length ? (
           <>
             <span className="mx-2">·</span>
@@ -76,7 +76,7 @@ function Card({ r, rank }: { r: Result; rank: number }) {
       <ol className="space-y-2">
         {r.loop.map((step, i) => (
           <li key={step} className="flex gap-3 text-small text-ink-muted">
-            <span className="tnum shrink-0 text-accent">{i + 1}</span>
+            <span className="tnum shrink-0 text-ink-a">{i + 1}</span>
             <span>{step}</span>
           </li>
         ))}
@@ -213,7 +213,7 @@ export default function AgentFit() {
             {out.caution ? (
               <p className="mt-6 max-w-prose border-l-2 pl-4 text-body text-ink"
                  style={{ borderColor: "var(--accent)" }}>
-                <span className="label mr-2 text-accent">Before you do</span>
+                <span className="label mr-2 text-ink-a">Before you do</span>
                 {out.caution}
               </p>
             ) : null}

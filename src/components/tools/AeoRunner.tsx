@@ -147,7 +147,7 @@ export default function AeoRunner() {
         <section className="mt-14">
           <div className="rule-t pt-8">
             <p className="label">Verdict</p>
-            <p className="t-metric mt-2 text-accent">{Math.round(score * 100)}%</p>
+            <p className="t-metric mt-2 text-ink-a">{Math.round(score * 100)}%</p>
             <p className="t-subhead mt-2">{v.word}</p>
             <p className="mt-2 max-w-prose text-body text-ink-muted">{v.note}</p>
           </div>
@@ -155,7 +155,7 @@ export default function AeoRunner() {
           {byCategory(findings).map((c) => (
             <div key={c.id} className="rule-t mt-10 pt-8">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="label text-accent">{c.label}</h2>
+                <h2 className="label text-ink-a">{c.label}</h2>
                 <p className="label tnum">{Math.round(c.score * 100)}%</p>
               </div>
               <ul className="mt-5 space-y-5">

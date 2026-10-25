@@ -33,7 +33,7 @@ export default function Contact({ index = "04" }: { index?: string }) {
                 className="rule-b flex items-baseline justify-between gap-4 py-4 sm:py-3"
               >
                 <dt className="label flex items-center gap-2">
-                  <r.Icon className="text-accent" />
+                  <r.Icon className="text-ink-a" />
                   {r.label}
                 </dt>
                 {/* An email address is one unbreakable token; at 200% text it was

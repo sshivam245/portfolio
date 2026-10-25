@@ -23,7 +23,7 @@ export default function WritingIndexPage() {
       <header className="shell py-12 sm:py-16">
         <p className="label mb-6">
           {publishedPosts.length} post{publishedPosts.length === 1 ? "" : "s"}
-          <span className="mx-2 text-accent">/</span>
+          <span className="mx-2 text-ink-a">/</span>
           Growth, GTM, automation
         </p>
         <h1 className="t-title max-w-[16ch]">

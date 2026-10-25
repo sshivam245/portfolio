@@ -35,7 +35,7 @@ export default function WorkIndex({
       title={heading}
       aside={
         hasMore ? (
-          <Link href="/work" className="label-tap hover:text-accent transition-colors">
+          <Link href="/work" className="label-tap hover:text-ink-a transition-colors">
             All {caseStudies.length} →
           </Link>
         ) : (
@@ -89,7 +89,7 @@ export default function WorkIndex({
                     ) : null}
                   </p>
 
-                  <h3 className="t-heading mt-4 transition-colors duration-150 group-hover:text-accent">
+                  <h3 className="t-heading mt-4 transition-colors duration-150 group-hover:text-ink-a">
                     {cs.title}
                   </h3>
                   {/*

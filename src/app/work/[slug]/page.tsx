@@ -88,13 +88,13 @@ export default function CaseStudyPage({
         where four numbers read best anyway.
       */}
       <header className="shell py-12 sm:py-16">
-        <Link href="/#work" className="label label-tap hover:text-accent transition-colors">
+        <Link href="/#work" className="label label-tap hover:text-ink-a transition-colors">
           ← Selected work
         </Link>
 
         <p className="label label-tap mt-10">
           <span className="tnum">{String(index + 1).padStart(2, "0")}</span>
-          <span className="mx-2 text-accent">·</span>
+          <span className="mx-2 text-ink-a">·</span>
           {cs.tag}
           <span className="mx-2">·</span>
           {cs.org}, {cs.timeframe}
@@ -216,7 +216,7 @@ export default function CaseStudyPage({
         <div className="shell py-10">
           <Link href={`/work/${next.id}`} className="group block">
             <h2 className="label mb-2">Next case study</h2>
-            <p className="t-heading transition-colors duration-150 group-hover:text-accent">
+            <p className="t-heading transition-colors duration-150 group-hover:text-ink-a">
               {next.title}
             </p>
           </Link>

@@ -33,7 +33,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="label label-tap hover:text-accent transition-colors"
+      className="label label-tap hover:text-ink-a transition-colors"
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
       {resolvedTheme === "dark" ? "LIGHT" : "DARK"}
@@ -50,7 +50,7 @@ export default function Header() {
       <div className="shell flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2">
         {/* next/link, not <a> — Next only prepends basePath (/portfolio) to
             Link hrefs, so a plain anchor to "/" 404s on GitHub Pages. */}
-        <Link href="/" className="label label-tap text-ink hover:text-accent transition-colors">
+        <Link href="/" className="label label-tap text-ink hover:text-ink-a transition-colors">
           Shivam Goel
         </Link>
 
@@ -59,7 +59,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className={`label label-tap hover:text-accent transition-colors ${
+              className={`label label-tap hover:text-ink-a transition-colors ${
                 item.secondary ? "hidden sm:inline" : ""
               }`}
             >
@@ -68,7 +68,7 @@ export default function Header() {
           ))}
           <a
             href={asset(profile.resumePath)}
-            className="label label-tap hover:text-accent transition-colors"
+            className="label label-tap hover:text-ink-a transition-colors"
             download
           >
             CV

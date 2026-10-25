@@ -71,7 +71,7 @@ export default function AeoAuditForm() {
   if (state === "done") {
     return (
       <div className="rule-t pt-8">
-        <p className="label text-accent">Request received</p>
+        <p className="label text-ink-a">Request received</p>
         <h2 className="t-subhead mt-3">I&apos;ll have this back to you within a day.</h2>
         <p className="mt-4 max-w-prose text-body text-ink-muted">
           It comes as a written report, not a dashboard: what an engine can currently
@@ -91,7 +91,7 @@ export default function AeoAuditForm() {
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label htmlFor="url" className="label block">
-            Your site <span className="text-accent">*</span>
+            Your site <span className="text-ink-a">*</span>
           </label>
           <input
             ref={urlRef}
@@ -107,7 +107,7 @@ export default function AeoAuditForm() {
 
         <div>
           <label htmlFor="email" className="label block">
-            Where to send it <span className="text-accent">*</span>
+            Where to send it <span className="text-ink-a">*</span>
           </label>
           <input
             id="email" name="email" type="email" required autoComplete="email"
@@ -167,8 +167,21 @@ export default function AeoAuditForm() {
         />
       </div>
 
+      {/*
+        An error is not a link and it is not verified evidence, so it gets
+        neither plate as a text colour. It is marked by the pink plate as a
+        rule down its left edge — --ink-b is 2.8:1 on light stock and cannot
+        carry text there — with the message itself in full-contrast ink.
+        role="alert" is what actually announces it; the rule is for everyone
+        scanning the form with their eyes.
+      */}
       {err ? (
-        <p role="alert" className="mt-6 text-small text-accent">{err}</p>
+        <p
+          role="alert"
+          className="mt-6 border-l-[3px] border-ink-b py-1 ps-3 text-small text-ink"
+        >
+          {err}
+        </p>
       ) : null}
 
       <div className="mt-8 flex flex-wrap items-center gap-4">

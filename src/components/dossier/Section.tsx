@@ -23,7 +23,7 @@ export default function Section({
         <Reveal>
           <header className="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
             <h2 className="label">
-              <span className="text-accent tnum">{index}</span>
+              <span className="text-ink-a tnum">{index}</span>
               <span className="mx-2">/</span>
               {title}
             </h2>

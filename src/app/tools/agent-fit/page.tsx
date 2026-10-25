@@ -29,12 +29,12 @@ export default function AgentFitPage() {
     <article>
       <AgentFitSchema />
       <header className="shell py-12 sm:py-16">
-        <Link href="/tools" className="label label-tap hover:text-accent transition-colors">
+        <Link href="/tools" className="label label-tap hover:text-ink-a transition-colors">
           ← Tools
         </Link>
 
         <p className="label label-tap mt-8">
-          <span className="text-accent">FIVE QUESTIONS</span>
+          <span className="text-ink-a">FIVE QUESTIONS</span>
           <span className="mx-2">·</span>
           NO EMAIL
           <span className="mx-2">·</span>
@@ -76,7 +76,7 @@ export default function AgentFitPage() {
         <div className="shell py-10">
           <Link href="/tools/aeo-audit" className="group block">
             <h2 className="label mb-2">Also here</h2>
-            <p className="t-heading transition-colors duration-150 group-hover:text-accent">
+            <p className="t-heading transition-colors duration-150 group-hover:text-ink-a">
               A free AEO audit of your site, written by a person
             </p>
           </Link>

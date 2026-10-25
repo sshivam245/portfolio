@@ -48,11 +48,11 @@ export default function ToolsPage() {
           <div className="shell py-12">
             <Link href={t.href} className="group block">
               <p className="label">
-                <span className="text-accent">{t.kicker.split(" · ")[0]}</span>
+                <span className="text-ink-a">{t.kicker.split(" · ")[0]}</span>
                 <span className="mx-2">·</span>
                 {t.kicker.split(" · ")[1]}
               </p>
-              <h2 className="t-heading mt-4 max-w-[20ch] transition-colors duration-150 group-hover:text-accent">
+              <h2 className="t-heading mt-4 max-w-[20ch] transition-colors duration-150 group-hover:text-ink-a">
                 {t.title}
               </h2>
               <p className="mt-5 max-w-prose text-body text-ink-muted">{t.blurb}</p>

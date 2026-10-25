@@ -81,16 +81,15 @@
   }
 
   ::selection {
-    background: var(--accent);
-    /* #fff, not --paper. Both pass AA on the accent (paper on the light
-       accent measures 4.56:1), so this is a margin rather than a fix: white
-       sits a little clearer on both accents and does not change with the
-       theme. */
+    background: var(--ink-a);
+    /* #fff, not --paper. White measures 7.7:1 on the light blue plate and
+       does not change with the theme, where --paper inverts and would have
+       to be re-checked against both. */
     color: #fff;
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--ink-a);
     outline-offset: 3px;
   }
 }
@@ -114,8 +113,8 @@
     /* At 200% text zoom a single long word is wider than its column. */
     overflow-wrap: break-word;
     font-size: 3.25rem;
-    line-height: 0.95;
-    letter-spacing: -0.025em;
+    line-height: 0.92;
+    letter-spacing: 0;
   }
   .t-title {
     @apply font-display font-normal;
@@ -123,8 +122,8 @@
     /* At 200% text zoom a single long word is wider than its column. */
     overflow-wrap: break-word;
     font-size: 2.5rem;
-    line-height: 1.02;
-    letter-spacing: -0.02em;
+    line-height: 0.92;
+    letter-spacing: 0;
   }
   .t-heading {
     @apply font-display font-normal;
@@ -132,8 +131,8 @@
     /* At 200% text zoom a single long word is wider than its column. */
     overflow-wrap: break-word;
     font-size: 1.75rem;
-    line-height: 1.08;
-    letter-spacing: -0.018em;
+    line-height: 1;
+    letter-spacing: 0.004em;
   }
   .t-subhead {
     @apply font-display font-normal;
@@ -146,27 +145,32 @@
        .t-display and .t-heading keep their tight leading on purpose: a
        52px serif headline at 0.95 is correct display typography, and the
        detector's 1.3 floor is a body-copy rule. */
-    line-height: 1.25;
-    letter-spacing: -0.012em;
+    line-height: 1.2;
+    letter-spacing: 0.008em;
   }
   .t-metric {
-    @apply font-mono font-medium tnum;
+    @apply font-display font-normal tnum;
+    /* Anton stops at Latin-1, so the arrow in "0→1" is not in the face and
+       falls through to whatever the system offers. Naming the mono as the
+       next stack entry keeps that one glyph in a face chosen on purpose.
+       Per-glyph fallback, so the digits either side stay Anton. */
     font-size: 2.5rem;
     line-height: 1;
     letter-spacing: -0.02em;
   }
   .t-metric-sm {
-    @apply font-mono font-medium tnum;
+    @apply font-display font-normal tnum;
     font-size: 1.5rem;
     line-height: 1;
   }
   /* The quiet end of the metric scale, for outcome values that are words
-     rather than numbers. It exists because the index reached for .t-subhead
-     here, which is the serif display face: "AI Overview" rendered in serif
-     beside "Live" and "1:1" in mono, so the typeface changed with the length
-     of the string. Size may vary across these values. Face may not. */
+     rather than numbers. It exists because the index once reached for
+     .t-subhead here, so "AI Overview" set in the display face beside "Live"
+     and "1:1" in mono: the typeface changed with the length of the string.
+     Size may vary across these values. Face may not — which is why all three
+     metric classes moved onto the plate together. */
   .t-metric-xs {
-    @apply font-mono font-medium tnum;
+    @apply font-display font-normal tnum;
     font-size: 1.25rem;
     line-height: 1.25;
   }
@@ -181,6 +185,127 @@
        the same non-hierarchy the old 32/34 pair had. */
     .t-metric-sm { font-size: 2rem; }
     .t-metric-xs { font-size: 1.5rem; }
+  }
+
+  /* ----------------------------------------------------- the two plates --
+     Display type on this site is ink pressed onto stock, and the hero is
+     printed twice: the soot plate, and a second plate in --ink-b that lands
+     a hair off register.
+
+     The offset is in em, not px, so it scales with the headline. At 52px on
+     a phone a fixed 5px offset is twice the misregistration it is at 88px,
+     which stops reading as printing and starts reading as a mistake.
+
+     Light and dark differ, because overprinting does:
+
+       light  the pink plate sits ON TOP and multiplies. Over the soot glyph
+              it goes near-black; over bare stock it stays pink. That is
+              literally what a second pass of translucent ink does, and the
+              dark core with a pink fringe is the whole effect.
+
+       dark   multiply against a dark ground turns pink into mud, so the
+              plate goes BEHIND instead and shows only in the fringe. Same
+              gesture, no blend.
+
+     The ghost carries the same words, so it is aria-hidden, unselectable and
+     untouchable by the pointer: a screen reader must not read the headline
+     twice, and a drag-select must not pick up a second copy. */
+  .plate {
+    position: relative;
+    display: block;
+  }
+  .plate-ghost {
+    position: absolute;
+    inset: 0;
+    color: var(--ink-b);
+    transform: translate(0.05em, 0.04em);
+    mix-blend-mode: multiply;
+    user-select: none;
+    pointer-events: none;
+  }
+  .dark .plate-ghost {
+    mix-blend-mode: normal;
+    z-index: -1;
+  }
+  /*
+   * The citations are printed on the blue plate only, so the ghost's copies
+   * are hidden — but with visibility, never display. The ghost exists to
+   * break lines in exactly the same places as the live headline, and
+   * removing a bracket from the flow changes where it breaks.
+   */
+  .plate-ghost .cite {
+    visibility: hidden;
+  }
+
+  /* ------------------------------------------------------- the citation --
+     The superscript in the headline is a real link into the source list, not
+     an ornament: the one mechanic the hero carries. Sized in em so it tracks
+     the headline rather than needing a value per breakpoint. */
+  .cite {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    font-size: 0.34em;
+    line-height: 1;
+    vertical-align: 0.95em;
+    letter-spacing: 0;
+    color: var(--ink-a);
+    text-decoration: none;
+    /* Anton sets very tight, so the bracket needs air on its left or it
+       collides with the word. Not on the right: padding there pushed the
+       comma after "engines[2]" visibly off the bracket, which read as a
+       spacing mistake rather than a citation. */
+    padding-left: 0.1em;
+    transition: color 150ms;
+  }
+  .cite:hover,
+  .cite:focus-visible {
+    /* Into the soot, not into --accent. The overlap colour means one thing
+       on this site and pointing at a source is not a claim of having been
+       verified by anything. */
+    color: var(--ink);
+  }
+
+  /* A source the citation points at, lit while its citation is pointed at.
+     Transform and colour only — never opacity on something carrying a
+     figure, for the same reason the diagrams never animate opacity. */
+  .source {
+    transition:
+      background-color 180ms,
+      padding-left 180ms cubic-bezier(0.22, 0.8, 0.2, 1);
+  }
+  .source:target,
+  .source.source-on {
+    background-color: var(--grid);
+    padding-left: 0.75rem;
+  }
+
+  /* The registration crosshair. A printer's alignment mark, used here for
+     the one claim a stranger can check from outside. */
+  .reg {
+    position: relative;
+    display: inline-block;
+    width: 0.72em;
+    height: 0.72em;
+    vertical-align: -0.08em;
+  }
+  .reg::before,
+  .reg::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+  .reg::before {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform: translateX(-50%);
+  }
+  .reg::after {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform: translateY(-50%);
   }
 
   /* The mono label: uppercase, tracked, small. Used for every meta line. */
@@ -228,13 +353,13 @@
   .link {
     color: var(--ink);
     text-decoration: underline;
-    text-decoration-color: var(--accent);
+    text-decoration-color: var(--ink-a);
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;
     transition: color 150ms ease-out;
   }
   .link:hover {
-    color: var(--accent);
+    color: var(--ink-a);
   }
 }
 
@@ -376,7 +501,7 @@
     opacity: 0.6;
   }
   .field:focus {
-    border-bottom-color: var(--accent);
+    border-bottom-color: var(--ink-a);
   }
   /* A textarea keeps its own scrollbar rather than growing the page. */
   textarea.field {
@@ -403,29 +528,52 @@
     border-color: var(--rule);
   }
   .chip:hover {
-    border-color: var(--accent);
+    border-color: var(--ink-a);
   }
   .chip-on {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--ink-a);
+    color: var(--ink-a);
   }
   .chip:has(.chip-input:focus-visible) {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--ink-a);
     outline-offset: 2px;
   }
 
+  /*
+   * The primary action is a plate, and pointing at it knocks the register
+   * out — the same gesture the headline is printed with.
+   *
+   * A register shift rather than a colour swap, because every colour this
+   * could swap to fails somewhere: --ink-b is 2.8:1 on light stock, and
+   * anything using --paper for the label inverts between themes and has to
+   * be measured twice. Moving a plate leaves the text on its own
+   * background, so the contrast never changes at all.
+   */
   .btn {
-    @apply label press inline-flex items-center gap-2 border px-5 py-3
-           transition-colors;
-    border-color: var(--ink);
-    background: var(--ink);
+    @apply label press relative inline-flex items-center gap-2 border px-5
+           py-3 transition-colors;
+    border-color: var(--ink-a);
+    background: var(--ink-a);
     color: var(--paper);
   }
-  .btn:hover:not(:disabled) {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: #fff;
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--ink-b);
+    transition: transform 180ms cubic-bezier(0.22, 0.8, 0.2, 1);
   }
+  @media (hover: hover) {
+    .btn:hover:not(:disabled)::before {
+      transform: translate(5px, 4px);
+    }
+  }
+  /* Keyboard parity: every :hover on this site has a :focus-visible twin. */
+  .btn:focus-visible::before {
+    transform: translate(5px, 4px);
+  }
+
   .btn:disabled {
     @apply cursor-not-allowed opacity-50;
   }
@@ -437,8 +585,8 @@
     color: var(--ink);
   }
   .btn-ghost:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--ink-a);
+    color: var(--ink-a);
   }
 
   /* Status dot for a finding row. Colour is never the only signal: the
@@ -460,8 +608,8 @@
   .diagram svg { display: block; }
   .diagram svg .ink   { fill: var(--ink); }
   .diagram svg .muted { fill: var(--ink-muted); }
-  .diagram svg .accf  { fill: var(--accent); }
-  .diagram svg .acc   { stroke: var(--accent); }
+  .diagram svg .accf  { fill: var(--ink-a); }
+  .diagram svg .acc   { stroke: var(--ink-a); }
   .diagram svg .box,
   .diagram svg .rule  { stroke: var(--rule); }
 
@@ -518,7 +666,7 @@
     inset: 0 0 auto 0;
     height: 2px;
     transform-origin: 0 50%;
-    background: var(--accent);
+    background: var(--ink-a);
     z-index: 50;
     transform: scaleX(0);
   }
@@ -627,20 +775,20 @@
 
   /* Hovering an entry lights its whole path: node, connector, arrowhead, box. */
   .flow-row:focus-visible .flow-node,
-  .flow-row:focus-visible .flow-out { border-color: var(--accent); }
-  .flow-row:focus-visible .flow-node { color: var(--accent); }
-  .flow-row:focus-visible .flow-out::before { background: var(--accent); }
-  .flow-row:focus-visible .flow-out::after { border-left-color: var(--accent); }
+  .flow-row:focus-visible .flow-out { border-color: var(--ink-a); }
+  .flow-row:focus-visible .flow-node { color: var(--ink-a); }
+  .flow-row:focus-visible .flow-out::before { background: var(--ink-a); }
+  .flow-row:focus-visible .flow-out::after { border-left-color: var(--ink-a); }
 
   @media (hover: hover) {
     .flow-row:hover .flow-node {
-      border-color: var(--accent);
-      background: var(--accent);
+      border-color: var(--ink-a);
+      background: var(--ink-a);
       color: var(--paper);
     }
-    .flow-row:hover .flow-out { border-color: var(--accent); }
-    .flow-row:hover .flow-out::before { background: var(--accent); }
-    .flow-row:hover .flow-out::after { border-left-color: var(--accent); }
+    .flow-row:hover .flow-out { border-color: var(--ink-a); }
+    .flow-row:hover .flow-out::before { background: var(--ink-a); }
+    .flow-row:hover .flow-out::after { border-left-color: var(--ink-a); }
   }
 
   /* Below sm the spine and its gutter are gone, so the connector would point
@@ -834,9 +982,9 @@
    assembled rather than built. All four come from the palette here. */
 @layer base {
   :root {
-    caret-color: var(--accent);
+    caret-color: var(--ink-a);
     /* Checkboxes, radios and the focus ring's default. */
-    accent-color: var(--accent);
+    accent-color: var(--ink-a);
     scrollbar-color: var(--rule) transparent;
     scrollbar-width: thin;
   }
@@ -874,11 +1022,11 @@
     opacity: 0.22;
   }
   .specimen svg rect[data-on] {
-    stroke: var(--accent);
+    stroke: var(--ink-a);
     stroke-width: 1.8;
   }
   .specimen svg text[data-on] {
-    fill: var(--accent);
+    fill: var(--ink-a);
   }
 
   .step-btn {
@@ -889,10 +1037,10 @@
   .step-btn:hover,
   .step-btn:focus-visible,
   .step-on {
-    border-top-color: var(--accent);
+    border-top-color: var(--ink-a);
   }
   .step-on .label {
-    color: var(--accent);
+    color: var(--ink-a);
   }
 }
 
@@ -901,81 +1049,9 @@
   .step-btn { transition: none; }
 }
 
-/* ------------------------------------------------------- hero wiring ----
-   A bus leaving the headline, dropping an arrow into each figure. Same
-   connector language as the case-study diagrams: hairline in --rule, solid
-   arrowhead in --accent, nothing rounded and nothing filled.
-
-   The bus is the container's ::before so it spans the whole measure; each
-   cell owns its own drop, which is what keeps the arrows centred under their
-   columns at any width without percentages to maintain.
-
-   Animated with transform only. If the animation never runs the wiring is
-   simply there, already drawn, which is the rule the reveals here learned
-   the hard way. */
-@layer components {
-  .hero-wire {
-    position: relative;
-    height: 4rem;
-  }
-  /* The bus. Scales from the left, so it reads as leaving the headline. */
-  .hero-wire::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 1px;
-    background: color-mix(in srgb, var(--accent) 32%, transparent);
-    transform-origin: 0 50%;
-    animation: wire-bus 620ms cubic-bezier(0.22, 0.8, 0.2, 1);
-  }
-  .hero-wire-cell {
-    position: relative;
-  }
-  /* The drop, from the bus down toward its figure. */
-  .hero-wire-drop {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 1px;
-    height: calc(100% - 9px);
-    background: color-mix(in srgb, var(--accent) 55%, transparent);
-    transform-origin: 50% 0;
-    animation: wire-drop 420ms cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
-  }
-  /* The arrowhead: a CSS triangle, matching .accf in the diagrams. */
-  .hero-wire-head {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    margin-left: -5px;
-    border-top: 9px solid var(--accent);
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    animation: wire-head 260ms cubic-bezier(0.22, 0.8, 0.2, 1) backwards;
-  }
-
-  /* Each column fires a beat after the one before, left to right, so the
-     bus visibly distributes rather than everything appearing at once. */
-  .hero-wire-cell:nth-child(1) .hero-wire-drop { animation-delay: 420ms; }
-  .hero-wire-cell:nth-child(2) .hero-wire-drop { animation-delay: 520ms; }
-  .hero-wire-cell:nth-child(3) .hero-wire-drop { animation-delay: 620ms; }
-  .hero-wire-cell:nth-child(4) .hero-wire-drop { animation-delay: 720ms; }
-  .hero-wire-cell:nth-child(1) .hero-wire-head { animation-delay: 780ms; }
-  .hero-wire-cell:nth-child(2) .hero-wire-head { animation-delay: 880ms; }
-  .hero-wire-cell:nth-child(3) .hero-wire-head { animation-delay: 980ms; }
-  .hero-wire-cell:nth-child(4) .hero-wire-head { animation-delay: 1080ms; }
-
-  @keyframes wire-bus  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  @keyframes wire-drop { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-  @keyframes wire-head { from { transform: scale(0); } to { transform: scale(1); } }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hero-wire::before,
-  .hero-wire-drop,
-  .hero-wire-head { animation: none; }
+  /* The plate still shifts, it just arrives there instantly: the offset is
+     the hover affordance, so removing it would leave the control with no
+     visible response at all. */
+  .btn::before { transition: none; }
 }

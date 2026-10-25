@@ -24,7 +24,7 @@ export default function Footer() {
     <footer className="rule-t">
       <div className="shell flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 py-8">
         <p className="label">
-          <span className="text-accent">Open to founding-GTM roles</span>
+          <span className="text-ink-a">Open to founding-GTM roles</span>
           <span className="mx-2">·</span>
           {profile.location}
         </p>

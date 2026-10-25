@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import {
-  IBM_Plex_Sans,
-  IBM_Plex_Mono,
-  Instrument_Serif,
-} from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Anton } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL } from "@/lib/site";
 import Header from "@/components/dossier/Header";
 import Footer from "@/components/dossier/Footer";
 
-const plexSans = IBM_Plex_Sans({
+/*
+ * The body grotesque. Plex Sans was the old dossier's voice: neutral,
+ * IBM-issue, and the reason the page read as a competent template. Archivo
+ * is cut for signage and small sizes, carries real weight at 700, and sits
+ * under Anton without arguing with it.
+ */
+const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-plex-sans",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -25,15 +27,19 @@ const plexMono = IBM_Plex_Mono({
 });
 
 /**
- * The display face. Plex Sans alone read as competent-but-anonymous; a serif
- * against the mono labels is what gives the page a voice, the same job Syne
- * does on kevinshelly.com and Instrument Serif does on abhijeet-patil.com.
+ * The plate. Every piece of display type on this site is ink pressed onto
+ * stock, and Anton is the only face here that reads as a solid area of it
+ * rather than as lettering — which is what makes the two-plate offset in
+ * the hero legible as printing instead of as a drop shadow.
+ *
+ * One weight, by design. A condensed poster face with a weight axis invites
+ * a hierarchy built from weight, and this system builds hierarchy from size
+ * and from which plate a thing is printed on.
  */
-const instrument = Instrument_Serif({
+const anton = Anton({
   subsets: ["latin"],
   weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-instrument",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -97,7 +103,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${plexSans.variable} ${plexMono.variable} ${instrument.variable} font-sans antialiased`}
+        className={`${archivo.variable} ${plexMono.variable} ${anton.variable} font-sans antialiased`}
       >
         {/* Dark by default — the design is built for the dark ground and it
             carries far more contrast. System preference still wins if set. */}

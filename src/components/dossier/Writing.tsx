@@ -30,7 +30,7 @@ export default function Writing({
       title="Writing"
       aside={
         hasMore ? (
-          <Link href="/writing" className="hover:text-accent transition-colors">
+          <Link href="/writing" className="hover:text-ink-a transition-colors">
             All {plural} →
           </Link>
         ) : (
@@ -51,11 +51,11 @@ export default function Writing({
 
               <span className="min-w-0 flex-1">
                 <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="t-subhead group-hover:text-accent transition-colors duration-150">
+                  <span className="t-subhead group-hover:text-ink-a transition-colors duration-150">
                     {post.title}
                   </span>
                   {external ? (
-                    <span className="label group-hover:text-accent transition-colors">
+                    <span className="label group-hover:text-ink-a transition-colors">
                       {post.venue} ↗
                     </span>
                   ) : null}
@@ -77,7 +77,7 @@ export default function Writing({
 
               <span
                 aria-hidden
-                className="mt-3 hidden h-px w-12 shrink-0 origin-left scale-x-50 bg-accent transition-transform duration-200 group-hover:scale-x-100 sm:block"
+                className="mt-3 hidden h-px w-12 shrink-0 origin-left scale-x-50 bg-ink-a transition-transform duration-200 group-hover:scale-x-100 sm:block"
               />
             </>
           );
