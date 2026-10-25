@@ -25,13 +25,16 @@ const root = path.join(here, "..");
 // The content files are TypeScript, so this is run through tsx rather than
 // duplicating titles and figures in a second place that can drift from them.
 const { caseStudies } = await import("../src/content/caseStudies.ts");
-const { profile } = await import("../src/content/profile.ts");
+const { profile, headlineMetrics } = await import("../src/content/profile.ts");
 
-const serif = fs.readFileSync(path.join(here, "og-fonts/InstrumentSerif-Regular.ttf"));
+const display = fs.readFileSync(path.join(here, "og-fonts/Anton-Regular.ttf"));
 const mono = fs.readFileSync(path.join(here, "og-fonts/IBMPlexMono-Medium.ttf"));
 
 // The dark plates. OG previews sit on both light and dark chrome, and the
 // dark card is the one that reads as this site rather than as a default.
+//
+// Same rule as the site: ACCENT is the overlap colour and marks the figure,
+// which is the one thing on the card a reader can go and check.
 // Imported, never copied: this block used to be a hand-kept second copy of
 // the palette, and the figure SVGs were a third that had already drifted.
 const { TOKENS } = await import("./tokens.mjs");
@@ -42,7 +45,7 @@ const ACCENT = TOKENS.dark["--accent"];
 const RULE = TOKENS.dark["--rule"];
 const INK_A = TOKENS.dark["--ink-a"];
 const INK_B = TOKENS.dark["--ink-b"];
-void INK_A; void INK_B;
+void INK_B;
 
 const W = 1200;
 const H = 630;
@@ -54,17 +57,64 @@ function grid() {
   for (let x = cell; x < W; x += cell)
     lines.push({
       type: "div",
-      props: { style: { position: "absolute", left: x, top: 0, width: 1, height: H, background: RULE, opacity: 0.55 } },
+      props: { style: { position: "absolute", left: x, top: 0, width: 1, height: H, background: INK_A, opacity: 0.22 } },
     });
   for (let y = cell; y < H; y += cell)
     lines.push({
       type: "div",
-      props: { style: { position: "absolute", left: 0, top: y, width: W, height: 1, background: RULE, opacity: 0.55 } },
+      props: { style: { position: "absolute", left: 0, top: y, width: W, height: 1, background: INK_A, opacity: 0.22 } },
     });
   return lines;
 }
 
-function card({ kicker, title, metric, metricLabel }) {
+/**
+ * The four figures as a source row, which is what the homepage hero now is.
+ *
+ * The home card used to fall through to profile.statement here, and that
+ * statement is the headline — so the most-shared graphic on the project
+ * printed the same sentence twice, once at 92px and once at 20px, with 300px
+ * of empty card between them. Carrying the evidence instead is the whole
+ * argument of the page the card links to.
+ */
+function sources() {
+  return {
+    type: "div",
+    props: {
+      style: { display: "flex", gap: 44 },
+      children: headlineMetrics.map((m) => ({
+        type: "div",
+        props: {
+          style: { display: "flex", flexDirection: "column", maxWidth: 230 },
+          children: [
+            {
+              type: "div",
+              props: {
+                style: {
+                  fontFamily: "Anton",
+                  fontSize: 58,
+                  lineHeight: 1,
+                  // Same rule as the site: the overlap marks the one figure
+                  // a reader can confirm without taking our word for it.
+                  color: m.verified ? ACCENT : INK,
+                },
+                children: `${m.value}${m.unit}`,
+              },
+            },
+            {
+              type: "div",
+              props: {
+                style: { fontSize: 17, color: MUTED, marginTop: 10, letterSpacing: 1 },
+                children: m.label.toUpperCase(),
+              },
+            },
+          ],
+        },
+      })),
+    },
+  };
+}
+
+function card({ kicker, title, metric, metricLabel, showSources }) {
   return {
     type: "div",
     props: {
@@ -98,8 +148,25 @@ function card({ kicker, title, metric, metricLabel }) {
                 type: "div",
                 props: {
                   style: {
-                    fontFamily: "Instrument Serif", fontSize: title.length > 44 ? 68 : 84,
-                    lineHeight: 1.04, marginTop: 28, maxWidth: 960, color: INK,
+                    /*
+                     * Anton is condensed, so it fits more per line than the
+                     * serif did and the breakpoints move with it. Three
+                     * steps, not two: at a single threshold a 29-character
+                     * title took the 92px branch, wrapped "AI / Overview"
+                     * across two lines and left one word alone on the second.
+                     *
+                     * maxWidth is the full content measure (1200 less the
+                     * 72px gutters). It was 1000, which threw away 56px and
+                     * caused exactly that break.
+                     *
+                     * lineHeight 1.02, not 0.96: the site's hero is set once
+                     * and checked, but these titles come from content and
+                     * wrap where they land. At 0.96 the descender of "by"
+                     * sat on the cap-height of the line beneath it.
+                     */
+                    fontFamily: "Anton",
+                    fontSize: title.length > 52 ? 72 : title.length > 26 ? 80 : 92,
+                    lineHeight: 1.02, marginTop: 28, maxWidth: 1056, color: INK,
                   },
                   children: title,
                 },
@@ -118,10 +185,12 @@ function card({ kicker, title, metric, metricLabel }) {
                   style: { display: "flex", flexDirection: "column" },
                   children: metric
                     ? [
-                        { type: "div", props: { style: { fontSize: 56, color: ACCENT, lineHeight: 1 }, children: metric } },
+                        { type: "div", props: { style: { fontFamily: "Anton", fontSize: 72, color: ACCENT, lineHeight: 1 }, children: metric } },
                         { type: "div", props: { style: { fontSize: 20, color: MUTED, marginTop: 12, maxWidth: 620 }, children: metricLabel } },
                       ]
-                    : [{ type: "div", props: { style: { fontSize: 20, color: MUTED }, children: profile.statement.slice(0, 92) } }],
+                    : showSources
+                      ? [sources()]
+                      : [{ type: "div", props: { style: { fontSize: 20, color: MUTED }, children: profile.statement.slice(0, 92) } }],
                 },
               },
               {
@@ -143,7 +212,7 @@ async function render(spec, file) {
   const svg = await satori(card(spec), {
     width: W, height: H,
     fonts: [
-      { name: "Instrument Serif", data: serif, weight: 400, style: "normal" },
+      { name: "Anton", data: display, weight: 400, style: "normal" },
       { name: "IBM Plex Mono", data: mono, weight: 500, style: "normal" },
     ],
   });
@@ -161,6 +230,7 @@ const pages = [
     kicker: `${profile.role} · ${profile.location}`,
     title: "I build acquisition engines, and the automation underneath them.",
     metric: null,
+    showSources: true,
   },
   ...caseStudies.map((cs) => ({
     file: `work-${cs.id}.png`,
