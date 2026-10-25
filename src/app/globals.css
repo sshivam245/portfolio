@@ -185,7 +185,33 @@
     line-height: 1.25;
   }
 
+  /*
+   * Three steps, not two.
+   *
+   * The scale used to jump straight from the phone size to the full desktop
+   * size at 640px, which meant every width from 640 to 1024 — tablets, split
+   * windows, a half-screen browser — got 88px display type. At 800px the
+   * headline ran to four lines and broke between "engines[2]" and the comma
+   * that follows it. The serif this scale was built for was narrower in the
+   * mouth and survived that jump; Anton at 88px does not.
+   */
   @media (min-width: 640px) {
+    .t-display { font-size: 4rem; }
+    .t-title { font-size: 3rem; }
+    .t-heading { font-size: 2.25rem; }
+    .t-subhead { font-size: 1.5rem; }
+    .t-metric { font-size: 2.75rem; }
+    .t-metric-sm { font-size: 1.75rem; }
+    .t-metric-xs { font-size: 1.375rem; }
+  }
+
+  /*
+   * 1200px, not the 1024 Tailwind lg: the shell is 1152px wide, so at a
+   * 1024 viewport the measure is ~960px and 88px Anton ran the headline to
+   * four lines with the citation stranded from its comma. The top of the
+   * scale wants the full shell behind it.
+   */
+  @media (min-width: 1200px) {
     .t-display { font-size: 5.5rem; }
     .t-title { font-size: 4rem; }
     .t-heading { font-size: 2.5rem; }
