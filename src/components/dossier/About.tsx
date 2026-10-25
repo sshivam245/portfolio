@@ -19,7 +19,7 @@ export function About({ index = "01" }: { index?: string }) {
             {beyond.map((b) => (
               <div key={b.title} className="py-4">
                 <p className="label mb-1">{b.label}</p>
-                <h4 className="text-h3 font-semibold">{b.title}</h4>
+                <h4 className="text-body font-semibold">{b.title}</h4>
                 <p className="mt-2 text-small text-ink-muted">{b.detail}</p>
               </div>
             ))}
@@ -74,7 +74,7 @@ export function Credentials({ index = "04" }: { index?: string }) {
           <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
             {education.map((e) => (
               <div key={e.institution} className="py-4">
-                <h4 className="text-h3 font-semibold">{e.institution}</h4>
+                <h4 className="text-body font-semibold">{e.institution}</h4>
                 <p className="mt-1 text-small text-ink-muted">{e.credential}</p>
                 <p className="label mt-2">{e.period}</p>
                 {e.honors.length ? (

@@ -28,7 +28,13 @@ export default function Marks() {
                 role="img"
                 aria-label={logo.label}
                 className="mark h-5 w-5 shrink-0"
-              />
+              >
+                {/* The <path> was missing: a `path` logo rendered an empty
+                    <svg>. Latent only because every current orgLogos entry
+                    uses `file`. LogoChip.tsx had it right before it was
+                    deleted. */}
+                <path d={logo.path} />
+              </svg>
             ) : logo.file ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
