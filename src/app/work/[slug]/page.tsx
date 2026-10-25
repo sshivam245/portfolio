@@ -147,7 +147,7 @@ export default function CaseStudyPage({
       <section className="rule-t">
         <div className="shell py-10">
           <h2 className="label mb-8">Outcome</h2>
-          <Ledger items={cs.outcomes} />
+          <Ledger items={cs.outcomes} verifiedFirst={cs.verified} />
         </div>
       </section>
 

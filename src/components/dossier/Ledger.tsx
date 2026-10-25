@@ -13,12 +13,24 @@ import CountUp from "@/components/motion/CountUp";
  */
 export default function Ledger({
   items,
+  verifiedFirst = false,
 }: {
   items: { value: string; label: string }[];
+  /**
+   * True when a stranger can check the headline outcome without taking this
+   * site's word for it — `verified` on the case study, which by its own
+   * definition refers to outcomes[0].
+   *
+   * Every value in here used to be painted accent unconditionally, which is
+   * exactly the flattening WorkIndex already carries a comment about fixing:
+   * the AI Overview citation rendered at the same weight as a figure read off
+   * a private Search Console. Accent means one thing on this site.
+   */
+  verifiedFirst?: boolean;
 }) {
   return (
     <dl className="ledger grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
-      {items.map((o) => (
+      {items.map((o, i) => (
         /* Two shared rows, so a value that wraps does not drop its own label
            below the others. See the same pattern on the masthead metrics. */
         <div
@@ -28,7 +40,9 @@ export default function Ledger({
           <dd
             className={`${
               o.value.length <= 7 ? "t-metric" : "t-metric-sm"
-            } break-words text-ink-a`}
+            } break-words ${
+              verifiedFirst && i === 0 ? "text-accent" : "text-ink"
+            }`}
           >
             {/* Words pass through untouched; only numbers count up. */}
             <CountUp value={o.value} />
