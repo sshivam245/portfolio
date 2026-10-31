@@ -14,7 +14,7 @@ export default function StatsBand() {
   return (
     <section aria-label="Results at a glance" className="tone-cream">
       <div className="shell py-12 sm:py-16">
-        <p className="label">The funnel&apos;s numbers, all at once</p>
+        <p className="stage-tag">Selected results</p>
         <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
           {headlineMetrics.map((m) => (
             <div key={m.label} className="min-w-0">

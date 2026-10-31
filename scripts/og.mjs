@@ -27,8 +27,8 @@ const root = path.join(here, "..");
 const { caseStudies } = await import("../src/content/caseStudies.ts");
 const { profile, headlineMetrics } = await import("../src/content/profile.ts");
 
-const heavy = fs.readFileSync(path.join(here, "og-fonts/BricolageGrotesque-800.ttf"));
-const regular = fs.readFileSync(path.join(here, "og-fonts/BricolageGrotesque-500.ttf"));
+const heavy = fs.readFileSync(path.join(here, "og-fonts/SchibstedGrotesk-700.ttf"));
+const regular = fs.readFileSync(path.join(here, "og-fonts/SchibstedGrotesk-500.ttf"));
 
 // The funnel's blue block. OG previews sit on both light and dark chrome, and
 // a saturated ultramarine card reads as this site on either. The yellow is the
@@ -37,7 +37,7 @@ const regular = fs.readFileSync(path.join(here, "og-fonts/BricolageGrotesque-500
 const { TOKENS } = await import("./tokens.mjs");
 const PAPER = TOKENS.light["--block"];
 const INK = TOKENS.light["--on-block"];
-const MUTED = "rgba(255, 246, 224, 0.78)";
+const MUTED = "rgba(251, 248, 241, 0.78)";
 const ZAP = TOKENS.light["--zap"];
 const ON_ZAP = TOKENS.light["--on-zap"];
 
@@ -47,7 +47,7 @@ const FUNNEL_SVG =
   Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 450">
       <polygon points="20,20 380,20 330,120 70,120" fill="${ZAP}"/>
-      <g fill="rgba(255,246,224,0.16)" stroke="rgba(255,246,224,0.6)" stroke-width="3">
+      <g fill="rgba(251,248,241,0.16)" stroke="rgba(251,248,241,0.6)" stroke-width="3">
         <polygon points="70,128 330,128 285,228 115,228"/>
         <polygon points="115,236 285,236 245,336 155,336"/>
         <polygon points="155,344 245,344 225,430 175,430"/>
@@ -83,8 +83,8 @@ function sources() {
                 style: {
                   display: "flex",
                   alignSelf: "flex-start",
-                  fontFamily: "Bricolage",
-                  fontWeight: 800,
+                  fontFamily: "Schibsted",
+                  fontWeight: 700,
                   fontSize: 58,
                   lineHeight: 1,
                   // Same rule as the site: the overlap marks the one figure
@@ -119,7 +119,7 @@ function card({ kicker, title, metric, metricLabel, metricVerified, showSources 
         width: W, height: H, boxSizing: "border-box", display: "flex",
         flexDirection: "column", justifyContent: "space-between",
         background: PAPER, color: INK,
-        padding: "64px 72px", position: "relative", fontFamily: "Bricolage",
+        padding: "64px 72px", position: "relative", fontFamily: "Schibsted",
       },
       children: [
         {
@@ -139,9 +139,12 @@ function card({ kicker, title, metric, metricLabel, metricVerified, showSources 
               {
                 type: "div",
                 props: {
+                  // The site's section marker, not a pill: a short rule in the
+                  // live yellow, then a small tracked label.
                   style: {
-                    display: "flex", alignSelf: "flex-start", fontSize: 22, fontWeight: 800,
-                    background: ZAP, color: ON_ZAP, padding: "6px 18px", borderRadius: 999,
+                    display: "flex", alignItems: "center", fontSize: 20, fontWeight: 700,
+                    letterSpacing: 2.5, textTransform: "uppercase", color: MUTED,
+                    borderLeft: `40px solid ${ZAP}`, height: 3, paddingLeft: 16, lineHeight: 0,
                   },
                   children: kicker,
                 },
@@ -155,7 +158,7 @@ function card({ kicker, title, metric, metricLabel, metricVerified, showSources 
                      * largest size and strands one word on its own line.
                      * maxWidth leaves room for the corner funnel.
                      */
-                    fontFamily: "Bricolage", fontWeight: 800, letterSpacing: -2,
+                    fontFamily: "Schibsted", fontWeight: 700, letterSpacing: -1.5,
                     fontSize: title.length > 52 ? 66 : title.length > 26 ? 76 : 88,
                     lineHeight: 1.0, marginTop: 30, maxWidth: 820, color: INK,
                     textWrap: "balance",
@@ -177,8 +180,8 @@ function card({ kicker, title, metric, metricLabel, metricVerified, showSources 
                   style: { display: "flex", flexDirection: "column" },
                   children: metric
                     ? [
-                        { type: "div", props: { style: { display: "flex", alignSelf: "flex-start", fontWeight: 800, fontSize: 72, color: metricVerified ? ON_ZAP : INK, background: metricVerified ? ZAP : "transparent", padding: metricVerified ? "2px 14px" : 0, borderRadius: 10, lineHeight: 1 }, children: metric } },
-                        { type: "div", props: { style: { fontSize: 20, color: MUTED, marginTop: 12, maxWidth: 620 }, children: metricLabel } },
+                        { type: "div", props: { style: { display: "flex", alignSelf: "flex-start", fontWeight: 700, fontSize: 72, color: metricVerified ? ON_ZAP : INK, background: metricVerified ? ZAP : "transparent", padding: metricVerified ? "2px 14px" : 0, borderRadius: 10, lineHeight: 1 }, children: metric } },
+                        { type: "div", props: { style: { fontSize: 20, color: MUTED, marginTop: 12, maxWidth: 720 }, children: metricLabel } },
                       ]
                     : showSources
                       ? [sources()]
@@ -188,7 +191,7 @@ function card({ kicker, title, metric, metricLabel, metricVerified, showSources 
               {
                 type: "div",
                 props: {
-                  style: { fontSize: 22, fontWeight: 800, color: INK },
+                  style: { fontSize: 22, fontWeight: 700, color: INK },
                   children: "shivamgoel.vercel.app",
                 },
               },
@@ -204,8 +207,8 @@ async function render(spec, file) {
   const svg = await satori(card(spec), {
     width: W, height: H,
     fonts: [
-      { name: "Bricolage", data: heavy, weight: 800, style: "normal" },
-      { name: "Bricolage", data: regular, weight: 500, style: "normal" },
+      { name: "Schibsted", data: heavy, weight: 700, style: "normal" },
+      { name: "Schibsted", data: regular, weight: 500, style: "normal" },
     ],
   });
   const png = new Resvg(svg, { fitTo: { mode: "width", value: W } }).render().asPng();

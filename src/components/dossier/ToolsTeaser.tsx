@@ -15,13 +15,13 @@ export default function ToolsTeaser() {
   return (
     <Section
       id="tools"
-      tag="Touchpoint 2 · Try before you buy"
-      title="Two free tools. They actually run."
+      tag="Free tools"
+      title="Two tools you can use right now."
     >
       <ul className="grid gap-5 lg:grid-cols-2">
         <li className="tool-panel tone-blue stagger-item">
-          <p className="kicker">Instant, no email</p>
-          <h3 className="t-heading mt-5">Which GTM agent should you build?</h3>
+          <p className="stage-tag">Instant, no email</p>
+          <h3 className="t-heading mt-4">Which GTM agent should you build?</h3>
           <p className="mt-4 max-w-[44ch] text-base leading-relaxed text-ink-muted">
             Five questions, a ranked shortlist, wired to the tools you already run.
             Start with the first one:
@@ -45,8 +45,8 @@ export default function ToolsTeaser() {
         </li>
 
         <li className="tool-panel tone-zap stagger-item" style={{ "--i": 1 } as React.CSSProperties}>
-          <p className="kicker">Free, back within a day</p>
-          <h3 className="t-heading mt-5">What can an answer engine do with your site?</h3>
+          <p className="stage-tag">Free, back within a day</p>
+          <h3 className="t-heading mt-4">What can an answer engine do with your site?</h3>
           <p className="mt-4 max-w-[44ch] text-base leading-relaxed text-ink-muted">
             Send a URL. I read the pages myself and reply with three fixes, in order.
           </p>

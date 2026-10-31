@@ -1,56 +1,154 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FUNNEL_STAGES } from "@/content/funnel";
 import Funnel3D from "./Funnel3D";
 
 const NAMES = FUNNEL_STAGES.map((s) => s.name);
+const LAST = FUNNEL_STAGES.length - 1;
+/** How long each stage holds, ms. The conversion holds longest. */
+const DURATIONS = [4200, 3800, 3800, 5400];
 
 /**
- * The homepage opens by telling the visitor what is happening to them.
+ * The homepage opens by telling the visitor what is happening to them, and
+ * then the funnel runs on its own.
  *
- * "You just entered my funnel." The page treats the reader as a lead and
- * walks them down it, one stage per press, each stage carrying one real
- * result. At the bottom they have converted. It is a joke, and it is also
- * the argument: the person reading is being run through an acquisition
- * engine, built by the person they are reading about.
+ * Each stage holds for a few seconds while its segment of the progress bar
+ * fills, then YOU sinks to the next band; at the bottom it converts, holds,
+ * and the loop starts again. Nobody has to find a button for the idea to
+ * land.
  *
- * Every figure is in the stage card as text, and the four stage buttons let
- * a keyboard or a screen reader jump straight to any of them. The 3D funnel
- * beside it is the show, never the only place the information lives.
+ * Moving content that starts by itself needs a way to stop it (WCAG 2.2.2),
+ * so there is a pause control, and the run also holds while it is off
+ * screen, while the tab is hidden, while the pointer rests on the stage
+ * card, and while keyboard focus is in the controls. With reduced motion it
+ * never starts: the stages are buttons, and the reader steps through them.
+ *
+ * The progress is written straight to the DOM from a rAF loop rather than
+ * through state, so a running funnel re-renders React four times a cycle,
+ * not sixty times a second.
  */
 export default function FunnelHero() {
   const [stage, setStage] = useState(0);
-  const s = FUNNEL_STAGES[stage];
-  const last = stage === FUNNEL_STAGES.length - 1;
+  const [playing, setPlaying] = useState(true);
 
-  const pick = useCallback((i: number) => setStage(i), []);
-  const next = () => setStage((i) => (i === FUNNEL_STAGES.length - 1 ? 0 : i + 1));
+  const stageRef = useRef(0);
+  const playingRef = useRef(true);
+  const holdRef = useRef(false); // pointer on the card, or focus in controls
+  const visibleRef = useRef(true);
+  const elapsed = useRef(0);
+  const fills = useRef<(HTMLSpanElement | null)[]>([]);
+  const section = useRef<HTMLElement>(null);
+
+  const s = FUNNEL_STAGES[stage];
+
+  const paintFills = useCallback((current: number, p: number) => {
+    fills.current.forEach((el, i) => {
+      if (!el) return;
+      el.style.transform = `scaleX(${i < current ? 1 : i === current ? p : 0})`;
+    });
+  }, []);
+
+  const goTo = useCallback(
+    (i: number) => {
+      stageRef.current = i;
+      elapsed.current = 0;
+      setStage(i);
+      paintFills(i, playingRef.current ? 0 : 1);
+    },
+    [paintFills],
+  );
+
+  // Reduced motion: never autoplay.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      playingRef.current = false;
+      setPlaying(false);
+      paintFills(0, 1);
+    }
+  }, [paintFills]);
+
+  // Off screen, nothing advances.
+  useEffect(() => {
+    const el = section.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      visibleRef.current = e.isIntersecting;
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // The clock. rAF also stops on its own while the tab is hidden.
+  useEffect(() => {
+    let raf = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      // Real elapsed time, capped at a second. A throttled tab (low-power
+      // mode, an unfocused embed) can deliver one frame a second, and a
+      // tight per-frame cap made the funnel run ten times slow there. The
+      // cap only exists so a tab returning from the background does not
+      // skip a stage in one jump.
+      const dt = Math.min(now - last, 1000);
+      last = now;
+      if (playingRef.current && !holdRef.current && visibleRef.current) {
+        elapsed.current += dt;
+        const cur = stageRef.current;
+        const p = Math.min(elapsed.current / DURATIONS[cur], 1);
+        const el = fills.current[cur];
+        if (el) el.style.transform = `scaleX(${p})`;
+        if (p >= 1) goTo(cur === LAST ? 0 : cur + 1);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [goTo]);
+
+  const toggle = () => {
+    const next = !playingRef.current;
+    playingRef.current = next;
+    setPlaying(next);
+    if (!next) paintFills(stageRef.current, 1);
+    else {
+      elapsed.current = 0;
+      paintFills(stageRef.current, 0);
+    }
+  };
+
+  const hold = (on: boolean) => () => {
+    holdRef.current = on;
+  };
 
   return (
-    <section id="top" className="tone-blue relative overflow-hidden">
-      <div className="hero-grid shell pb-14 pt-10 sm:pb-20 sm:pt-14">
+    <section ref={section} id="top" className="tone-blue relative overflow-hidden">
+      <div className="hero-grid shell pb-14 pt-12 sm:pb-20 sm:pt-16">
         <div className="hero-intro">
-          <p className="kicker">{last ? "Status: converted ✓" : "Hi. Don't panic."}</p>
-          <h1 className="t-display mt-6">
+          <h1 className="t-display">
             You just entered <span className="text-zap">my funnel.</span>
           </h1>
-          <p className="mt-5 max-w-[40ch] text-base leading-relaxed sm:mt-6 sm:text-xl">
-            I&apos;m Shivam Goel. I build acquisition engines and the automation
-            underneath them. This page is one. Let&apos;s see if it converts you.
+          <p className="mt-6 max-w-[42ch] text-base leading-relaxed text-ink-muted sm:text-xl">
+            I&apos;m Shivam Goel, a marketing engineer. I build acquisition engines
+            and the automation underneath them. This page is one of them.
           </p>
         </div>
 
         <div className="hero-funnel">
-          <Funnel3D stage={stage} names={NAMES} onPick={pick} />
+          <Funnel3D stage={stage} names={NAMES} onPick={goTo} />
         </div>
 
         <div className="hero-controls">
-          {/* The stage card. aria-live, so pressing the button announces the
-              new figure rather than silently changing the screen. */}
-          <div className="stage-card" aria-live="polite" key={stage}>
+          {/* Announced only when the reader is driving. While it runs on its
+              own, a live region would read a new figure every four seconds. */}
+          <div
+            className="stage-card"
+            aria-live={playing ? "off" : "polite"}
+            key={stage}
+            onMouseEnter={hold(true)}
+            onMouseLeave={hold(false)}
+          >
             <p className="stage-tag">
-              Stage {stage + 1} · {s.name}
+              Stage {stage + 1} of {FUNNEL_STAGES.length} · {s.name}
             </p>
             <p className="t-metric mt-4">
               {/* The highlighter marks the figure a stranger can check. */}
@@ -61,31 +159,63 @@ export default function FunnelHero() {
             </p>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button type="button" className="btn" onClick={next}>
-              {last ? "Run the funnel again ↺" : "Move me down the funnel ↓"}
+          <div
+            className="fp mt-6"
+            onFocus={hold(true)}
+            onBlur={hold(false)}
+          >
+            <div className="fp-segs" role="group" aria-label="Funnel stages">
+              {FUNNEL_STAGES.map((st, i) => (
+                <button
+                  key={st.name}
+                  type="button"
+                  className="fp-seg"
+                  aria-pressed={i === stage}
+                  aria-label={`Stage ${i + 1}: ${st.name}`}
+                  onClick={() => goTo(i)}
+                >
+                  <span className="fp-bar">
+                    <span
+                      className="fp-fill"
+                      ref={(el) => {
+                        fills.current[i] = el;
+                      }}
+                    />
+                  </span>
+                  <span aria-hidden>
+                    <span className="tnum">{i + 1}</span>
+                    <span className="fp-name"> {st.name}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              className="fp-toggle"
+              onClick={toggle}
+              aria-label={playing ? "Pause the funnel" : "Play the funnel"}
+            >
+              {playing ? (
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+                  <rect x="2" y="1.5" width="3.5" height="11" rx="1" fill="currentColor" />
+                  <rect x="8.5" y="1.5" width="3.5" height="11" rx="1" fill="currentColor" />
+                </svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
+                  <path d="M3 1.8v10.4a.8.8 0 0 0 1.2.7l8.6-5.2a.8.8 0 0 0 0-1.4L4.2 1.1A.8.8 0 0 0 3 1.8Z" fill="currentColor" />
+                </svg>
+              )}
             </button>
-            <a href="#work" className="btn-ghost">
-              Skip to the work
-            </a>
           </div>
 
-          {/* Direct access to every stage. Real buttons, so the whole funnel
-              is reachable without a mouse or the 3D scene. */}
-          <ol className="mt-7 flex flex-wrap gap-2" aria-label="Funnel stages">
-            {FUNNEL_STAGES.map((st, i) => (
-              <li key={st.name}>
-                <button
-                  type="button"
-                  onClick={() => setStage(i)}
-                  aria-pressed={i === stage}
-                  className={`stage-pill${i === stage ? " on" : ""}`}
-                >
-                  <span className="tnum">{i + 1}</span> {st.name}
-                </button>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <a href="#work" className="btn">
+              See the work
+            </a>
+            <a href="#contact" className="btn-ghost">
+              Get in touch
+            </a>
+          </div>
         </div>
       </div>
     </section>

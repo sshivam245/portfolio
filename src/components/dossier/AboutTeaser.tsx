@@ -11,8 +11,8 @@ export default function AboutTeaser() {
   return (
     <Section
       id="about"
-      tag="Touchpoint 3 · The human"
-      title="Who's running this funnel?"
+      tag="About"
+      title="Growth, built like engineering."
       tone="blue"
     >
       <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12 lg:items-end">

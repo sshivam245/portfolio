@@ -25,7 +25,7 @@ export default function AboutPage() {
       <PageHero
         kicker={`${profile.role} · ${profile.location}`}
         title="The long version."
-        lede="For the thorough lead: the full track record, the toolbox, and where the work has been picked up by others."
+        lede="The full track record, the toolbox, and where the work has been picked up by others."
       />
 
       <About />

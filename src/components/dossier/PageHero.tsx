@@ -26,16 +26,12 @@ export default function PageHero({
             ← {back.label}
           </Link>
         ) : null}
-        {/* Its own block: .kicker is inline-block, so beside an inline back
-            link it shared the line and the two collided. */}
         {kicker ? (
-          <div className={back ? "mt-8" : ""}>
-            <p className="kicker">{kicker}</p>
-          </div>
+          <p className={`stage-tag ${back ? "mt-10" : ""}`}>{kicker}</p>
         ) : null}
-        <h1 className="t-display mt-6 max-w-[16ch]">{title}</h1>
+        <h1 className="t-display mt-5 max-w-[18ch]">{title}</h1>
         {lede ? (
-          <p className="mt-6 max-w-[52ch] text-lg leading-relaxed sm:text-xl">{lede}</p>
+          <p className="mt-6 max-w-[52ch] text-lg leading-relaxed text-ink-muted sm:text-xl">{lede}</p>
         ) : null}
         {children}
       </div>

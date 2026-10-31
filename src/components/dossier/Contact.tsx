@@ -11,8 +11,8 @@ export default function Contact() {
   return (
     <Section
       id="contact"
-      tag="Stage 4 · Conversation"
-      title="Status: converted. Let's talk."
+      tag="Contact"
+      title="Let's talk."
       tone="zap"
     >
       <div className="grid gap-x-12 gap-y-10 lg:grid-cols-12">
@@ -26,7 +26,7 @@ export default function Contact() {
               text it pushed the page past the viewport. */}
           <a
             href={`mailto:${profile.email}`}
-            className="t-heading mt-8 block break-all underline decoration-[3px] underline-offset-[6px] hover:decoration-[6px]"
+            className="t-heading mt-8 block break-all underline decoration-2 underline-offset-[6px] transition-[text-decoration-color] hover:decoration-ink-a"
           >
             {profile.email}
           </a>

@@ -1,22 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 648 208" width="648" height="208" role="img" aria-label="segments then campaigns then leverage points then dashboards">
   <style>
-    .ink   { fill: #0d0d6b; }
-    .muted { fill: #4b4b85; }
-    .accf  { fill: #1f1fd1; }
-    .acc   { stroke: #1f1fd1; }
-    .box   { fill: none; stroke: #4b4b85; stroke-width: 1; }
-    .rule  { stroke: #4b4b85; }
-    text   { font-family: var(--font-sans, "Bricolage Grotesque"), system-ui, sans-serif; font-weight: 600; }
+    .ink   { fill: #15153a; }
+    .muted { fill: #55556e; }
+    .accf  { fill: #2424c8; }
+    .acc   { stroke: #2424c8; }
+    .box   { fill: none; stroke: #55556e; stroke-width: 1; }
+    .rule  { stroke: #55556e; }
+    text   { font-family: var(--font-sans, "Schibsted Grotesk"), system-ui, sans-serif; font-weight: 600; }
     .lbl   { font-size: 10px; letter-spacing: 0.08em; }
     .sub   { font-size: 9px; }
     .tiny  { font-size: 8px; }
-    @media (prefers-color-scheme: dark) {
-      .ink   { fill: #fff6e0; }
-      .muted { fill: #b9b6dc; }
-      .accf  { fill: #9e9eff; }
-      .acc   { stroke: #9e9eff; }
-      .box, .rule { stroke: #b9b6dc; }
-    }
   </style>
 
   <text class="lbl muted" x="8" y="18">FIRST GTM HIRE</text>

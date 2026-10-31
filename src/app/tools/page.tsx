@@ -32,9 +32,9 @@ export default function ToolsPage() {
   return (
     <article>
       <PageHero
-        back={{ href: "/", label: "Back to the funnel" }}
-        kicker="Try before you buy"
-        title="Two things that do something."
+        back={{ href: "/", label: "Home" }}
+        kicker="Tools"
+        title="Two tools, both free."
         lede="A portfolio that only talks about systems is asking to be taken on faith. These are the working versions. One answers instantly and asks for nothing. The other reaches me, because the useful version needs a person to read your pages."
       />
 
@@ -43,8 +43,8 @@ export default function ToolsPage() {
           {tools.map((t, i) => (
             <li key={t.href}>
               <Link href={t.href} className={`tool-panel group block h-full ${i === 0 ? "tone-blue" : "tone-zap"}`}>
-                <p className="kicker">{t.kicker}</p>
-                <h2 className="t-heading mt-5 max-w-[20ch]">{t.title}</h2>
+                <p className="stage-tag">{t.kicker}</p>
+                <h2 className="t-heading mt-4 max-w-[20ch]">{t.title}</h2>
                 <p className="mt-5 max-w-prose text-base leading-relaxed text-ink-muted">{t.blurb}</p>
                 <span className="btn mt-8">
                   {t.cta} →

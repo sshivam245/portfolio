@@ -3,13 +3,12 @@ import Reveal from "./Reveal";
 export type Tone = "cream" | "blue" | "zap";
 
 /**
- * A colour block with a funnel tag and a real headline.
+ * A colour block with a plain headline and an optional small marker.
  *
- * The old sections were introduced by a monospace index — "[02] SELECTED
- * WORK" — which is how documentation introduces a section. This is a
- * campaign page, so each block gets a stage tag ("Touchpoint 1 · The work")
- * and a headline that says something, and the page alternates cream and
- * ultramarine instead of separating identical white sections with hairlines.
+ * Sections used to open on a filled pill and a jokey headline each
+ * ("Touchpoint 2 · Try before you buy"). Repeated down a page, that is the
+ * signature of a generated landing page. The joke lives in the hero now;
+ * everything below it says plainly what it is.
  *
  * The tone class re-scopes the colour tokens, so nothing inside needs to
  * know which block it is in.
@@ -24,7 +23,7 @@ export default function Section({
   children,
 }: {
   id: string;
-  tag: string;
+  tag?: string;
   title: React.ReactNode;
   lede?: React.ReactNode;
   aside?: React.ReactNode;
@@ -40,8 +39,8 @@ export default function Section({
         <Reveal>
           <header className="mb-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 sm:mb-14">
             <div className="min-w-0">
-              <p className="stage-tag">{tag}</p>
-              <h2 className="t-title mt-5 max-w-[18ch]">{title}</h2>
+              {tag ? <p className="stage-tag">{tag}</p> : null}
+              <h2 className={`t-title max-w-[20ch] ${tag ? "mt-4" : ""}`}>{title}</h2>
               {lede ? (
                 <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-ink-muted">
                   {lede}

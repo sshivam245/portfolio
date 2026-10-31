@@ -22,12 +22,12 @@ export default function WritingIndexPage() {
   return (
     <>
       <PageHero
-        back={{ href: "/", label: "Back to the funnel" }}
+        back={{ href: "/", label: "Home" }}
         kicker={`${publishedPosts.length} post${publishedPosts.length === 1 ? "" : "s"}`}
         title="Writing."
         lede="Notes on generative-search optimisation, GTM automation and building acquisition systems."
       />
-      <Writing tag="All posts" title="Nurture content, all of it." />
+      <Writing tag="All posts" title="Everything I have published." />
     </>
   );
 }

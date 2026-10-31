@@ -5,7 +5,7 @@
  *   npm run tokens:check  fail if any consumer has drifted (runs in prebuild)
  *
  * Consumers:
- *   1. src/app/globals.css   — the :root / .dark blocks, between sentinels
+ *   1. src/app/globals.css   — the :root block, between sentinels
  *   2. public/figures/*.svg  — the <style> block each file carries
  *   3. scripts/og.mjs        — imports TOKENS directly, nothing to write
  *
@@ -42,13 +42,12 @@ const decls = (t, indent) =>
 {
   const file = path.join(root, "src/app/globals.css");
   const before = fs.readFileSync(file, "utf8");
+  // One theme. color-scheme keeps native controls and scrollbars light even
+  // when the OS is in dark mode.
   const body = `
   :root {
 ${decls(TOKENS.light, "    ")}
-  }
-
-  .dark {
-${decls(TOKENS.dark, "    ")}
+    color-scheme: light;
   }
 `;
   const after = spliceSentinels(
@@ -68,26 +67,17 @@ ${decls(TOKENS.dark, "    ")}
 {
   const dir = path.join(root, "public/figures");
   const light = SVG_CLASSES(TOKENS.light);
-  const dark = SVG_CLASSES(TOKENS.dark);
 
-  // The dark override only restates what actually changes; .box and .rule
-  // share a stroke, so they collapse to one selector exactly as the
-  // hand-written blocks did.
+  // No prefers-color-scheme block: the site has one theme, so a figure
+  // served through <img> must not turn dark on its own when the OS does.
   const block = `  <style>
 ${Object.entries(light)
   .map(([sel, rule]) => `    ${sel.padEnd(6)} { ${rule} }`)
   .join("\n")}
-    text   { font-family: var(--font-sans, "Bricolage Grotesque"), system-ui, sans-serif; font-weight: 600; }
+    text   { font-family: var(--font-sans, "Schibsted Grotesk"), system-ui, sans-serif; font-weight: 600; }
     .lbl   { font-size: 10px; letter-spacing: 0.08em; }
     .sub   { font-size: 9px; }
     .tiny  { font-size: 8px; }
-    @media (prefers-color-scheme: dark) {
-      .ink   { ${dark[".ink"]} }
-      .muted { ${dark[".muted"]} }
-      .accf  { ${dark[".accf"]} }
-      .acc   { ${dark[".acc"]} }
-      .box, .rule { stroke: ${TOKENS.dark["--ink-muted"]}; }
-    }
   </style>`;
 
   for (const name of fs.readdirSync(dir).filter((f) => f.endsWith(".svg"))) {
@@ -112,8 +102,7 @@ ${Object.entries(light)
 }
 
 {
-  // --ink-b is 2.8:1 on light stock. Enforce the documented rule: it never
-  // carries small text in light mode. A dark:-prefixed utility is fine.
+  // --ink-b is yellow, ~1.3:1 on paper. It never carries text.
   const out = [];
   const walk = (d) => {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -122,8 +111,7 @@ ${Object.entries(light)
       else if (/\.tsx?$/.test(e.name)) {
         const src = fs.readFileSync(p, "utf8").split("\n");
         src.forEach((line, i) => {
-          // text-ink-b is legal only behind a dark: prefix.
-          if (/(^|[^:\w-])text-ink-b\b/.test(line))
+          if (/\btext-ink-b\b/.test(line))
             out.push(`${path.relative(root, p)}:${i + 1}  ${line.trim()}`);
         });
       }
@@ -131,7 +119,7 @@ ${Object.entries(light)
   };
   walk(path.join(root, "src"));
   if (out.length)
-    drift.push(`--ink-b used as light-mode text (2.8:1):\n    ${out.join("\n    ")}`);
+    drift.push(`--ink-b used as text (~1.3:1 on paper):\n    ${out.join("\n    ")}`);
 }
 
 if (!drift.length) {

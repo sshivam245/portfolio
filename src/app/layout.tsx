@@ -1,24 +1,21 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_URL } from "@/lib/site";
 import Header from "@/components/dossier/Header";
 import Footer from "@/components/dossier/Footer";
 
 /*
- * One family for everything. Bricolage Grotesque has an optical-size axis,
- * so the same face is tight and loud at 90px and open and calm at 16px —
- * which is what lets a campaign-weight headline and a readable case study
- * share one voice instead of a display face bolted onto a body face.
+ * One family for everything: Schibsted Grotesk, cut for a Scandinavian news
+ * publisher. It is sober at text sizes and confident at display sizes, which
+ * is the register a hiring manager trusts.
  *
- * There is no monospace any more. Mono labels, a terminal prompt and
- * bracketed citations were exactly what made the last version read as a
- * developer's site.
+ * It replaced Bricolage Grotesque, whose extra-bold, tightly tracked
+ * headlines were the signature of the 2025 template landing page and the
+ * single biggest reason the site read as generated. There is no monospace.
  */
-const bricolage = Bricolage_Grotesque({
+const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
-  axes: ["opsz"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -81,32 +78,21 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
-        className={`${bricolage.variable} font-sans antialiased`}
+        className={`${schibsted.variable} font-sans antialiased`}
       >
-        {/* Light by default: the funnel's home is cream stock with blue colour
-            blocks. The blocks stay brand blue in dark mode too; only the cream
-            becomes night navy. */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          /* Without this every colour transition fires at once on toggle. */
-          disableTransitionOnChange
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 focus:text-small"
         >
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 focus:text-small"
-          >
-            Skip to content
-          </a>
-          {/* Hairline fill showing scroll depth. CSS-only, no listener. */}
-          <div className="scroll-progress" aria-hidden />
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-        </ThemeProvider>
+          Skip to content
+        </a>
+        {/* Hairline fill showing scroll depth. CSS-only, no listener. */}
+        <div className="scroll-progress" aria-hidden />
+        <Header />
+        <main id="main">{children}</main>
+        <Footer />
       </body>
     </html>
   );

@@ -3,7 +3,7 @@ import { profile, education, publications, beyond, recognition } from "@/content
 
 export function About() {
   return (
-    <Section id="about" tag="About" title="The person behind the funnel.">
+    <Section id="about" tag="About" title="How I work.">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-7">
           {profile.about.map((para) => (

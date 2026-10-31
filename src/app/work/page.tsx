@@ -29,11 +29,11 @@ export default function WorkPage() {
   return (
     <article>
       <PageHero
-        back={{ href: "/", label: "Back to the funnel" }}
-        kicker="All seven"
-        title="Every system, and what came out of it."
+        back={{ href: "/", label: "Home" }}
+        kicker="Work"
+        title="Every system, and what it produced."
       />
-      <WorkIndex tag="Selected work" title="Pick one. Each has the receipts." tone="cream" />
+      <WorkIndex tag="Case studies" title="Each one opens with its evidence." tone="cream" />
     </article>
   );
 }

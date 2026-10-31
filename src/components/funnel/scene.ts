@@ -56,9 +56,9 @@ const BANDS: [number, number][] = [
 ];
 const mid = (i: number) => (BANDS[i][0] + BANDS[i][1]) / 2;
 
-const CREAM = "#fff6e0";
-const YELLOW = "#e4ff3c";
-const BLUE = "#1f1fd1";
+const CREAM = "#fbf8f1";
+const YELLOW = "#ffd60a";
+const BLUE = "#2424c8";
 
 /** Where YOU parks: in front of the band, a little to the right. */
 const YOU_ANGLE = 0.55;
@@ -143,7 +143,9 @@ export function createFunnelScene(
     leakAt: number; leaked: boolean; s: number;
     p: ThreeNS.Vector3; vel: ThreeNS.Vector3;
   };
-  const N = 72;
+  // Fewer than the first version: seventy read as a particle effect, this
+  // many read as leads.
+  const N = 46;
   const leadGeo = keep(new THREE.IcosahedronGeometry(0.048, 1));
   const leadMat = keep(new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.28, roughness: 0.4 }));
   const leads = new THREE.InstancedMesh(leadGeo, leadMat, N);
@@ -159,7 +161,7 @@ export function createFunnelScene(
     l.th = Math.random() * Math.PI * 2;
     l.k = 0.55 + Math.random() * 0.35;
     l.v = 0.0016 + Math.random() * 0.0022;
-    l.leakAt = Math.random() < 0.32 ? 0.04 + Math.random() * 0.75 : 9;
+    l.leakAt = Math.random() < 0.22 ? 0.04 + Math.random() * 0.75 : 9;
     l.leaked = false;
     l.s = 1;
   }
@@ -211,7 +213,7 @@ export function createFunnelScene(
   }
 
   // ---------------------------------------------------------- conversion burst
-  const B = 40;
+  const B = 26;
   const burstMat = keep(new THREE.MeshStandardMaterial({ color: YELLOW, emissive: YELLOW, emissiveIntensity: 0.5 }));
   const burst = new THREE.InstancedMesh(leadGeo, burstMat, B);
   burst.visible = false;
@@ -295,8 +297,11 @@ export function createFunnelScene(
   const EDGE = 4;
   function placeLabels(w: number, h: number) {
     labels.forEach((el, i) => {
+      // Anchored off the band's widest point (its top rim), not its middle:
+      // from the camera's height the rim flares past the mid-height radius
+      // and the active label, yellow on a yellow band, disappeared into it.
       const t = mid(i);
-      const a = toScreen(new THREE.Vector3(-(rAt(t) + 0.28), yAt(t), 0), w, h);
+      const a = toScreen(new THREE.Vector3(-(rAt(BANDS[i][0]) + 0.3), yAt(t), 0), w, h);
       const x = Math.max(a.x, el.offsetWidth + EDGE);
       el.style.transform = `translate(${x.toFixed(1)}px, ${a.y.toFixed(1)}px) translate(-100%, -50%)`;
     });
@@ -415,7 +420,7 @@ export function createFunnelScene(
     const f = Math.min(dt, 0.05) * 60; // frames' worth of motion at 60fps
     time += dt;
     if (!opts.reduce) {
-      group.rotation.y += 0.0032 * f + spin * f;
+      group.rotation.y += 0.0022 * f + spin * f;
       spin *= Math.pow(0.94, f);
       group.rotation.x += ((-0.04 + pointerY * 0.1) - group.rotation.x) * 0.06 * f;
       group.rotation.z += ((pointerX * -0.05) - group.rotation.z) * 0.06 * f;

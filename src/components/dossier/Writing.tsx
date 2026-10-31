@@ -4,15 +4,14 @@ import { publishedPosts, formatDate } from "@/content/writing";
 import { indexLine } from "@/lib/text";
 
 /**
- * Posts, as big rows. On the homepage this is the nurture content: the
- * thing you send a lead who is interested but not ready.
+ * Posts, as rows.
  *
  * `limit` shows only the most recent few; the full list lives at /writing.
  */
 export default function Writing({
   limit,
-  tag = "Touchpoint 4 · Nurture content",
-  title = "Reading material, for the thorough.",
+  tag = "Writing",
+  title = "Notes on growth, GTM and automation.",
 }: {
   limit?: number;
   tag?: string;

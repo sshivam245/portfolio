@@ -15,8 +15,8 @@ import { caseStudies } from "@/content/caseStudies";
  */
 export default function WorkIndex({
   limit,
-  tag = "Touchpoint 1 · The work",
-  title = "Things I built that actually shipped.",
+  tag = "Selected work",
+  title = "Systems I built, and what they produced.",
   tone = "blue",
 }: {
   limit?: number;
@@ -59,7 +59,7 @@ export default function WorkIndex({
                     {/* A badge, not a link: the whole panel is already an <a>.
                         Highlighted, because a live artefact is something the
                         reader can go and check. */}
-                    {cs.link ? <span className="hl ms-2 normal-case tracking-normal">Live ↗</span> : null}
+                    {cs.link ? <span className="ms-2 text-ink-a">Live ↗</span> : null}
                   </p>
                   <h3 className="t-heading mt-3">{cs.title}</h3>
                 </div>
