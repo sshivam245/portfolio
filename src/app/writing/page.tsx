@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Writing from "@/components/dossier/Writing";
+import PageHero from "@/components/dossier/PageHero";
 import { publishedPosts } from "@/content/writing";
 
 export const metadata: Metadata = {
@@ -20,19 +21,13 @@ export const metadata: Metadata = {
 export default function WritingIndexPage() {
   return (
     <>
-      <header className="shell py-12 sm:py-16">
-        <p className="label mb-6">
-          {publishedPosts.length} post{publishedPosts.length === 1 ? "" : "s"}
-          <span className="mx-2 text-ink-a">/</span>
-          Growth, GTM, automation
-        </p>
-        <h1 className="t-title max-w-[16ch]">
-          Writing.
-        </h1>
-      </header>
-
-      {/* `compact` is off here — this page is the full list. */}
-      <Writing index="01" />
+      <PageHero
+        back={{ href: "/", label: "Back to the funnel" }}
+        kicker={`${publishedPosts.length} post${publishedPosts.length === 1 ? "" : "s"}`}
+        title="Writing."
+        lede="Notes on generative-search optimisation, GTM automation and building acquisition systems."
+      />
+      <Writing tag="All posts" title="Nurture content, all of it." />
     </>
   );
 }

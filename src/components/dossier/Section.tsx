@@ -1,43 +1,54 @@
 import Reveal from "./Reveal";
 
+export type Tone = "cream" | "blue" | "zap";
+
 /**
- * Every section is separated by a hairline rule and introduced by a mono
- * index. Structure is the decoration.
+ * A colour block with a funnel tag and a real headline.
  *
- * The index is bracketed — "[02] SELECTED WORK" — because the hero's
- * citations are, and a number in square brackets on the blue plate is now
- * this site's one notation for "a thing you can go to". Making the section
- * indices read the same way is what carries the hero's grammar down the
- * page instead of leaving it as a trick played once at the top.
+ * The old sections were introduced by a monospace index — "[02] SELECTED
+ * WORK" — which is how documentation introduces a section. This is a
+ * campaign page, so each block gets a stage tag ("Touchpoint 1 · The work")
+ * and a headline that says something, and the page alternates cream and
+ * ultramarine instead of separating identical white sections with hairlines.
+ *
+ * The tone class re-scopes the colour tokens, so nothing inside needs to
+ * know which block it is in.
  */
 export default function Section({
   id,
-  index,
+  tag,
   title,
+  lede,
   aside,
+  tone = "cream",
   children,
 }: {
   id: string;
-  index: string;
-  title: string;
+  tag: string;
+  title: React.ReactNode;
+  lede?: React.ReactNode;
   aside?: React.ReactNode;
+  tone?: Tone;
   children: React.ReactNode;
 }) {
+  const toneClass =
+    tone === "blue" ? "tone-blue" : tone === "zap" ? "tone-zap" : "tone-cream";
+
   return (
-    <section id={id} className="rule-t">
-      <div className="shell py-14 sm:py-20">
+    <section id={id} className={toneClass}>
+      <div className="shell py-16 sm:py-24">
         <Reveal>
-          <header className="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-            <h2 className="label">
-              {/* aria-hidden: the brackets are notation, and a screen reader
-                  announcing "left bracket zero two right bracket" before
-                  every section heading is noise, not structure. */}
-              <span className="text-ink-a tnum" aria-hidden>
-                [{index}]
-              </span>
-              <span className="ms-2">{title}</span>
-            </h2>
-            {aside ? <div className="label">{aside}</div> : null}
+          <header className="mb-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 sm:mb-14">
+            <div className="min-w-0">
+              <p className="stage-tag">{tag}</p>
+              <h2 className="t-title mt-5 max-w-[18ch]">{title}</h2>
+              {lede ? (
+                <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-ink-muted">
+                  {lede}
+                </p>
+              ) : null}
+            </div>
+            {aside ? <div className="text-base font-bold">{aside}</div> : null}
           </header>
           {children}
         </Reveal>

@@ -1,38 +1,29 @@
 import type { BuildStep } from "@/content/caseStudies";
 
 /**
- * "What I built", drawn as a sequence rather than printed as bullets.
+ * "What I built", as numbered steps.
  *
- * These lists were always a sequence wearing prose: every item named a thing
- * and then spent a clause justifying it, six times, at about 160 characters
- * each. Split into a step and a detail line and hung off a spine, the same
- * content scans in a glance and reads as the build it describes.
+ * It used to hang off a spine with square nodes, the same systems-diagram
+ * grammar as the old work index. The numbers are bubbles now and there is
+ * no spine: a sequence does not need a drawn line to read as one.
  *
- * Still real text, deliberately. The temptation with "less text, more
- * graphics" is to render copy into an image, which would make the most
- * substantive writing on the site invisible to exactly the retrieval systems
- * the Cloudsheer case study is about.
+ * Still real text, deliberately: copy rendered into an image would be
+ * invisible to exactly the retrieval systems the AEO case study is about.
  */
 export default function BuildFlow({ steps }: { steps: BuildStep[] }) {
   return (
-    <ol className="build-flow sm:pl-14">
+    <ol className="grid gap-5">
       {steps.map((b, i) => (
-        <li key={b.step} className="relative py-4">
-          <span aria-hidden className="build-node tnum hidden sm:grid">
-            {String(i + 1).padStart(2, "0")}
+        <li key={b.step} className="flex min-w-0 gap-4">
+          <span aria-hidden className="work-n tnum !h-9 !w-9 shrink-0 !text-sm">
+            {i + 1}
           </span>
-          <p className="text-body text-ink">
-            {/* The number returns inline once the gutter is gone. */}
-            <span className="tnum mr-3 text-ink-muted sm:hidden">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            {b.step}
-          </p>
-          {b.detail ? (
-            <p className="mt-1.5 max-w-prose font-mono text-small text-ink-muted">
-              {b.detail}
-            </p>
-          ) : null}
+          <div className="min-w-0 pt-1.5">
+            <p className="text-base font-bold leading-snug">{b.step}</p>
+            {b.detail ? (
+              <p className="mt-1 max-w-prose text-base leading-relaxed text-ink-muted">{b.detail}</p>
+            ) : null}
+          </div>
         </li>
       ))}
     </ol>

@@ -1,29 +1,38 @@
 import Link from "next/link";
 import Section from "./Section";
-import { profile } from "@/content/profile";
+import { profile, experience } from "@/content/profile";
 import { indexLine } from "@/lib/text";
 
 /**
- * One paragraph on the homepage, with the full history a click away.
- * The role-by-role track record, tool list, education and publications all
- * live on /about now — a landing page shouldn't have to carry a CV.
+ * One paragraph, set large, and the full history a click away. A landing
+ * page should not have to carry a CV.
  */
-export default function AboutTeaser({ index = "03" }: { index?: string }) {
+export default function AboutTeaser() {
   return (
-    <Section id="about" index={index} title="About">
-      <div className="grid gap-x-10 gap-y-6 lg:grid-cols-12">
-        {/* Trimmed here, whole on /about. Seven stacked paragraphs of this
-            length is what made the homepage read as a wall. */}
-        <p className="max-w-prose text-body lg:col-span-8">
-          {indexLine(profile.about[0])}
-        </p>
+    <Section
+      id="about"
+      tag="Touchpoint 3 · The human"
+      title="Who's running this funnel?"
+      tone="blue"
+    >
+      <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12 lg:items-end">
+        <div className="lg:col-span-8">
+          <p className="t-subhead max-w-[34ch] font-semibold">
+            {indexLine(profile.about[0])}
+          </p>
+          {/* The two most recent roles, as the facts under the line. */}
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {experience.slice(0, 2).map((job) => (
+              <li key={job.company} className="stage-pill">
+                {job.role}, {job.company}
+              </li>
+            ))}
+            <li className="stage-pill">{profile.location}</li>
+          </ul>
+        </div>
         <div className="lg:col-span-4 lg:text-right">
-          <Link href="/about" className="label label-tap group inline-flex items-center gap-2 text-ink">
-            Track record &amp; capabilities
-            <span
-              aria-hidden
-              className="h-px w-12 origin-left scale-x-50 bg-ink-a transition-transform duration-200 group-hover:scale-x-100"
-            />
+          <Link href="/about" className="btn">
+            Track record &amp; capabilities →
           </Link>
         </div>
       </div>

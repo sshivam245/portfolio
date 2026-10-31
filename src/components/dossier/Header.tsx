@@ -27,53 +27,58 @@ function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   // Render a stable placeholder until mounted so SSR and client agree.
-  if (!mounted) return <span className="label w-8" aria-hidden />;
+  if (!mounted) return <span className="w-9" aria-hidden />;
 
   return (
     <button
       type="button"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="label label-tap hover:text-ink-a transition-colors"
+      className="label-tap text-sm font-bold text-ink transition-colors hover:text-ink-a"
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
-      {resolvedTheme === "dark" ? "LIGHT" : "DARK"}
+      {resolvedTheme === "dark" ? "Light" : "Dark"}
     </button>
   );
 }
 
 export default function Header() {
   return (
-    <header className="rule-b sticky top-0 z-40 bg-paper/95">
+    <header className="sticky top-0 z-40 border-b-2 bg-paper/95" style={{ borderColor: "var(--ink)" }}>
       {/* Wraps rather than overflowing: at 375px with 200% text the row
-          needs 696px, which is a WCAG 1.4.10 reflow failure. Height grows
-          instead, and the sticky offset is generous enough to absorb it. */}
-      <div className="shell flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2">
-        {/* next/link, not <a> — Next only prepends basePath (/portfolio) to
-            Link hrefs, so a plain anchor to "/" 404s on GitHub Pages. */}
-        <Link href="/" className="label label-tap text-ink hover:text-ink-a transition-colors">
+          needs far more than the viewport, which is a WCAG 1.4.10 failure.
+          Height grows instead. */}
+      <div className="shell flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2">
+        {/* next/link, not <a>: Next only prepends basePath to Link hrefs. */}
+        <Link href="/" className="label-tap text-lg font-extrabold tracking-tight text-ink">
           Shivam Goel
         </Link>
 
-        <nav className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 sm:gap-x-6">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`label label-tap hover:text-ink-a transition-colors ${
-                item.secondary ? "hidden sm:inline" : ""
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1 sm:gap-x-6">
+          {nav
+            .filter((item) => item.label !== "Contact")
+            .map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`label-tap text-sm font-bold text-ink transition-colors hover:text-ink-a ${
+                  item.secondary ? "hidden sm:inline" : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           <a
             href={asset(profile.resumePath)}
-            className="label label-tap hover:text-ink-a transition-colors"
+            className="label-tap hidden text-sm font-bold text-ink transition-colors hover:text-ink-a sm:inline"
             download
           >
             CV
           </a>
           <ThemeToggle />
+          {/* The funnel always has a next step. */}
+          <Link href="/#contact" className="btn !min-h-10 !px-4 !py-2 text-sm">
+            Let&apos;s talk
+          </Link>
         </nav>
       </div>
     </header>

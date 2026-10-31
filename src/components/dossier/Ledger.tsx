@@ -29,7 +29,7 @@ export default function Ledger({
   verifiedFirst?: boolean;
 }) {
   return (
-    <dl className="ledger grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+    <dl className="ledger grid gap-x-8 gap-y-8">
       {items.map((o, i) => (
         /* Two shared rows, so a value that wraps does not drop its own label
            below the others. See the same pattern on the masthead metrics. */
@@ -40,14 +40,18 @@ export default function Ledger({
           <dd
             className={`${
               o.value.length <= 7 ? "t-metric" : "t-metric-sm"
-            } break-words ${
-              verifiedFirst && i === 0 ? "text-accent" : "text-ink"
-            }`}
+            } break-words`}
           >
-            {/* Words pass through untouched; only numbers count up. */}
-            <CountUp value={o.value} />
+            {/* The highlighter marks the one figure a stranger can check. */}
+            {verifiedFirst && i === 0 ? (
+              <span className="hl">
+                <CountUp value={o.value} />
+              </span>
+            ) : (
+              <CountUp value={o.value} />
+            )}
           </dd>
-          <dt className="text-small text-ink-muted">{o.label}</dt>
+          <dt className="text-base font-semibold text-ink-muted">{o.label}</dt>
         </div>
       ))}
     </dl>

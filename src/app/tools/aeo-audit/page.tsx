@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import type { Metadata } from "next";
+import PageHero from "@/components/dossier/PageHero";
 import AeoAuditForm from "@/components/tools/AeoAuditForm";
 import Ledger from "@/components/dossier/Ledger";
 import { AeoAuditSchema } from "@/components/dossier/StructuredData";
@@ -24,32 +25,12 @@ export default function AeoAuditPage() {
   return (
     <article>
       <AeoAuditSchema />
-      <header className="shell py-12 sm:py-16">
-        <Link href="/tools" className="label label-tap hover:text-ink-a transition-colors">
-          ← Tools
-        </Link>
-
-        <p className="label label-tap mt-8">
-          <span className="text-ink-a">FREE</span>
-          <span className="mx-2">·</span>
-          WRITTEN BY A PERSON
-          <span className="mx-2">·</span>
-          BACK WITHIN A DAY
-        </p>
-
-        {/* No ch cap, and the figures run underneath rather than standing
-            in a bordered panel beside a shorter column. */}
-        <h1 className="t-title mt-5">
-          What can an answer engine actually do with your site?
-        </h1>
-
-        <p className="mt-6 max-w-prose text-body text-ink-muted">
-          Search is being answered, not listed. A page can rank perfectly well
-          and never be quoted, because what gets quoted is a passage and most
-          pages do not contain one. Send a URL and I will tell you where yours
-          stands.
-        </p>
-      </header>
+      <PageHero
+        back={{ href: "/tools", label: "Tools" }}
+        kicker="Free, written by a person, back within a day"
+        title="What can an answer engine actually do with your site?"
+        lede="Search is being answered, not listed. A page can rank perfectly well and never be quoted, because what gets quoted is a passage and most pages do not contain one. Send a URL and I will tell you where yours stands."
+      />
 
       <section className="rule-t">
         <div className="shell py-10">

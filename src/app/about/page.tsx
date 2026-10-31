@@ -3,6 +3,7 @@ import { Experience, Capabilities } from "@/components/dossier/Track";
 import { About, Credentials } from "@/components/dossier/About";
 import { profile } from "@/content/profile";
 import { AboutSchema } from "@/components/dossier/StructuredData";
+import PageHero from "@/components/dossier/PageHero";
 
 export const metadata: Metadata = {
   title: "About",
@@ -21,20 +22,11 @@ export default function AboutPage() {
   return (
     <>
       <AboutSchema />
-      <header className="shell py-12 sm:py-16">
-        <p className="label mb-6">
-          {profile.role}
-          <span className="mx-2 text-ink-a">/</span>
-          {profile.roleAlt}
-          <span className="mx-2 text-ink-a">/</span>
-          {profile.yearsExperience} yrs
-          <span className="mx-2 text-ink-a">/</span>
-          {profile.location}
-        </p>
-        <h1 className="t-title max-w-[16ch]">
-          The long version.
-        </h1>
-      </header>
+      <PageHero
+        kicker={`${profile.role} · ${profile.location}`}
+        title="The long version."
+        lede="For the thorough lead: the full track record, the toolbox, and where the work has been picked up by others."
+      />
 
       <About />
       <Experience />

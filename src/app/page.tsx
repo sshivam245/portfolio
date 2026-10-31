@@ -1,31 +1,33 @@
-import Masthead from "@/components/dossier/Masthead";
-import Specimen from "@/components/dossier/Specimen";
+import FunnelHero from "@/components/funnel/FunnelHero";
+import StatsBand from "@/components/dossier/StatsBand";
 import WorkIndex from "@/components/dossier/WorkIndex";
 import ToolsTeaser from "@/components/dossier/ToolsTeaser";
-import Writing from "@/components/dossier/Writing";
 import AboutTeaser from "@/components/dossier/AboutTeaser";
+import Writing from "@/components/dossier/Writing";
 import Contact from "@/components/dossier/Contact";
-import Wordmark from "@/components/dossier/Wordmark";
 import { HomeSchema } from "@/components/dossier/StructuredData";
 
 /**
- * The homepage is now an index, not the whole site. Case studies live at
- * /work/<slug>, the full history at /about, all posts at /writing.
+ * The homepage is the funnel.
+ *
+ * The hero walks the visitor through four stages, one real result each. The
+ * rest of the page is what a funnel does next: the numbers at a glance,
+ * then touchpoints (the work, the tools, the person, the reading), then the
+ * close, painted in the hero's "this stage is live" yellow.
+ *
+ * Blocks alternate cream and blue so no two neighbours share a colour.
  */
 export default function Home() {
   return (
     <>
       <HomeSchema />
-      <Masthead />
-      <Specimen index="01" />
-      <WorkIndex index="02" limit={3} />
-      <ToolsTeaser index="03" />
-      <Writing index="04" limit={2} />
-      <AboutTeaser index="05" />
-      {/* Wordmark before Contact, not after. The last screen should be the
-          ask, not an ornament that repeats a name already in the header. */}
-      <Wordmark />
-      <Contact index="06" />
+      <FunnelHero />
+      <StatsBand />
+      <WorkIndex limit={3} />
+      <ToolsTeaser />
+      <AboutTeaser />
+      <Writing limit={2} />
+      <Contact />
     </>
   );
 }

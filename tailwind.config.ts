@@ -82,25 +82,21 @@ const config: Config = {
          * and rules only; never small text in light mode. sync-tokens.mjs
          * greps for `text-ink-b` outside a dark: prefix and fails the build.
          */
+        block: alpha("block"),
+        "on-block": alpha("on-block"),
+        zap: alpha("zap"),
+        "on-zap": alpha("on-zap"),
         "ink-a": alpha("ink-a"),
         "ink-b": alpha("ink-b"),
         accent: alpha("accent"),
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        mono: ["var(--font-plex-mono)", "ui-monospace", "monospace"],
-        /* Anton is condensed, so a fallback must be too: Georgia standing in
-           for it would reflow a headline by whole lines, not a few pixels. */
-        display: [
-          "var(--font-display)",
-          /* Anton's charset ends at Latin-1. The mono sits second so a glyph
-             it lacks — the arrow in the "0→1" metric — resolves to a face
-             this project already loads rather than to a system default. */
-          "var(--font-plex-mono)",
-          "Haettenschweiler",
-          "Impact",
-          "sans-serif",
-        ],
+        /* Display is the same family at a heavier weight and a larger optical
+           size, so it is an alias rather than a second face. `mono` points at
+           it too: nothing on this site is set in a monospace any more. */
+        display: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       fontSize: {
         // Only the small end lives here; headings use the .t-*

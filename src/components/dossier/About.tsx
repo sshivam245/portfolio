@@ -1,20 +1,20 @@
 import Section from "./Section";
 import { profile, education, publications, beyond, recognition } from "@/content/profile";
 
-export function About({ index = "01" }: { index?: string }) {
+export function About() {
   return (
-    <Section id="about" index={index} title="About">
+    <Section id="about" tag="About" title="The person behind the funnel.">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-7">
           {profile.about.map((para) => (
-            <p key={para} className="mb-4 max-w-prose text-body last:mb-0">
+            <p key={para} className="mb-5 max-w-prose text-lg leading-relaxed last:mb-0">
               {para}
             </p>
           ))}
         </div>
 
         <div className="lg:col-span-5">
-          <h3 className="label rule-b pb-2 text-ink">Beyond work</h3>
+          <h3 className="stage-tag mb-3">Beyond work</h3>
           <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
             {beyond.map((b) => (
               <div key={b.title} className="py-4">
@@ -30,14 +30,14 @@ export function About({ index = "01" }: { index?: string }) {
   );
 }
 
-export function Credentials({ index = "04" }: { index?: string }) {
+export function Credentials() {
   return (
-    <Section id="credentials" index={index} title="Recognition, education & publications">
+    <Section id="credentials" tag="Proof from elsewhere" title="Recognition, education and publications." tone="blue">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         {/* Recognition leads: someone else pointing at the work is stronger
             evidence than anything self-reported below it. */}
         <div className="lg:col-span-12">
-          <h3 className="label rule-b pb-2 text-ink">Recognition</h3>
+          <h3 className="stage-tag mb-3">Recognition</h3>
           <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
             {recognition.map((r) => (
               <div key={r.title} className="grid gap-x-10 gap-y-3 py-4 lg:grid-cols-12">
@@ -70,7 +70,7 @@ export function Credentials({ index = "04" }: { index?: string }) {
         </div>
 
         <div className="lg:col-span-6">
-          <h3 className="label rule-b pb-2 text-ink">Education</h3>
+          <h3 className="stage-tag mb-3">Education</h3>
           <div className="divide-y" style={{ borderColor: "var(--rule)" }}>
             {education.map((e) => (
               <div key={e.institution} className="py-4">
@@ -93,7 +93,7 @@ export function Credentials({ index = "04" }: { index?: string }) {
         </div>
 
         <div className="lg:col-span-6">
-          <h3 className="label rule-b pb-2 text-ink">Publications</h3>
+          <h3 className="stage-tag mb-3">Publications</h3>
           <ol className="divide-y" style={{ borderColor: "var(--rule)" }}>
             {publications.map((p, i) => (
               <li key={p.title} className="flex gap-4 py-4">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import WorkIndex from "@/components/dossier/WorkIndex";
+import PageHero from "@/components/dossier/PageHero";
 
 export const metadata: Metadata = {
   title: "Selected work",
@@ -27,7 +28,12 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <article>
-      <WorkIndex index="01" heading="Selected work" />
+      <PageHero
+        back={{ href: "/", label: "Back to the funnel" }}
+        kicker="All seven"
+        title="Every system, and what came out of it."
+      />
+      <WorkIndex tag="Selected work" title="Pick one. Each has the receipts." tone="cream" />
     </article>
   );
 }

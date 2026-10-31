@@ -27,45 +27,36 @@ const root = path.join(here, "..");
 const { caseStudies } = await import("../src/content/caseStudies.ts");
 const { profile, headlineMetrics } = await import("../src/content/profile.ts");
 
-const display = fs.readFileSync(path.join(here, "og-fonts/Anton-Regular.ttf"));
-const mono = fs.readFileSync(path.join(here, "og-fonts/IBMPlexMono-Medium.ttf"));
+const heavy = fs.readFileSync(path.join(here, "og-fonts/BricolageGrotesque-800.ttf"));
+const regular = fs.readFileSync(path.join(here, "og-fonts/BricolageGrotesque-500.ttf"));
 
-// The dark plates. OG previews sit on both light and dark chrome, and the
-// dark card is the one that reads as this site rather than as a default.
-//
-// Same rule as the site: ACCENT is the overlap colour and marks the figure,
-// which is the one thing on the card a reader can go and check.
-// Imported, never copied: this block used to be a hand-kept second copy of
-// the palette, and the figure SVGs were a third that had already drifted.
+// The funnel's blue block. OG previews sit on both light and dark chrome, and
+// a saturated ultramarine card reads as this site on either. The yellow is the
+// same "this stage is live" yellow, and marks the one figure a reader can go
+// and check. Imported, never copied.
 const { TOKENS } = await import("./tokens.mjs");
-const PAPER = TOKENS.dark["--paper"];
-const INK = TOKENS.dark["--ink"];
-const MUTED = TOKENS.dark["--ink-muted"];
-const ACCENT = TOKENS.dark["--accent"];
-const RULE = TOKENS.dark["--rule"];
-const INK_A = TOKENS.dark["--ink-a"];
-const INK_B = TOKENS.dark["--ink-b"];
-void INK_B;
+const PAPER = TOKENS.light["--block"];
+const INK = TOKENS.light["--on-block"];
+const MUTED = "rgba(255, 246, 224, 0.78)";
+const ZAP = TOKENS.light["--zap"];
+const ON_ZAP = TOKENS.light["--on-zap"];
+
+/** A small funnel for the card's corner, as an inline SVG image. */
+const FUNNEL_SVG =
+  "data:image/svg+xml;base64," +
+  Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 450">
+      <polygon points="20,20 380,20 330,120 70,120" fill="${ZAP}"/>
+      <g fill="rgba(255,246,224,0.16)" stroke="rgba(255,246,224,0.6)" stroke-width="3">
+        <polygon points="70,128 330,128 285,228 115,228"/>
+        <polygon points="115,236 285,236 245,336 155,336"/>
+        <polygon points="155,344 245,344 225,430 175,430"/>
+      </g>
+    </svg>`,
+  ).toString("base64");
 
 const W = 1200;
 const H = 630;
-
-/** The hairline grid, as elements: satori supports no background-image. */
-function grid() {
-  const cell = 72;
-  const lines = [];
-  for (let x = cell; x < W; x += cell)
-    lines.push({
-      type: "div",
-      props: { style: { position: "absolute", left: x, top: 0, width: 1, height: H, background: INK_A, opacity: 0.22 } },
-    });
-  for (let y = cell; y < H; y += cell)
-    lines.push({
-      type: "div",
-      props: { style: { position: "absolute", left: 0, top: y, width: W, height: 1, background: INK_A, opacity: 0.22 } },
-    });
-  return lines;
-}
 
 /**
  * The four figures as a source row, which is what the homepage hero now is.
@@ -90,12 +81,18 @@ function sources() {
               type: "div",
               props: {
                 style: {
-                  fontFamily: "Anton",
+                  display: "flex",
+                  alignSelf: "flex-start",
+                  fontFamily: "Bricolage",
+                  fontWeight: 800,
                   fontSize: 58,
                   lineHeight: 1,
                   // Same rule as the site: the overlap marks the one figure
                   // a reader can confirm without taking our word for it.
-                  color: m.verified ? ACCENT : INK,
+                  color: m.verified ? ON_ZAP : INK,
+                  background: m.verified ? ZAP : "transparent",
+                  padding: m.verified ? "2px 10px" : 0,
+                  borderRadius: 8,
                 },
                 children: `${m.value}${m.unit}`,
               },
@@ -103,8 +100,8 @@ function sources() {
             {
               type: "div",
               props: {
-                style: { fontSize: 17, color: MUTED, marginTop: 10, letterSpacing: 1 },
-                children: m.label.toUpperCase(),
+                style: { fontSize: 19, color: MUTED, marginTop: 10, fontWeight: 500 },
+                children: m.label,
               },
             },
           ],
@@ -114,7 +111,7 @@ function sources() {
   };
 }
 
-function card({ kicker, title, metric, metricLabel, showSources }) {
+function card({ kicker, title, metric, metricLabel, metricVerified, showSources }) {
   return {
     type: "div",
     props: {
@@ -122,14 +119,16 @@ function card({ kicker, title, metric, metricLabel, showSources }) {
         width: W, height: H, boxSizing: "border-box", display: "flex",
         flexDirection: "column", justifyContent: "space-between",
         background: PAPER, color: INK,
-        padding: "64px 72px", position: "relative", fontFamily: "IBM Plex Mono",
+        padding: "64px 72px", position: "relative", fontFamily: "Bricolage",
       },
       children: [
         {
-          type: "div",
+          type: "img",
           props: {
-            style: { position: "absolute", top: 0, left: 0, width: W, height: H, display: "flex" },
-            children: grid(),
+            src: FUNNEL_SVG,
+            width: 200,
+            height: 225,
+            style: { position: "absolute", top: 56, right: 64 },
           },
         },
         {
@@ -140,7 +139,10 @@ function card({ kicker, title, metric, metricLabel, showSources }) {
               {
                 type: "div",
                 props: {
-                  style: { fontSize: 20, letterSpacing: 2.4, textTransform: "uppercase", color: MUTED },
+                  style: {
+                    display: "flex", alignSelf: "flex-start", fontSize: 22, fontWeight: 800,
+                    background: ZAP, color: ON_ZAP, padding: "6px 18px", borderRadius: 999,
+                  },
                   children: kicker,
                 },
               },
@@ -149,24 +151,14 @@ function card({ kicker, title, metric, metricLabel, showSources }) {
                 props: {
                   style: {
                     /*
-                     * Anton is condensed, so it fits more per line than the
-                     * serif did and the breakpoints move with it. Three
-                     * steps, not two: at a single threshold a 29-character
-                     * title took the 92px branch, wrapped "AI / Overview"
-                     * across two lines and left one word alone on the second.
-                     *
-                     * maxWidth is the full content measure (1200 less the
-                     * 72px gutters). It was 1000, which threw away 56px and
-                     * caused exactly that break.
-                     *
-                     * lineHeight 1.02, not 0.96: the site's hero is set once
-                     * and checked, but these titles come from content and
-                     * wrap where they land. At 0.96 the descender of "by"
-                     * sat on the cap-height of the line beneath it.
+                     * Three steps, so a mid-length title never takes the
+                     * largest size and strands one word on its own line.
+                     * maxWidth leaves room for the corner funnel.
                      */
-                    fontFamily: "Anton",
-                    fontSize: title.length > 52 ? 72 : title.length > 26 ? 80 : 92,
-                    lineHeight: 1.02, marginTop: 28, maxWidth: 1056, color: INK,
+                    fontFamily: "Bricolage", fontWeight: 800, letterSpacing: -2,
+                    fontSize: title.length > 52 ? 66 : title.length > 26 ? 76 : 88,
+                    lineHeight: 1.0, marginTop: 30, maxWidth: 820, color: INK,
+                    textWrap: "balance",
                   },
                   children: title,
                 },
@@ -185,7 +177,7 @@ function card({ kicker, title, metric, metricLabel, showSources }) {
                   style: { display: "flex", flexDirection: "column" },
                   children: metric
                     ? [
-                        { type: "div", props: { style: { fontFamily: "Anton", fontSize: 72, color: ACCENT, lineHeight: 1 }, children: metric } },
+                        { type: "div", props: { style: { display: "flex", alignSelf: "flex-start", fontWeight: 800, fontSize: 72, color: metricVerified ? ON_ZAP : INK, background: metricVerified ? ZAP : "transparent", padding: metricVerified ? "2px 14px" : 0, borderRadius: 10, lineHeight: 1 }, children: metric } },
                         { type: "div", props: { style: { fontSize: 20, color: MUTED, marginTop: 12, maxWidth: 620 }, children: metricLabel } },
                       ]
                     : showSources
@@ -196,7 +188,7 @@ function card({ kicker, title, metric, metricLabel, showSources }) {
               {
                 type: "div",
                 props: {
-                  style: { fontSize: 20, letterSpacing: 2, textTransform: "uppercase", color: MUTED },
+                  style: { fontSize: 22, fontWeight: 800, color: INK },
                   children: "shivamgoel.vercel.app",
                 },
               },
@@ -212,8 +204,8 @@ async function render(spec, file) {
   const svg = await satori(card(spec), {
     width: W, height: H,
     fonts: [
-      { name: "Anton", data: display, weight: 400, style: "normal" },
-      { name: "IBM Plex Mono", data: mono, weight: 500, style: "normal" },
+      { name: "Bricolage", data: heavy, weight: 800, style: "normal" },
+      { name: "Bricolage", data: regular, weight: 500, style: "normal" },
     ],
   });
   const png = new Resvg(svg, { fitTo: { mode: "width", value: W } }).render().asPng();
@@ -238,6 +230,7 @@ const pages = [
     title: cs.title,
     metric: cs.outcomes[0]?.value,
     metricLabel: cs.outcomes[0]?.label,
+    metricVerified: Boolean(cs.verified),
   })),
   {
     file: "tools-agent-fit.png",

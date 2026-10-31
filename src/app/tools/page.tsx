@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PageHero from "@/components/dossier/PageHero";
 
 export const metadata: Metadata = {
   title: "Tools",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 const tools = [
   {
     href: "/tools/agent-fit",
-    kicker: "INSTANT · NO EMAIL",
+    kicker: "Instant, no email",
     title: "Which GTM agent should you build?",
     blurb:
       "Five questions about your motion, deal size, team and stack. Returns a ranked shortlist, each with its trigger, its loop, the tools of yours it would sit on, and where it breaks. Sometimes it tells you to build nothing.",
@@ -19,7 +20,7 @@ const tools = [
   },
   {
     href: "/tools/aeo-audit",
-    kicker: "FREE · BACK WITHIN A DAY",
+    kicker: "Free, back within a day",
     title: "What can an answer engine do with your site?",
     blurb:
       "Send a URL and I read the pages myself, against 23 checks that decide whether a passage can be retrieved, attributed and quoted. You get three fixes in priority order and an explicit list of what to leave alone.",
@@ -30,42 +31,29 @@ const tools = [
 export default function ToolsPage() {
   return (
     <article>
-      <header className="shell py-12 sm:py-16">
-        <p className="label label-tap">Tools</p>
-        <h1 className="t-title mt-4 max-w-[17ch]">
-          Two things that do something, rather than describe it
-        </h1>
-        <p className="mt-6 max-w-prose text-body text-ink-muted">
-          A portfolio that only talks about systems is asking to be taken on faith.
-          These are the working versions. One answers instantly in your browser and
-          asks for nothing. The other reaches me, because the useful version of it
-          needs a person to read your pages.
-        </p>
-      </header>
+      <PageHero
+        back={{ href: "/", label: "Back to the funnel" }}
+        kicker="Try before you buy"
+        title="Two things that do something."
+        lede="A portfolio that only talks about systems is asking to be taken on faith. These are the working versions. One answers instantly and asks for nothing. The other reaches me, because the useful version needs a person to read your pages."
+      />
 
-      {tools.map((t) => (
-        <section key={t.href} className="rule-t">
-          <div className="shell py-12">
-            <Link href={t.href} className="group block">
-              <p className="label">
-                <span className="text-ink-a">{t.kicker.split(" · ")[0]}</span>
-                <span className="mx-2">·</span>
-                {t.kicker.split(" · ")[1]}
-              </p>
-              <h2 className="t-heading mt-4 max-w-[20ch] transition-colors duration-150 group-hover:text-ink-a">
-                {t.title}
-              </h2>
-              <p className="mt-5 max-w-prose text-body text-ink-muted">{t.blurb}</p>
-              <p className="link label-tap mt-6 inline-flex items-center gap-2 text-body">
-                {t.cta}
-                <span aria-hidden className="transition-transform duration-150 group-hover:translate-x-1">
-                  →
+      <section className="tone-cream">
+        <ul className="shell grid gap-5 py-16 sm:py-24 lg:grid-cols-2">
+          {tools.map((t, i) => (
+            <li key={t.href}>
+              <Link href={t.href} className={`tool-panel group block h-full ${i === 0 ? "tone-blue" : "tone-zap"}`}>
+                <p className="kicker">{t.kicker}</p>
+                <h2 className="t-heading mt-5 max-w-[20ch]">{t.title}</h2>
+                <p className="mt-5 max-w-prose text-base leading-relaxed text-ink-muted">{t.blurb}</p>
+                <span className="btn mt-8">
+                  {t.cta} →
                 </span>
-              </p>
-            </Link>
-          </div>
-        </section>
-      ))}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
     </article>
   );
 }

@@ -77,7 +77,7 @@ ${decls(TOKENS.dark, "    ")}
 ${Object.entries(light)
   .map(([sel, rule]) => `    ${sel.padEnd(6)} { ${rule} }`)
   .join("\n")}
-    text   { font-family: var(--font-plex-mono, "IBM Plex Mono"), ui-monospace, monospace; }
+    text   { font-family: var(--font-sans, "Bricolage Grotesque"), system-ui, sans-serif; font-weight: 600; }
     .lbl   { font-size: 10px; letter-spacing: 0.08em; }
     .sub   { font-size: 9px; }
     .tiny  { font-size: 8px; }
@@ -86,7 +86,7 @@ ${Object.entries(light)
       .muted { ${dark[".muted"]} }
       .accf  { ${dark[".accf"]} }
       .acc   { ${dark[".acc"]} }
-      .box, .rule { stroke: ${TOKENS.dark["--rule"]}; }
+      .box, .rule { stroke: ${TOKENS.dark["--ink-muted"]}; }
     }
   </style>`;
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PageHero from "@/components/dossier/PageHero";
 import { notFound } from "next/navigation";
 import Figure from "@/components/dossier/Figure";
 import FigureHero from "@/components/dossier/FigureHero";
@@ -87,66 +88,34 @@ export default function CaseStudyPage({
         The figures run underneath as a full-width ledger instead, which is
         where four numbers read best anyway.
       */}
-      <header className="shell py-12 sm:py-16">
-        <Link href="/#work" className="label label-tap hover:text-ink-a transition-colors">
-          ← Selected work
-        </Link>
-
-        <p className="label label-tap mt-10">
-          <span className="tnum">{String(index + 1).padStart(2, "0")}</span>
-          <span className="mx-2 text-ink-a">·</span>
-          {cs.tag}
-          <span className="mx-2">·</span>
-          {cs.org}, {cs.timeframe}
-        </p>
-
-        {/* No ch cap. The shell is the measure. */}
-        <h1 className="t-display mt-5">{cs.title}</h1>
-
-        <p className="mt-8 max-w-prose text-body">{cs.summary}</p>
-
-        {/*
-          The live link as a ruled row across the page, not a lone underlined
-          string parked in a right-hand column with nothing near it. Label on
-          the left, URL next to it, arrow driven out to the far margin, so the
-          row reads as an entry rather than something left behind.
-        */}
+      <PageHero
+        back={{ href: "/#work", label: "All the work" }}
+        kicker={`${cs.tag} · ${cs.org}, ${cs.timeframe}`}
+        title={cs.title}
+        lede={cs.summary}
+      >
         {cs.link ? (
           <a
             /* A root-relative href points at a file in /public and needs the
                basePath; a plain <a> does not get it the way next/link does. */
-            href={
-              cs.link.href.startsWith("/") ? asset(cs.link.href) : cs.link.href
-            }
+            href={cs.link.href.startsWith("/") ? asset(cs.link.href) : cs.link.href}
             target="_blank"
             rel="noreferrer noopener"
-            className="live-bar rule-t press mt-10 flex items-baseline gap-x-5 pt-5"
+            className="live-bar btn mt-9 max-w-full"
           >
-            <span className="label shrink-0 text-accent">Live</span>
-            {/*
-              Body size with the .link underline, not .label. As a label it
-              rendered identically to "Outcome", "Context" and "Stack", so the
-              one genuinely clickable thing here read as a section heading.
-            */}
-            {/*
-              flex-1 + min-w-0 + break-all: the URL takes whatever is left on
-              the row and wraps inside itself. As an auto-width item it
-              claimed a whole flex line at 375px, which stranded the arrow
-              alone on a third line.
-            */}
-            <span className="link min-w-0 flex-1 break-all text-body">
-              {cs.link.label}
-            </span>
-            {/* Sits at the far margin on every width, because the URL now
-                grows to fill rather than wrapping past it. */}
-            <span aria-hidden className="live-arrow shrink-0 text-accent">↗</span>
+            <span className="shrink-0">See it live</span>
+            {/* break-all: the URL wraps inside itself at 375px instead of
+                pushing the button wider than the screen. */}
+            <span className="min-w-0 break-all font-semibold opacity-80">{cs.link.label}</span>
+            <span aria-hidden className="live-arrow shrink-0">↗</span>
           </a>
         ) : null}
-      </header>
+      </PageHero>
 
-      <section className="rule-t">
-        <div className="shell py-10">
-          <h2 className="label mb-8">Outcome</h2>
+      {/* The result, in the colour the funnel uses for "this stage is live". */}
+      <section className="tone-zap">
+        <div className="shell py-12 sm:py-16">
+          <h2 className="stage-tag mb-8">What came out of it</h2>
           <Ledger items={cs.outcomes} verifiedFirst={cs.verified} />
         </div>
       </section>
@@ -157,8 +126,8 @@ export default function CaseStudyPage({
         them check it rather than take it on trust.
       */}
       {hero ? (
-        <section className="rule-t">
-          <div className="shell py-12">
+        <section className="tone-cream">
+          <div className="shell pt-14">
             <FigureHero figure={hero} />
           </div>
         </section>
@@ -170,8 +139,8 @@ export default function CaseStudyPage({
         column: they are evidence to glance at, not a step to follow, and
         they give the column something to hold.
       */}
-      <section className="rule-t">
-        <div className="shell grid gap-10 py-12 lg:grid-cols-12 lg:gap-12">
+      <section className="tone-cream">
+        <div className="shell grid gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-14">
           {/*
             min-w-0: a grid item defaults to min-width:auto, so the diagram's
             648px min-width was forcing the whole grid wider than the phone
@@ -179,20 +148,20 @@ export default function CaseStudyPage({
             can shrink and the diagram scrolls inside its own wrapper instead.
           */}
           <div className="min-w-0 lg:col-span-7">
-            <h2 className="label mb-3">Context</h2>
-            <p className="max-w-prose text-body text-ink-muted">{cs.context}</p>
+            <h2 className="stage-tag mb-4">Context</h2>
+            <p className="max-w-prose text-lg leading-relaxed">{cs.context}</p>
 
             {diagrams.map((f) => (
               <InlineDiagram key={f.src} figure={f} />
             ))}
 
-            <h2 className="label mb-6 mt-10">What I built</h2>
+            <h2 className="stage-tag mb-6 mt-12">What I built</h2>
             <BuildFlow steps={cs.built} />
 
             {cs.reflection ? (
               <>
-                <h2 className="label mb-3 mt-10">What I&apos;d do differently</h2>
-                <p className="max-w-prose text-body text-ink-muted">
+                <h2 className="stage-tag mb-4 mt-12">What I&apos;d do differently</h2>
+                <p className="max-w-prose text-lg leading-relaxed">
                   {cs.reflection}
                 </p>
               </>
@@ -200,10 +169,12 @@ export default function CaseStudyPage({
           </div>
 
           <aside className="min-w-0 lg:col-span-5">
-            <h2 className="label mb-2">Stack</h2>
-            <p className="font-mono text-small text-ink-muted">
-              {cs.stack.join("  \u00b7  ")}
-            </p>
+            <h2 className="stage-tag mb-4">Stack</h2>
+            <ul className="flex flex-wrap gap-2">
+              {cs.stack.map((t) => (
+                <li key={t} className="stage-pill !min-h-0 !py-1.5">{t}</li>
+              ))}
+            </ul>
             {shots.map((f) => (
               <Figure key={f.src} figure={f} />
             ))}
@@ -212,13 +183,14 @@ export default function CaseStudyPage({
       </section>
 
       {/* Next case study, so the page doesn't dead-end. */}
-      <section className="rule-t">
-        <div className="shell py-10">
-          <Link href={`/work/${next.id}`} className="group block">
-            <h2 className="label mb-2">Next case study</h2>
-            <p className="t-heading transition-colors duration-150 group-hover:text-ink-a">
-              {next.title}
-            </p>
+      <section className="tone-blue">
+        <div className="shell py-14 sm:py-20">
+          <Link href={`/work/${next.id}`} className="group flex items-center justify-between gap-6">
+            <span className="min-w-0">
+              <span className="stage-tag">Next case study</span>
+              <span className="t-title mt-5 block max-w-[20ch]">{next.title}</span>
+            </span>
+            <span className="work-arrow shrink-0" aria-hidden>→</span>
           </Link>
         </div>
       </section>

@@ -4,85 +4,69 @@ import { publishedPosts, formatDate } from "@/content/writing";
 import { indexLine } from "@/lib/text";
 
 /**
- * Numbered list of posts, same dossier grammar as the work index.
+ * Posts, as big rows. On the homepage this is the nurture content: the
+ * thing you send a lead who is interested but not ready.
  *
- * `limit` shows only the most recent few, for the homepage; the full list
- * lives at /writing.
+ * `limit` shows only the most recent few; the full list lives at /writing.
  */
 export default function Writing({
-  index = "02",
   limit,
+  tag = "Touchpoint 4 · Nurture content",
+  title = "Reading material, for the thorough.",
 }: {
-  index?: string;
   limit?: number;
+  tag?: string;
+  title?: React.ReactNode;
 }) {
   if (!publishedPosts.length) return null;
 
   const posts = limit ? publishedPosts.slice(0, limit) : publishedPosts;
   const hasMore = limit != null && publishedPosts.length > limit;
-  const n = publishedPosts.length;
-  const plural = `${n} post${n === 1 ? "" : "s"}`;
 
   return (
     <Section
       id="writing"
-      index={index}
-      title="Writing"
+      tag={tag}
+      title={title}
       aside={
         hasMore ? (
-          <Link href="/writing" className="hover:text-ink-a transition-colors">
-            All {plural} →
+          <Link href="/writing" className="link">
+            All {publishedPosts.length} posts →
           </Link>
-        ) : (
-          plural
-        )
+        ) : null
       }
     >
-      <ol className="rule-t">
+      <ol className="grid gap-4">
         {posts.map((post, i) => {
           const external = Boolean(post.href);
           const href = post.href ?? `/writing/${post.slug}`;
 
           const inner = (
             <>
-              <span className="label tnum shrink-0 pt-1 sm:w-10">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-
               <span className="min-w-0 flex-1">
-                <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="t-subhead group-hover:text-ink-a transition-colors duration-150">
-                    {post.title}
-                  </span>
-                  {external ? (
-                    <span className="label group-hover:text-ink-a transition-colors">
-                      {post.venue} ↗
-                    </span>
-                  ) : null}
-                </span>
-
-                {/* One line on the homepage, the whole blurb on /writing.
-                    `limit` is what distinguishes the two, and an index does
-                    not need the paragraph the page itself opens with. */}
-                <span className="mt-2 block max-w-prose text-small text-ink-muted">
-                  {limit ? indexLine(post.blurb) : post.blurb}
-                </span>
-
-                <span className="label mt-3 block">
+                <span className="label block">
                   {formatDate(post.date)}
                   <span className="mx-2">·</span>
                   {post.tags.join(" · ")}
+                  {external ? (
+                    <>
+                      <span className="mx-2">·</span>
+                      {post.venue} ↗
+                    </>
+                  ) : null}
+                </span>
+                <span className="t-heading mt-3 block">{post.title}</span>
+                <span className="mt-3 block max-w-[60ch] text-base leading-relaxed text-ink-muted">
+                  {limit ? indexLine(post.blurb) : post.blurb}
                 </span>
               </span>
-
-              <span
-                aria-hidden
-                className="mt-3 hidden h-px w-12 shrink-0 origin-left scale-x-50 bg-ink-a transition-transform duration-200 group-hover:scale-x-100 sm:block"
-              />
+              <span className="work-arrow" aria-hidden>
+                →
+              </span>
             </>
           );
 
-          const cls = "press group flex gap-4 rule-b py-6 sm:gap-6 items-start";
+          const cls = "post-card group";
 
           return (
             <li key={post.slug} className="stagger-item" style={{ "--i": i } as React.CSSProperties}>

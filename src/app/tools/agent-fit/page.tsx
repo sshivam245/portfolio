@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import type { Metadata } from "next";
+import PageHero from "@/components/dossier/PageHero";
 import AgentFit from "@/components/tools/AgentFit";
 import Ledger from "@/components/dossier/Ledger";
 import { AgentFitSchema } from "@/components/dossier/StructuredData";
@@ -28,30 +29,12 @@ export default function AgentFitPage() {
   return (
     <article>
       <AgentFitSchema />
-      <header className="shell py-12 sm:py-16">
-        <Link href="/tools" className="label label-tap hover:text-ink-a transition-colors">
-          ← Tools
-        </Link>
-
-        <p className="label label-tap mt-8">
-          <span className="text-ink-a">FIVE QUESTIONS</span>
-          <span className="mx-2">·</span>
-          NO EMAIL
-          <span className="mx-2">·</span>
-          ANSWER IS INSTANT
-        </p>
-
-        {/* No ch cap, and the figures run underneath rather than standing
-            in a bordered panel beside a shorter column. */}
-        <h1 className="t-title mt-5">Which GTM agent is worth building?</h1>
-
-        <p className="mt-6 max-w-prose text-body text-ink-muted">
-          Most teams start with the agent that is most fun to build and abandon
-          it three weeks later. The one that survives sits on data you already
-          trust and removes a task someone repeats every week. This says which
-          that is, including when the answer is to build nothing yet.
-        </p>
-      </header>
+      <PageHero
+        back={{ href: "/tools", label: "Tools" }}
+        kicker="Five questions, no email, instant answer"
+        title="Which GTM agent is worth building?"
+        lede="Most teams start with the agent that is most fun to build and abandon it three weeks later. The one that survives sits on data you already trust and removes a task someone repeats every week. This says which that is, including when the answer is to build nothing yet."
+      />
 
       <section className="rule-t">
         <div className="shell py-10">
