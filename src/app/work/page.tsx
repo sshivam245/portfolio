@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       "Seven case studies: what the system was, how it worked, and what came out of it.",
     type: "website",
     url: "/work",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Selected work" }],
+    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Selected work" }],
   },
 };
 
