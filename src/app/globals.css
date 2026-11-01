@@ -268,8 +268,10 @@
     font-weight: 600;
     color: var(--ink-muted);
     /* At 200% text a single uppercase word ("AUTOMATION") is wider than a
-       work card's column on a phone. */
-    overflow-wrap: anywhere;
+       work card's column on a phone. break-word, not anywhere: `anywhere`
+       also shrinks the label's min-content width, so in a flex caption the
+       "DIAGRAM" tag gave way and wrapped as "DIAGR / AM". */
+    overflow-wrap: break-word;
   }
 
   /*

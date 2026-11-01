@@ -50,8 +50,8 @@ export default function FigureHero({ figure }: { figure: FigureData }) {
         style={{ borderColor: "var(--rule)" }}
       />
       <figcaption className="label mt-5 flex max-w-prose gap-2 text-center">
-        <span className="text-ink-a">Evidence</span>
-        <span>{figure.caption}</span>
+        <span className="shrink-0 text-ink-a">Evidence</span>
+        <span className="min-w-0">{figure.caption}</span>
       </figcaption>
     </figure>
   );

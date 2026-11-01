@@ -45,8 +45,8 @@ export default function InlineDiagram({ figure }: { figure: FigureData }) {
         <DrawSvg markup={markup} />
       </div>
       <figcaption className="label mt-3 flex gap-2">
-        <span className="text-ink-a">DIAGRAM</span>
-        <span>{figure.caption}</span>
+        <span className="shrink-0 text-ink-a">DIAGRAM</span>
+        <span className="min-w-0">{figure.caption}</span>
       </figcaption>
     </figure>
   );

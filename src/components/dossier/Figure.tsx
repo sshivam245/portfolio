@@ -80,9 +80,9 @@ export default function Figure({ figure }: { figure: FigureData }) {
       </div>
       <figcaption className="label mt-3 flex gap-2">
         {figure.diagram ? (
-          <span className="text-ink-a">DIAGRAM</span>
+          <span className="shrink-0 text-ink-a">DIAGRAM</span>
         ) : null}
-        <span>{figure.caption}</span>
+        <span className="min-w-0">{figure.caption}</span>
       </figcaption>
     </figure>
   );
