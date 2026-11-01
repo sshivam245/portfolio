@@ -10,8 +10,8 @@ const LAST = FUNNEL_STAGES.length - 1;
 const DURATIONS = [4200, 3800, 3800, 5400];
 
 /**
- * The homepage opens by telling the visitor what is happening to them, and
- * then the funnel runs on its own.
+ * The homepage opens on a plain line, and then the funnel beside it runs on
+ * its own with the visitor in it as the orange dot.
  *
  * Each stage holds for a few seconds while its segment of the progress bar
  * fills, then YOU sinks to the next band; at the bottom it converts, holds,
@@ -121,15 +121,20 @@ export default function FunnelHero() {
   };
 
   return (
-    <section ref={section} id="top" className="tone-blue relative overflow-hidden">
+    <section ref={section} id="top" className="tone-stone relative overflow-hidden">
       <div className="hero-grid shell pb-14 pt-12 sm:pb-20 sm:pt-16">
         <div className="hero-intro">
+          {/* Said straight. The joke headline it replaced ("You just entered
+              my funnel.") was the single most childish thing on the page. The
+              funnel beside it still makes the point, without saying it. */}
           <h1 className="t-display">
-            You just entered <span className="text-zap">my funnel.</span>
+            Growth,
+            <br />
+            engineered.
           </h1>
-          <p className="mt-6 max-w-[42ch] text-base leading-relaxed text-ink-muted sm:text-xl">
+          <p className="mt-6 max-w-[40ch] text-base leading-relaxed text-ink-muted sm:text-xl">
             I&apos;m Shivam Goel, a marketing engineer. I build acquisition engines
-            and the automation underneath them. This page is one of them.
+            and the automation underneath them. You&apos;re falling through one now.
           </p>
         </div>
 

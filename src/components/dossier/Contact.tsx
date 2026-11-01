@@ -3,8 +3,8 @@ import { profile } from "@/content/profile";
 import { asset } from "@/lib/basePath";
 
 /**
- * The close. The bottom of the funnel, painted in the colour the hero uses
- * for "this stage is live", with one ask and the address in type big enough
+ * The close. The bottom of the funnel, painted signal orange, the colour
+ * YOU is in the hero, and the one loud block on the page. One ask and the address in type big enough
  * to copy from across the room.
  */
 export default function Contact() {
@@ -13,7 +13,7 @@ export default function Contact() {
       id="contact"
       tag="Contact"
       title="Let's talk."
-      tone="zap"
+      tone="signal"
     >
       <div className="grid gap-x-12 gap-y-10 lg:grid-cols-12">
         <div className="lg:col-span-7">

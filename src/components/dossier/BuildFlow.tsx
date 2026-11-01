@@ -21,7 +21,7 @@ export default function BuildFlow({ steps }: { steps: BuildStep[] }) {
           <div className="min-w-0">
             <p className="text-base font-bold leading-snug">{b.step}</p>
             {b.detail ? (
-              <p className="mt-1 max-w-prose text-base leading-relaxed text-ink-muted">{b.detail}</p>
+              <p className="mt-1 max-w-prose text-base leading-relaxed text-ink-muted [overflow-wrap:anywhere]">{b.detail}</p>
             ) : null}
           </div>
         </li>

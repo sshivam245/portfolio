@@ -44,15 +44,15 @@ export default function FlatFunnel({
           className={`flat-label${i === stage ? " on" : ""}`}
         >
           {/* The narrow last band only fits a short word. */}
-          {i === 3 ? "CALL" : n.toUpperCase()}
+          {i === 3 ? "Call" : n}
         </text>
       ))}
       <g
         className="flat-you"
         style={{ transform: `translate(200px, ${YOU_Y[stage]}px)` }}
       >
-        <circle r="19" />
-        <text y="4">YOU</text>
+        <circle r="8" />
+        <text x="16" y="4">You</text>
       </g>
     </svg>
   );

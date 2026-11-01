@@ -25,7 +25,7 @@ export default function Header() {
           Height grows instead. */}
       <div className="shell flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2">
         {/* next/link, not <a>: Next only prepends basePath to Link hrefs. */}
-        <Link href="/" className="label-tap text-lg font-bold tracking-tight text-ink">
+        <Link href="/" className="label-tap text-lg font-semibold tracking-tight text-ink">
           Shivam Goel
         </Link>
 
@@ -36,7 +36,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`label-tap text-sm font-bold text-ink transition-colors hover:text-ink-a ${
+                className={`label-tap text-sm font-medium text-ink transition-colors hover:text-ink-a ${
                   item.secondary ? "hidden sm:inline" : ""
                 }`}
               >
@@ -45,7 +45,7 @@ export default function Header() {
             ))}
           <a
             href={asset(profile.resumePath)}
-            className="label-tap hidden text-sm font-bold text-ink transition-colors hover:text-ink-a sm:inline"
+            className="label-tap hidden text-sm font-medium text-ink transition-colors hover:text-ink-a sm:inline"
             download
           >
             CV

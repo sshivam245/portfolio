@@ -15,49 +15,49 @@
  *
  * ── The world ──────────────────────────────────────────────────────────────
  *
- * A funnel. The site treats the visitor as a lead and walks them down it.
- * Paper stock, ultramarine colour blocks, and a warm signal yellow that
- * means "this stage is live". One theme only: the site is a campaign with a
- * fixed palette, not an app, and a dark mode was a second set of colours to
- * keep honest for no gain.
+ * A design studio's stone-and-ink sheet with one signal orange. The funnel is
+ * still the idea (the site treats the visitor as a lead and walks them down
+ * it), but it is drawn in fine linework, the way a studio would draw it on a
+ * presentation board, not as a toy. One theme only.
  *
- * The yellow is warm on purpose. The acid lime it replaced was the most
- * recognisable colour of the 2025 template landing page, and it made the
- * whole site read as generated.
+ * It replaced ultramarine and lemon yellow, which read as a children's
+ * product: primary blue with primary yellow is the palette of toys.
  *
  * Token names are kept from earlier systems so the utilities used across
  * every page carry over:
  *
- *   --ink-a   ultramarine. Structure: links, focus, the blue blocks.
- *   --ink-b   signal yellow. The live stage, the highlighter, buttons on blue.
- *   --accent  ultramarine, used by the diagrams' highlight node.
- *   --block / --on-block   the blue colour-block sections and their text.
- *   --zap / --on-zap       the yellow block (the close) and its text.
+ *   --ink-a   burnt orange, dark enough for text on stone (5.2:1). Links,
+ *             index numbers, the small accents.
+ *   --ink-b   signal orange. Fills only: YOU, the live stage, the underline
+ *             marker, the button hover. 3.1:1 on stone, so never text there.
+ *   --accent  burnt orange, used by the diagrams' highlight node.
+ *   --block / --on-block   the ink sections (work, footer) and their text.
+ *   --zap / --on-zap       the signal-orange close and its text.
  *
- * Inside a blue or yellow section the .tone-* classes in globals.css re-scope
- * --paper, --ink, --ink-a and friends.
+ * Inside an ink or signal section the .tone-* classes in globals.css
+ * re-scope --paper, --ink, --ink-a and friends.
  *
  * ── The one trap ───────────────────────────────────────────────────────────
  *
- * --ink-b is yellow: about 1.3:1 on paper. A fill, a highlight and a button
- * colour, never text on paper; `npm run tokens:check` enforces that by grep.
+ * --ink-b is 3.1:1 on stone. A fill, a marker and a hover colour, never text
+ * on paper; `npm run tokens:check` enforces that by grep.
  */
 
 /** Contrast against --paper, measured, not estimated. */
 export const TOKENS = {
   light: {
-    "--paper": "#fbf8f1", //            paper stock
-    "--ink": "#15153a", //              deep ink                 16.1:1
-    "--ink-muted": "#55556e", //                                  6.8:1
-    "--rule": "#e2ddcf",
-    "--ink-a": "#2424c8", //            ultramarine               9.2:1
-    "--ink-b": "#ffd60a", //            signal yellow             1.3:1  see above
-    "--accent": "#2424c8",
-    "--grid": "rgba(36, 36, 200, 0.05)",
-    "--block": "#2424c8", //            the blue sections
-    "--on-block": "#fbf8f1", //         paper on ultramarine      9.2:1
-    "--zap": "#ffd60a", //              the yellow close
-    "--on-zap": "#15153a", //           ink on yellow            11.4:1
+    "--paper": "#ebe8e1", //            stone
+    "--ink": "#121212", //              ink                      15.3:1
+    "--ink-muted": "#57544d", //                                  6.2:1
+    "--rule": "#d4d0c6",
+    "--ink-a": "#a83a10", //            burnt orange              5.2:1
+    "--ink-b": "#e5532d", //            signal orange             3.1:1  see above
+    "--accent": "#a83a10",
+    "--grid": "rgba(18, 18, 18, 0.05)",
+    "--block": "#121212", //            the ink sections
+    "--on-block": "#ebe8e1", //         stone on ink             15.3:1
+    "--zap": "#e5532d", //              the signal close
+    "--on-zap": "#121212", //           ink on signal             5.0:1
   },
 };
 

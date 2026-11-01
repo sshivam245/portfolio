@@ -102,7 +102,7 @@ ${Object.entries(light)
 }
 
 {
-  // --ink-b is yellow, ~1.3:1 on paper. It never carries text.
+  // --ink-b is signal orange, 3.1:1 on stone. It never carries text.
   const out = [];
   const walk = (d) => {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -119,7 +119,7 @@ ${Object.entries(light)
   };
   walk(path.join(root, "src"));
   if (out.length)
-    drift.push(`--ink-b used as text (~1.3:1 on paper):\n    ${out.join("\n    ")}`);
+    drift.push(`--ink-b used as text (3.1:1 on stone):\n    ${out.join("\n    ")}`);
 }
 
 if (!drift.length) {

@@ -30,28 +30,30 @@ const { profile, headlineMetrics } = await import("../src/content/profile.ts");
 const heavy = fs.readFileSync(path.join(here, "og-fonts/SchibstedGrotesk-700.ttf"));
 const regular = fs.readFileSync(path.join(here, "og-fonts/SchibstedGrotesk-500.ttf"));
 
-// The funnel's blue block. OG previews sit on both light and dark chrome, and
-// a saturated ultramarine card reads as this site on either. The yellow is the
-// same "this stage is live" yellow, and marks the one figure a reader can go
-// and check. Imported, never copied.
+// The site's own sheet: stone, ink, and one signal orange, which underlines
+// the one figure a reader can go and check. Imported, never copied.
 const { TOKENS } = await import("./tokens.mjs");
-const PAPER = TOKENS.light["--block"];
-const INK = TOKENS.light["--on-block"];
-const MUTED = "rgba(251, 248, 241, 0.78)";
+const PAPER = TOKENS.light["--paper"];
+const INK = TOKENS.light["--ink"];
+const MUTED = TOKENS.light["--ink-muted"];
 const ZAP = TOKENS.light["--zap"];
-const ON_ZAP = TOKENS.light["--on-zap"];
 
 /** A small funnel for the card's corner, as an inline SVG image. */
 const FUNNEL_SVG =
   "data:image/svg+xml;base64," +
   Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 450">
-      <polygon points="20,20 380,20 330,120 70,120" fill="${ZAP}"/>
-      <g fill="rgba(251,248,241,0.16)" stroke="rgba(251,248,241,0.6)" stroke-width="3">
-        <polygon points="70,128 330,128 285,228 115,228"/>
-        <polygon points="115,236 285,236 245,336 155,336"/>
-        <polygon points="155,344 245,344 225,430 175,430"/>
+      <g fill="none" stroke="${INK}" stroke-width="2.5">
+        <ellipse cx="200" cy="40" rx="170" ry="22"/>
+        <path d="M30 40 L178 380 M370 40 L222 380" stroke-opacity="0.45"/>
+        <ellipse cx="200" cy="300" rx="52" ry="8"/>
+        <ellipse cx="200" cy="380" rx="22" ry="4"/>
       </g>
+      <g fill="none" stroke="${ZAP}" stroke-width="5">
+        <ellipse cx="200" cy="125" rx="133" ry="17"/>
+        <ellipse cx="200" cy="212" rx="93" ry="12"/>
+      </g>
+      <circle cx="318" cy="175" r="16" fill="${ZAP}"/>
     </svg>`,
   ).toString("base64");
 
@@ -89,10 +91,9 @@ function sources() {
                   lineHeight: 1,
                   // Same rule as the site: the overlap marks the one figure
                   // a reader can confirm without taking our word for it.
-                  color: m.verified ? ON_ZAP : INK,
-                  background: m.verified ? ZAP : "transparent",
-                  padding: m.verified ? "2px 10px" : 0,
-                  borderRadius: 8,
+                  color: INK,
+                  borderBottom: m.verified ? `5px solid ${ZAP}` : "5px solid transparent",
+                  paddingBottom: 4,
                 },
                 children: `${m.value}${m.unit}`,
               },
@@ -180,7 +181,7 @@ function card({ kicker, title, metric, metricLabel, metricVerified, showSources 
                   style: { display: "flex", flexDirection: "column" },
                   children: metric
                     ? [
-                        { type: "div", props: { style: { display: "flex", alignSelf: "flex-start", fontWeight: 700, fontSize: 72, color: metricVerified ? ON_ZAP : INK, background: metricVerified ? ZAP : "transparent", padding: metricVerified ? "2px 14px" : 0, borderRadius: 10, lineHeight: 1 }, children: metric } },
+                        { type: "div", props: { style: { display: "flex", alignSelf: "flex-start", fontWeight: 700, fontSize: 72, color: INK, borderBottom: metricVerified ? `6px solid ${ZAP}` : "6px solid transparent", paddingBottom: 6, lineHeight: 1 }, children: metric } },
                         { type: "div", props: { style: { fontSize: 20, color: MUTED, marginTop: 12, maxWidth: 720 }, children: metricLabel } },
                       ]
                     : showSources

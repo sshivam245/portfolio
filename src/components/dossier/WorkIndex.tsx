@@ -3,13 +3,14 @@ import Section, { type Tone } from "./Section";
 import { caseStudies } from "@/content/caseStudies";
 
 /**
- * The case studies, as big tappable panels on the blue block.
+ * The case studies, as big tappable panels on the ink block: the one dark
+ * section in the body of the page, so the work reads as the main event.
  *
  * This used to be drawn as a flow: a spine, numbered nodes, hairline arrows
  * into outcome boxes. That is the grammar of a systems diagram, and it was a
  * large part of why the site read as a developer's. These are panels you can
  * hit with a thumb, with the title at headline size and the result beside
- * it, and they lean when you point at them.
+ * it,
  *
  * `limit` shows the first few, for the homepage; /work shows all of them.
  */
@@ -17,7 +18,7 @@ export default function WorkIndex({
   limit,
   tag = "Selected work",
   title = "Systems I built, and what they produced.",
-  tone = "blue",
+  tone = "ink",
 }: {
   limit?: number;
   tag?: string;

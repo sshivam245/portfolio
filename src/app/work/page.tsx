@@ -33,7 +33,7 @@ export default function WorkPage() {
         kicker="Work"
         title="Every system, and what it produced."
       />
-      <WorkIndex tag="Case studies" title="Each one opens with its evidence." tone="cream" />
+      <WorkIndex tag="Case studies" title="Each one opens with its evidence." tone="stone" />
     </article>
   );
 }

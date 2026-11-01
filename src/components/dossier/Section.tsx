@@ -1,6 +1,6 @@
 import Reveal from "./Reveal";
 
-export type Tone = "cream" | "blue" | "zap";
+export type Tone = "stone" | "ink" | "signal";
 
 /**
  * A colour block with a plain headline and an optional small marker.
@@ -9,6 +9,10 @@ export type Tone = "cream" | "blue" | "zap";
  * ("Touchpoint 2 · Try before you buy"). Repeated down a page, that is the
  * signature of a generated landing page. The joke lives in the hero now;
  * everything below it says plainly what it is.
+ *
+ * Only three tones: stone (most of the page), ink (the work and the
+ * footer) and signal (the close). Eight colour changes down one page read
+ * as a slide deck, so most sections are stone, separated by a rule.
  *
  * The tone class re-scopes the colour tokens, so nothing inside needs to
  * know which block it is in.
@@ -19,7 +23,7 @@ export default function Section({
   title,
   lede,
   aside,
-  tone = "cream",
+  tone = "stone",
   children,
 }: {
   id: string;
@@ -31,7 +35,7 @@ export default function Section({
   children: React.ReactNode;
 }) {
   const toneClass =
-    tone === "blue" ? "tone-blue" : tone === "zap" ? "tone-zap" : "tone-cream";
+    tone === "ink" ? "tone-ink" : tone === "signal" ? "tone-signal" : "tone-stone";
 
   return (
     <section id={id} className={toneClass}>

@@ -12,8 +12,7 @@ export default function AboutTeaser() {
     <Section
       id="about"
       tag="About"
-      title="Growth, built like engineering."
-      tone="blue"
+      title="A marketer who ships the system."
     >
       <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-8">

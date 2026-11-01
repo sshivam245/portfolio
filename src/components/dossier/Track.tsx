@@ -3,7 +3,7 @@ import { experience, skills } from "@/content/profile";
 
 export function Experience() {
   return (
-    <Section id="track" tag="Track record" title="Where the engines got built." tone="blue">
+    <Section id="track" tag="Track record" title="Where the engines got built.">
       <ol className="grid gap-4">
         {experience.map((job) => (
           <li

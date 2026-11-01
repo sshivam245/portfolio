@@ -12,7 +12,7 @@ import Marks from "./Marks";
  */
 export default function StatsBand() {
   return (
-    <section aria-label="Results at a glance" className="tone-cream">
+    <section aria-label="Results at a glance" className="tone-stone">
       <div className="shell py-12 sm:py-16">
         <p className="stage-tag">Selected results</p>
         <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">

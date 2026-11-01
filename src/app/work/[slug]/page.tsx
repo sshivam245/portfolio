@@ -112,8 +112,8 @@ export default function CaseStudyPage({
         ) : null}
       </PageHero>
 
-      {/* The result, in the colour the funnel uses for "this stage is live". */}
-      <section className="tone-zap">
+      {/* The result, straight under the title, ruled off from it. */}
+      <section className="tone-stone">
         <div className="shell py-12 sm:py-16">
           <h2 className="stage-tag mb-8">What came out of it</h2>
           <Ledger items={cs.outcomes} verifiedFirst={cs.verified} />
@@ -126,7 +126,7 @@ export default function CaseStudyPage({
         them check it rather than take it on trust.
       */}
       {hero ? (
-        <section className="tone-cream">
+        <section className="tone-stone">
           <div className="shell pt-14">
             <FigureHero figure={hero} />
           </div>
@@ -139,7 +139,7 @@ export default function CaseStudyPage({
         column: they are evidence to glance at, not a step to follow, and
         they give the column something to hold.
       */}
-      <section className="tone-cream">
+      <section className="tone-stone">
         <div className="shell grid gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-14">
           {/*
             min-w-0: a grid item defaults to min-width:auto, so the diagram's
@@ -183,7 +183,7 @@ export default function CaseStudyPage({
       </section>
 
       {/* Next case study, so the page doesn't dead-end. */}
-      <section className="tone-blue">
+      <section className="tone-ink">
         <div className="shell py-14 sm:py-20">
           <Link href={`/work/${next.id}`} className="group flex items-center justify-between gap-6">
             <span className="min-w-0">

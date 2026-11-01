@@ -43,9 +43,9 @@ export type Logo = {
  *
  * Cloudsheer, Nuvia and Apollo were cropped from supplied lockups down to
  * their icon; the wordmarks were discarded because they're unreadable at
- * 28px. `ey.svg` is EY's reversed lockup — white wordmark, yellow beam —
- * recoloured from the supplied navy version for the dark ground. Shapes
- * are unmodified in every case.
+ * 28px. `ey.svg` has EY's own dark grey (#2E2E38) wordmark and yellow beam;
+ * it was a reversed white lockup for an old dark ground, which vanished on
+ * stone. Shapes are unmodified in every case.
  *
  * Nuvia, LBS and Comviva are square avatars with their own backgrounds, so
  * they use `tile` and fill the chip rather than shrinking to a 28px glyph.

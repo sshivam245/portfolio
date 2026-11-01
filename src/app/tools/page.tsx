@@ -38,11 +38,11 @@ export default function ToolsPage() {
         lede="A portfolio that only talks about systems is asking to be taken on faith. These are the working versions. One answers instantly and asks for nothing. The other reaches me, because the useful version needs a person to read your pages."
       />
 
-      <section className="tone-cream">
+      <section className="tone-stone">
         <ul className="shell grid gap-5 py-16 sm:py-24 lg:grid-cols-2">
-          {tools.map((t, i) => (
+          {tools.map((t) => (
             <li key={t.href}>
-              <Link href={t.href} className={`tool-panel group block h-full ${i === 0 ? "tone-blue" : "tone-zap"}`}>
+              <Link href={t.href} className="tool-panel group block h-full">
                 <p className="stage-tag">{t.kicker}</p>
                 <h2 className="t-heading mt-4 max-w-[20ch]">{t.title}</h2>
                 <p className="mt-5 max-w-prose text-base leading-relaxed text-ink-muted">{t.blurb}</p>

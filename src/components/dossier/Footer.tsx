@@ -11,7 +11,7 @@ const UPDATED = new Date().toLocaleDateString("en-GB", {
 
 export default function Footer() {
   return (
-    <footer className="tone-blue">
+    <footer className="tone-ink border-t">
       <div className="shell flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 py-8">
         <p className="text-base font-bold">
           Shivam Goel <span className="font-medium text-ink-muted">· open to founding-GTM roles · {profile.location}</span>

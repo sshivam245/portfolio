@@ -6,16 +6,20 @@
  * and the component's only jobs are to load three.js lazily, hand this a
  * host element, and tell it which stage is live.
  *
- * What is in the scene:
- *   - four lathe-turned bands, one per stage, with a rim ring on each. The
- *     live stage is acid yellow; the others are frosted cream, so the swirl
- *     inside reads through them.
- *   - leads: small white spheres spiralling down the inside, faster as the
- *     funnel narrows, and about a third of them flying off the rim and
+ * What is in the scene, drawn as linework on the page's stone, the way a
+ * studio would draw a funnel on a presentation board:
+ *   - five ink rings marking the stage boundaries, and profile lines down
+ *     the walls so the shape reads in 3D as it turns. The rings either side
+ *     of the live stage are signal orange, with a faint orange wash between.
+ *   - leads: small ink dots spiralling down the inside, faster as the
+ *     funnel narrows, and about a fifth of them flying off the wall and
  *     dropping away, because funnels leak.
- *   - YOU: a glowing yellow sphere with its own light, parked at the front
- *     of the live stage. When the stage changes it sinks to the next band;
- *     at the last stage it drops out of the spout and the funnel bursts.
+ *   - YOU: the one orange dot, parked at the front of the live stage. When
+ *     the stage changes it sinks to the next band; at the last stage it
+ *     drops out of the spout and throws a small burst of orange.
+ *
+ * It replaced a glossy lit funnel in primary yellow with bouncing white
+ * balls, which read as a toy. Everything here is unlit, flat colour.
  *
  * The labels are HTML laid over the canvas and projected from 3D each
  * frame, so they stay crisp at any pixel ratio and use the page's own font.
@@ -56,13 +60,18 @@ const BANDS: [number, number][] = [
 ];
 const mid = (i: number) => (BANDS[i][0] + BANDS[i][1]) / 2;
 
-const CREAM = "#fbf8f1";
-const YELLOW = "#ffd60a";
-const BLUE = "#2424c8";
+const INK = "#121212";
+const SIGNAL = "#e5532d";
+/** Ring boundaries in t. Band i runs from RINGS[i] to RINGS[i + 1]. */
+const RINGS = [0, 0.245, 0.5, 0.755, 1];
 
-/** Where YOU parks: in front of the band, a little to the right. */
-const YOU_ANGLE = 0.55;
-const YOU_OUT = 0.34;
+/**
+ * Where YOU parks: inside the funnel, at the front and a little right, in
+ * among the other leads. It used to sit outside the wall, which at the top
+ * stage put it past the edge of the box.
+ */
+const YOU_ANGLE = 1.15;
+const YOU_IN = 0.72;
 
 export function createFunnelScene(
   THREE: Three,
@@ -84,11 +93,6 @@ export function createFunnelScene(
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
   const LOOK = new THREE.Vector3(0, -0.15, 0);
 
-  scene.add(new THREE.HemisphereLight(0xffffff, new THREE.Color(BLUE), 1.25));
-  const key = new THREE.DirectionalLight(0xffffff, 1.7);
-  key.position.set(3, 5, 4);
-  scene.add(key);
-
   // Everything that turns with the funnel lives in this group. YOU and the
   // labels do not: they stay where the reader is looking.
   const group = new THREE.Group();
@@ -98,8 +102,9 @@ export function createFunnelScene(
   const keep = <T extends { dispose(): void }>(x: T) => (disposables.push(x), x);
 
   // ------------------------------------------------------------------ bands
-  const bandMats: ThreeNS.MeshStandardMaterial[] = [];
-  const rimMats: ThreeNS.MeshStandardMaterial[] = [];
+  // The band surfaces are an invisible pick target and a faint wash on the
+  // live stage. The drawing itself is the rings and the profile lines.
+  const bandMats: ThreeNS.MeshBasicMaterial[] = [];
   const bandMeshes: ThreeNS.Mesh[] = [];
   BANDS.forEach(([t0, t1], i) => {
     const pts: ThreeNS.Vector2[] = [];
@@ -109,33 +114,51 @@ export function createFunnelScene(
     }
     const geo = keep(new THREE.LatheGeometry(pts, 96));
     const mat = keep(
-      new THREE.MeshStandardMaterial({
-        color: CREAM,
-        roughness: 0.38,
-        metalness: 0,
+      new THREE.MeshBasicMaterial({
+        color: SIGNAL,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.55,
+        opacity: 0,
         depthWrite: false,
       }),
     );
     const mesh = new THREE.Mesh(geo, mat);
     mesh.userData.stage = i;
-    mesh.renderOrder = 2;
+    mesh.renderOrder = 0;
     group.add(mesh);
     bandMats.push(mat);
     bandMeshes.push(mesh);
-
-    // A rim on the top edge of every band: the crisp line that makes the
-    // stack read as four separate stages rather than one smooth cone.
-    const rimGeo = keep(new THREE.TorusGeometry(rAt(t0), 0.028, 10, 120));
-    const rimMat = keep(new THREE.MeshStandardMaterial({ color: CREAM, roughness: 0.3 }));
-    const rim = new THREE.Mesh(rimGeo, rimMat);
-    rim.rotation.x = Math.PI / 2;
-    rim.position.y = yAt(t0);
-    group.add(rim);
-    rimMats.push(rimMat);
   });
+
+  // Rings: thin tubes rather than GL lines, because WebGL draws every line
+  // one pixel wide whatever linewidth says, and the live rings need weight.
+  const ringMats: ThreeNS.MeshBasicMaterial[] = [];
+  const rings: ThreeNS.Mesh[] = [];
+  RINGS.forEach((t) => {
+    const geo = keep(new THREE.TorusGeometry(rAt(t), 0.011, 6, 160));
+    const mat = keep(new THREE.MeshBasicMaterial({ color: INK }));
+    const ring = new THREE.Mesh(geo, mat);
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = yAt(t);
+    group.add(ring);
+    ringMats.push(mat);
+    rings.push(ring);
+  });
+
+  // Profile lines down the wall. One pixel is right for these: they are
+  // the hatching, not the outline.
+  const profileMat = keep(new THREE.LineBasicMaterial({ color: INK, transparent: true, opacity: 0.22 }));
+  const MERIDIANS = 18;
+  for (let m = 0; m < MERIDIANS; m++) {
+    const a = (m / MERIDIANS) * Math.PI * 2;
+    const pts: ThreeNS.Vector3[] = [];
+    for (let k = 0; k <= 40; k++) {
+      const t = k / 40;
+      pts.push(new THREE.Vector3(rAt(t) * Math.cos(a), yAt(t), rAt(t) * Math.sin(a)));
+    }
+    const geo = keep(new THREE.BufferGeometry().setFromPoints(pts));
+    group.add(new THREE.Line(geo, profileMat));
+  }
 
   // ------------------------------------------------------------------ leads
   type Lead = {
@@ -146,8 +169,8 @@ export function createFunnelScene(
   // Fewer than the first version: seventy read as a particle effect, this
   // many read as leads.
   const N = 46;
-  const leadGeo = keep(new THREE.IcosahedronGeometry(0.048, 1));
-  const leadMat = keep(new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.28, roughness: 0.4 }));
+  const leadGeo = keep(new THREE.IcosahedronGeometry(0.036, 1));
+  const leadMat = keep(new THREE.MeshBasicMaterial({ color: INK }));
   const leads = new THREE.InstancedMesh(leadGeo, leadMat, N);
   leads.renderOrder = 1;
   group.add(leads);
@@ -214,7 +237,7 @@ export function createFunnelScene(
 
   // ---------------------------------------------------------- conversion burst
   const B = 26;
-  const burstMat = keep(new THREE.MeshStandardMaterial({ color: YELLOW, emissive: YELLOW, emissiveIntensity: 0.5 }));
+  const burstMat = keep(new THREE.MeshBasicMaterial({ color: SIGNAL }));
   const burst = new THREE.InstancedMesh(leadGeo, burstMat, B);
   burst.visible = false;
   scene.add(burst);
@@ -247,13 +270,11 @@ export function createFunnelScene(
   }
 
   // -------------------------------------------------------------------- YOU
-  const youGeo = keep(new THREE.SphereGeometry(0.15, 32, 20));
-  const youMat = keep(new THREE.MeshStandardMaterial({ color: YELLOW, emissive: YELLOW, emissiveIntensity: 0.55, roughness: 0.3 }));
+  const youGeo = keep(new THREE.SphereGeometry(0.12, 32, 20));
+  const youMat = keep(new THREE.MeshBasicMaterial({ color: SIGNAL }));
   const you = new THREE.Mesh(youGeo, youMat);
   you.renderOrder = 3;
   scene.add(you);
-  const youLight = new THREE.PointLight(YELLOW, 5, 3.2, 1.6);
-  you.add(youLight);
 
   const targetY = (i: number) => (i >= 3 ? BOT - 0.62 : yAt(mid(i)));
   let youY = targetY(opts.stage);
@@ -262,8 +283,8 @@ export function createFunnelScene(
   function placeYou(time: number) {
     const t = tAtY(youY);
     let r: number;
-    if (t <= 1) r = rAt(t) + YOU_OUT;
-    else r = Math.max(0, (rAt(1) + YOU_OUT) * (1 - (t - 1) / 0.12));
+    if (t <= 1) r = rAt(t) * YOU_IN;
+    else r = Math.max(0, rAt(1) * YOU_IN * (1 - (t - 1) / 0.12));
     const bob = opts.reduce ? 0 : Math.sin(time * 2.2) * 0.035;
     you.position.set(r * Math.cos(YOU_ANGLE), youY + bob, r * Math.sin(YOU_ANGLE));
   }
@@ -280,7 +301,7 @@ export function createFunnelScene(
   });
   const youTag = document.createElement("span");
   youTag.className = "f3-you";
-  youTag.textContent = "YOU";
+  youTag.textContent = "You";
   labelHost.appendChild(youTag);
 
   const proj = new THREE.Vector3();
@@ -299,7 +320,7 @@ export function createFunnelScene(
     labels.forEach((el, i) => {
       // Anchored off the band's widest point (its top rim), not its middle:
       // from the camera's height the rim flares past the mid-height radius
-      // and the active label, yellow on a yellow band, disappeared into it.
+      // and a label anchored there sat on the drawing.
       const t = mid(i);
       const a = toScreen(new THREE.Vector3(-(rAt(BANDS[i][0]) + 0.3), yAt(t), 0), w, h);
       const x = Math.max(a.x, el.offsetWidth + EDGE);
@@ -314,13 +335,16 @@ export function createFunnelScene(
   let hovered = -1;
   function paint() {
     bandMats.forEach((m, i) => {
-      const on = i === stage;
-      const done = i < stage;
-      m.color.set(on ? YELLOW : CREAM);
-      m.opacity = on ? 0.95 : done ? 0.72 : 0.5;
-      m.emissive.set(on ? YELLOW : CREAM);
-      m.emissiveIntensity = on ? 0.18 : i === hovered ? 0.22 : 0;
-      rimMats[i].color.set(on ? YELLOW : CREAM);
+      m.color.set(i === stage ? SIGNAL : INK);
+      m.opacity = i === stage ? 0.05 : i === hovered ? 0.03 : 0;
+    });
+    ringMats.forEach((m, k) => {
+      // Ring k is the top of band k and the bottom of band k - 1.
+      const on = k === stage || k === stage + 1;
+      m.color.set(on ? SIGNAL : INK);
+      // Heavier by stretching the tube along the ring's own axis, which after
+      // the ring is laid flat is world up: the thickness the camera sees.
+      rings[k].scale.set(1, 1, on ? 1.7 : 1);
     });
     labels.forEach((el, i) => {
       el.classList.toggle("on", i === stage);

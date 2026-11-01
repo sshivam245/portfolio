@@ -72,10 +72,10 @@ export default function CountUp({
     };
   }, []);
 
-  // The authored string, always. tabular-nums keeps columns of figures
-  // aligned across the ledger.
+  // The authored string, always. No tabular-nums: in this face they also
+  // fix the width of the full stop and the comma, so "68.7k" read "68 . 7k".
   return (
-    <span ref={ref} className={`tnum ${className ?? ""}`}>
+    <span ref={ref} className={className}>
       {value}
     </span>
   );

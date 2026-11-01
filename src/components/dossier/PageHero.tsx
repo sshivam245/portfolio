@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 /**
- * The blue band every inner page opens with, so a case study or the about
- * page reads as part of the same campaign as the homepage rather than as a
- * plain document that happens to share a header.
+ * How every inner page opens: a large headline on stone, ruled off from the
+ * page below. It was a full colour band; with one on every page and more
+ * underneath, the site read as a slide deck.
  */
 export default function PageHero({
   back,
@@ -19,7 +19,7 @@ export default function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <header className="tone-blue">
+    <header className="tone-stone border-b">
       <div className="shell pb-14 pt-10 sm:pb-20 sm:pt-12">
         {back ? (
           <Link href={back.href} className="label-tap text-sm font-bold text-ink-muted transition-colors hover:text-ink">

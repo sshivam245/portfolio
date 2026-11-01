@@ -32,7 +32,7 @@ export function About() {
 
 export function Credentials() {
   return (
-    <Section id="credentials" tag="Proof from elsewhere" title="Recognition, education and publications." tone="blue">
+    <Section id="credentials" tag="Proof from elsewhere" title="Recognition, education and publications." tone="ink">
       <div className="grid gap-x-10 gap-y-10 lg:grid-cols-12">
         {/* Recognition leads: someone else pointing at the work is stronger
             evidence than anything self-reported below it. */}
