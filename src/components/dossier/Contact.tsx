@@ -4,8 +4,8 @@ import { asset } from "@/lib/basePath";
 
 /**
  * The close. The bottom of the funnel, painted signal orange, the colour
- * YOU is in the hero, and the one loud block on the page. One ask and the address in type big enough
- * to copy from across the room.
+ * YOU is in the hero, and the one loud block on the page. One ask, and the
+ * buttons to act on it.
  */
 export default function Contact() {
   return (
@@ -22,14 +22,8 @@ export default function Contact() {
             early enough that building the acquisition machine is the job. Email
             me and I&apos;ll reply the same day.
           </p>
-          {/* break-all: an email address is one unbreakable token, and at 200%
-              text it pushed the page past the viewport. */}
-          <a
-            href={`mailto:${profile.email}`}
-            className="t-heading mt-8 block break-all underline decoration-2 underline-offset-[6px] transition-[text-decoration-color] hover:decoration-ink-a"
-          >
-            {profile.email}
-          </a>
+          {/* No address set in large type here: the Email me button is the
+              one way to write, and the address beside it read as clutter. */}
         </div>
 
         {/* Two by two. As a wrapping row four buttons left "Download CV"
