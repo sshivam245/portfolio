@@ -64,6 +64,8 @@ export const experience = [
       "Automated end-to-end lead generation, improving outreach efficiency and pipeline scalability.",
       "Led LinkedIn growth and brand positioning for inbound opportunities.",
       "Implemented AEO and GEO strategies, growing traffic from AI browsers and generative search by 15%.",
+      "Grew organic search from 35 to 873 clicks a month (May to September 2026) and impressions from 857 to 73k a month; named in Google's AI Overview for “salesforce partner miami”.",
+      "Built the lead pipeline: capture on 96 pages, every lead written to Sheets, Salesforce and the inbox, and a Claude-powered site assistant with 11 tested guardrails.",
       "Launched Descipher OS: GTM strategy, positioning, messaging and digital presence from inception.",
       "Opened the Middle East market: demand identification, entry strategy, early partnerships.",
     ],

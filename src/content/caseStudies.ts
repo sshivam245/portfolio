@@ -71,35 +71,36 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "aeo-geo",
     verified: true,
-    title: "Cited by Google's AI Overview",
+    title: "Organic search from 35 to 873 clicks a month",
     tag: "SEO / AEO / GEO",
-    timeframe: "2025",
+    timeframe: "2025–26",
     org: "Cloudsheer Consulting",
     link: {
       href: "https://www.cloudsheer.com/salesforce-consultant-miami",
       label: "cloudsheer.com/salesforce-consultant-miami",
     },
     summary:
-      "I built Cloudsheer's site from nothing and owned its search strategy. It now ranks first organically for “salesforce partner miami” and is named directly inside Google's AI Overview for the same query, which is the outcome AEO is actually for.",
+      "I built Cloudsheer's site from nothing and ran its search program. Organic clicks went from 35 a month in May 2026 to 873 in September, impressions from 857 to 73k, and Google's AI Overview names the site for “salesforce partner miami”.",
     context:
-      "Salesforce implementation is expensive to buy keywords in, and buyers increasingly ask an assistant instead of scrolling. If the AI Overview names two firms, the third blue link is invisible. The target was never a position. It was being the source the answer is built from.",
+      "Salesforce implementation is expensive to buy keywords in, and buyers increasingly ask an assistant instead of scrolling. If the AI Overview names two firms, the third blue link is invisible. The target was never a position. It was being the source the answer is built from, and then turning the traffic into booked calls.",
     built: [
-      { step: "The site, from zero", detail: "Architecture, pages and copy. Not an optimisation pass on someone else's build." },
-      { step: "An entity layer in structured data", detail: "Organization · WebSite · ProfessionalService · BreadcrumbList" },
-      { step: "FAQPage schema on the money pages", detail: "An engine assembling an answer wants a question paired with a liftable answer" },
-      { step: "Headings as the questions buyers ask", detail: "Each section is a clean extract, not a paragraph to summarise" },
-      { step: "Geo pages for Miami and South Florida", detail: "The bilingual angle stated plainly enough to quote. That is the line the AI Overview used." },
-      { step: "Referral tracking", detail: "Separates AI-browser traffic from conventional organic, so the effect is measured" },
+      { step: "The site, from zero", detail: "295 routes prerendered to static HTML, 610 JSON-LD blocks, a markdown copy of every page for AI agents" },
+      { step: "An audit loop on API data", detail: "Seven full audits, each a ranked action list, every fix re-measured against its own baseline" },
+      { step: "SERP teardowns for stuck pages", detail: "Read the actual page-one competitors, rebuilt to beat them. Miami reached position 2.2 on its money query" },
+      { step: "Unique answers instead of templates", detail: "10 integration guides shared boilerplate FAQs and stayed unindexed. Rewritten per tool, 10 of 10 flipped" },
+      { step: "Indexing as an operation", detail: "URL Inspection sweeps of the full sitemap, diffed against a baseline. 270 of 294 pages indexed" },
+      { step: "Content that owns a news cycle", detail: "The Claudeforce cluster went live within days of the announcement and took 67% of site clicks at its peak" },
+      { step: "Page speed", detail: "106 routes code-split, main bundle down 87%, mobile LCP from 9.4s to 4.3s" },
     ],
-    // Search Console figures are for the cloudsheer.com property,
-    // 29 May – 28 Aug 2026. Average CTR is deliberately not reported here.
+    // Search Console API, sc-domain:cloudsheer.com. Monthly figures are
+    // calendar months of 2026; the page-one count is the 28 days to 17 Nov.
     outcomes: [
       { value: "AI Overview", label: "Named in Google's generative answer for “salesforce partner miami”" },
-      { value: "#1", label: "Organic result for the same commercial query" },
-      { value: "68.7k", label: "Search impressions in three months" },
-      { value: "11,062", label: "Impressions in a single day at peak, from a ~1.5k baseline" },
+      { value: "35 → 873", label: "Organic clicks a month, May to September 2026" },
+      { value: "857 → 73k", label: "Search impressions a month, May to August 2026" },
+      { value: "17+", label: "Queries holding page one, including position 1.2 for “claudeforce vs agentforce”" },
     ],
-    stack: ["Schema.org", "FAQPage", "Local SEO", "Content architecture", "GA4"],
+    stack: ["Schema.org", "FAQPage", "Search Console API", "URL Inspection API", "Vite SSR", "Lighthouse", "GA4"],
     reflection:
       "The thing that moved the needle was not writing more, it was writing shorter. Every claim that got picked up was a sentence that survives being lifted out of its paragraph and still makes sense on its own. Long, hedged prose ranks fine and never gets quoted.",
     figures: [
@@ -109,6 +110,13 @@ export const caseStudies: CaseStudy[] = [
         h: 302,
         diagram: true,
         caption: "The FAQPage step is the one that matters: an answer engine wants a question paired with a liftable answer.",
+      },
+      {
+        src: "cloudsheer-clicks.svg",
+        w: 648,
+        h: 280,
+        diagram: true,
+        caption: "Organic clicks by month on cloudsheer.com, from Search Console. The AI Overview citation landed on 27 August; September is the peak.",
       },
       {
         src: "cloudsheer-ai-overview.png",
@@ -126,6 +134,34 @@ export const caseStudies: CaseStudy[] = [
           "Search Console, 29 May – 28 Aug 2026: 68.7k impressions, with the step-change at the end of August.",
       },
     ],
+  },
+  {
+    id: "cloudsheer-conversion",
+    title: "A lead pipeline that cannot drop a lead",
+    tag: "Conversion / RevOps",
+    timeframe: "2026",
+    org: "Cloudsheer Consulting",
+    summary:
+      "Once search was bringing people in, I built the system that turns a visit into a booked call: capture on 96 pages, every lead written to three places, and a Claude-powered assistant held to eleven rules. Shipped in four phases without losing a single top-20 commercial ranking.",
+    context:
+      "Traffic that does not convert is a vanity number. The site had one contact form and a mail provider nobody had tested. The job was to put a sensible next step in front of every visitor, make sure no submission could vanish, and measure which asset produced which lead.",
+    built: [
+      { step: "Capture everywhere", detail: "9 form types across 96 pages: lead magnets with 4 branded PDFs, calculator estimates, quote and prototype requests, a quiz" },
+      { step: "Every lead written three times", detail: "Google Sheet as the source of truth, Salesforce Web-to-Lead with a per-asset lead source, and an inbox alert" },
+      { step: "A silent failure, found and fixed", detail: "A 9-submission live test matrix showed the mail provider dropping relayed email while reporting success. Alerts moved browser-side, same day" },
+      { step: "Booking at the moment of intent", detail: "Every form's success state offers the 30-minute call, instead of a thank-you page" },
+      { step: "A proof layer", detail: "Clutch 5.0 badges, a named review strip on money pages, a case-study hub that invites checking every claim" },
+      { step: "An AI concierge with guardrails", detail: "Claude-powered, 11 rules: scope lock, injection resistance, no fabrication. Each verified against real transcripts" },
+      { step: "Measurement", detail: "GA4 generate_lead events tagged by asset and page, Clarity recordings loaded after interaction to protect speed" },
+    ],
+    // Mechanism figures only. Lead volumes are not published here.
+    outcomes: [
+      { value: "96", label: "Pages with lead capture, across 9 form types" },
+      { value: "3", label: "Places every lead is written: Sheets, Salesforce, inbox" },
+      { value: "11", label: "Guardrails on the AI concierge, each tested live" },
+      { value: "0", label: "Top-20 commercial rankings lost during the rollout" },
+    ],
+    stack: ["Salesforce Web-to-Lead", "Google Sheets", "Claude API", "GA4", "Microsoft Clarity", "Puppeteer"],
   },
   {
     id: "mintnovalabs",
