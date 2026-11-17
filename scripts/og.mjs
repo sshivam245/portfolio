@@ -193,7 +193,7 @@ function card({ kicker, title, metric, metricLabel, metricVerified, showSources 
                 type: "div",
                 props: {
                   style: { fontSize: 22, fontWeight: 700, color: INK },
-                  children: "shivamgoel.vercel.app",
+                  children: "shivamgoel.me",
                 },
               },
             ],

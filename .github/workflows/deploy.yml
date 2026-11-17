@@ -31,7 +31,7 @@ jobs:
       - run: npm run build
         env:
           # Assets still live under /portfolio here. NEXT_PUBLIC_SITE_URL is
-          # deliberately NOT set: this copy inherits the Vercel default, so
+          # deliberately NOT set: this copy inherits the default (shivamgoel.me), so
           # its canonicals point at the primary site instead of competing
           # with it. Two live copies each declaring themselves canonical is
           # duplicate content, which is a bad look on a site that sells SEO.

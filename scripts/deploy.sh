@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 # Deploy to Vercel production and prove the public URL actually moved.
 #
-# Vercel now treats shivamgoel.vercel.app as a project domain and reassigns it
-# on each production deploy, so the alias step below is a fallback rather than
-# the normal path. It stays because the failure it guards against is silent:
-# a *.vercel.app subdomain pinned to one deployment keeps serving the old
-# build, and once that build is no longer current Vercel answers with an SSO
-# login redirect instead of the site — while the deploy reports success.
+# The public site is shivamgoel.me, a project domain that Vercel reassigns on
+# each production deploy; shivamgoel.vercel.app and www.shivamgoel.me 308 to
+# it. The alias step below is a fallback, not the normal path. It stays
+# because the failure it guards against is silent: a domain pinned to one
+# deployment keeps serving the old build while the deploy reports success.
 set -euo pipefail
 
-ALIAS="${VERCEL_ALIAS:-shivamgoel.vercel.app}"
+ALIAS="${VERCEL_ALIAS:-shivamgoel.me}"
 
 out=$(vercel deploy --prod --yes 2>&1 | tee /dev/stderr)
 

@@ -49,9 +49,10 @@ describe systems that ran somewhere else.
 - Next.js 14 (App Router) with `output: "export"`. **Static only: there is no
   server, no API route and nowhere to hide a key.** Any feature requiring a
   secret is out of scope unless the hosting model changes.
-- Deployed to Vercel at `https://shivamgoel.vercel.app`. A GitHub Pages mirror
-  still builds under `/portfolio`; its canonicals point at the Vercel origin so
-  the two copies do not compete.
+- Deployed to Vercel at `https://shivamgoel.me` (domain registered at GoDaddy,
+  DNS there points at Vercel). `shivamgoel.vercel.app` and `www.shivamgoel.me`
+  308 to it. A GitHub Pages mirror still builds under `/portfolio`; its
+  canonicals point at shivamgoel.me so the two copies do not compete.
 - `basePath` is environment-driven (`NEXT_PUBLIC_BASE_PATH`), read by both
   `next.config.mjs` and `src/lib/basePath.ts`. Both must stay in agreement.
 - Vercel serves clean URLs; GitHub Pages does not. `vercel.json` redirects

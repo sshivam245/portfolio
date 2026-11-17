@@ -10,7 +10,7 @@
  * canonical is duplicate content, and this site's whole argument is that its
  * author knows better.
  */
-const DEFAULT_SITE_URL = "https://shivamgoel.vercel.app";
+const DEFAULT_SITE_URL = "https://shivamgoel.me";
 
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL
