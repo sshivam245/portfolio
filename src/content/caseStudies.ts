@@ -71,7 +71,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "aeo-geo",
     verified: true,
-    title: "Organic search from 35 to 873 clicks a month",
+    title: "25× organic clicks in four months",
     tag: "SEO / AEO / GEO",
     timeframe: "2025–26",
     org: "Cloudsheer Consulting",
@@ -80,7 +80,7 @@ export const caseStudies: CaseStudy[] = [
       label: "cloudsheer.com/salesforce-consultant-miami",
     },
     summary:
-      "I built Cloudsheer's site from nothing and ran its search program. Organic clicks went from 35 a month in May 2026 to 873 in September, impressions from 857 to 73k, and Google's AI Overview names the site for “salesforce partner miami”.",
+      "I built Cloudsheer's site from nothing and ran its search program. Organic clicks grew 25× in four months, from 35 a month to 873, search impressions grew 85×, and Google's AI Overview names the site for “salesforce partner miami”.",
     context:
       "Salesforce implementation is expensive to buy keywords in, and buyers increasingly ask an assistant instead of scrolling. If the AI Overview names two firms, the third blue link is invisible. The target was never a position. It was being the source the answer is built from, and then turning the traffic into booked calls.",
     built: [
@@ -93,12 +93,12 @@ export const caseStudies: CaseStudy[] = [
       { step: "Page speed", detail: "106 routes code-split, main bundle down 87%, mobile LCP from 9.4s to 4.3s" },
     ],
     // Search Console API, sc-domain:cloudsheer.com. Monthly figures are
-    // calendar months of 2026; the page-one count is the 28 days to 17 Nov.
+    // calendar months of 2026. 230k+ is the sum of May to 17 Nov (232,008).
     outcomes: [
       { value: "AI Overview", label: "Named in Google's generative answer for “salesforce partner miami”" },
-      { value: "35 → 873", label: "Organic clicks a month, May to September 2026" },
-      { value: "857 → 73k", label: "Search impressions a month, May to August 2026" },
-      { value: "17+", label: "Queries holding page one, including position 1.2 for “claudeforce vs agentforce”" },
+      { value: "25×", label: "Organic clicks a month, 35 in May 2026 to 873 in September" },
+      { value: "85×", label: "Search impressions a month, 857 in May 2026 to 73k in August" },
+      { value: "230k+", label: "Search impressions, May to 17 November 2026" },
     ],
     stack: ["Schema.org", "FAQPage", "Search Console API", "URL Inspection API", "Vite SSR", "Lighthouse", "GA4"],
     reflection:
