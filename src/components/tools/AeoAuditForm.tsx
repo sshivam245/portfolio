@@ -62,6 +62,11 @@ export default function AeoAuditForm() {
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
+      // FormSubmit answers 200 even when it has not forwarded anything (an
+      // unactivated form says success: "false"), so the status alone told
+      // visitors their request had arrived when it had not.
+      const json = (await res.json().catch(() => null)) as { success?: string | boolean } | null;
+      if (!json || String(json.success) !== "true") throw new Error("not forwarded");
       setState("done");
     } catch {
       setState("error");

@@ -1,15 +1,15 @@
 import Link from "next/link";
 import Section from "./Section";
 import { MOTIONS } from "@/lib/agentfit/engine";
-import { BASE_PATH } from "@/lib/basePath";
+import AuditTeaserForm from "@/components/tools/AuditTeaserForm";
 
 /**
  * "Try before you buy": the two tools, side by side on lighter stock.
  *
  * Both start the tool rather than advertising it. The agent-fit panel asks
  * the first real question inline and carries the answer forward as a query
- * param; the audit panel is a plain GET form, so it works with no JavaScript
- * on a static export.
+ * param; the audit panel emails the URL to the inbox the moment it is sent,
+ * then opens the full form (a plain GET, so it still works with no JS).
  */
 export default function ToolsTeaser() {
   return (
@@ -50,25 +50,7 @@ export default function ToolsTeaser() {
           <p className="mt-4 max-w-[44ch] text-base leading-relaxed text-ink-muted">
             Send a URL. I read the pages myself and reply with three fixes, in order.
           </p>
-          {/* The action carries BASE_PATH by hand: next/link adds it, a raw
-              form action does not. */}
-          <form action={`${BASE_PATH}/tools/aeo-audit`} method="get" className="mt-7">
-            <label htmlFor="teaser-url" className="label block">
-              Your site
-            </label>
-            <div className="mt-3 flex flex-wrap items-end gap-3">
-              <input
-                id="teaser-url"
-                name="url"
-                autoComplete="url"
-                placeholder="yourcompany.com"
-                className="field min-w-0 flex-1"
-              />
-              <button type="submit" className="btn shrink-0">
-                Check it
-              </button>
-            </div>
-          </form>
+          <AuditTeaserForm />
         </li>
       </ul>
     </Section>
