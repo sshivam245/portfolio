@@ -36,7 +36,7 @@ export function generateMetadata({
   if (!cs) return {};
   const description = metaDescription(cs.summary);
   return {
-    title: cs.title,
+    title: cs.seoTitle ?? cs.title,
     description,
     alternates: { canonical: `/work/${cs.id}` },
     openGraph: {

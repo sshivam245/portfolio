@@ -45,6 +45,12 @@ export type BuildStep = { step: string; detail?: string };
 export type CaseStudy = {
   id: string;
   title: string;
+  /**
+   * The <title> tag, when the on-page headline is not what anyone searches.
+   * The H1 keeps its voice; this carries the query. Keep it to 46
+   * characters so it fits 60 with the " · Shivam Goel" suffix.
+   */
+  seoTitle?: string;
   tag: string;
   timeframe: string;
   org: string;
@@ -70,6 +76,7 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     id: "aeo-geo",
+    seoTitle: "AEO & SEO case study: 25× organic clicks",
     verified: true,
     title: "25× organic clicks in four months",
     tag: "SEO / AEO / GEO",
@@ -137,6 +144,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "cloudsheer-conversion",
+    seoTitle: "Lead capture pipeline: Sheets to Salesforce",
     title: "A lead pipeline that cannot drop a lead",
     tag: "Conversion / RevOps",
     timeframe: "2026",
@@ -165,6 +173,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "mintnovalabs",
+    seoTitle: "MintNovaLabs: a pay-per-result outbound agency",
     title: "MintNovaLabs, built from nothing",
     tag: "0 → 1 venture",
     timeframe: "2026",
@@ -205,6 +214,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "gravitee-abm",
+    seoTitle: "Spec work: 1:1 ABM for Gravitee, built in Clay",
     title: "I pitched Gravitee by building their outbound",
     // The org line renders as `{tag} · {org}, {timeframe}`, so "spec work"
     // belongs in one of them, not both.
@@ -256,6 +266,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "investor-sourcing",
+    seoTitle: "Clay workflow for investor sourcing",
     title: "Fundraising as an outbound problem",
     tag: "Clay workflow",
     timeframe: "2026",
@@ -304,6 +315,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "descipher-os",
+    seoTitle: "Descipher OS: a 0 to 1 brand and GTM launch",
     title: "Launching Descipher OS from zero",
     tag: "0 → 1",
     timeframe: "2025",
@@ -336,6 +348,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "nuvia-engine",
+    seoTitle: "AI startup demand gen: 100+ qualified leads",
     title: "An acquisition engine at an AI startup",
     tag: "Demand gen",
     timeframe: "2024 – 2025",
@@ -370,6 +383,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "job-pipeline",
+    seoTitle: "AI job search pipeline with Claude and Python",
     title: "A GTM pipeline I built for myself",
     tag: "Automation",
     timeframe: "2025",

@@ -21,7 +21,7 @@ const schibsted = Schibsted_Grotesk({
 });
 
 const DESCRIPTION =
-  "I build acquisition engines, and the automation underneath them. Growth & GTM, 2 years, remote. Case studies in generative-search optimisation, 0→1 brand launch, demand generation, and pipeline automation.";
+  "Shivam Goel builds growth systems: SEO, AEO and GEO that get sites cited by AI search, and GTM pipelines. 25× organic clicks in four months at Cloudsheer.";
 
 export const metadata: Metadata = {
   // Required for og:image and canonical URLs to resolve to absolute paths.
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   // cannot follow.
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Shivam Goel · Marketing Engineer, Growth & GTM",
+    default: "Shivam Goel · GTM Engineer for SEO, AEO & GEO",
     template: "%s · Shivam Goel",
   },
   description: DESCRIPTION,
@@ -46,7 +46,12 @@ export const metadata: Metadata = {
     "go-to-market",
     "demand generation",
     "AEO",
-    "generative engine optimisation",
+    "answer engine optimization",
+    "GEO",
+    "generative engine optimization",
+    "SEO",
+    "AEO consultant",
+    "AI search optimization",
     "outbound automation",
     "Clay",
     "Apollo",

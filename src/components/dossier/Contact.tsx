@@ -26,17 +26,23 @@ export default function Contact() {
               one way to write, and the address beside it read as clutter. */}
         </div>
 
-        {/* Two by two. As a wrapping row four buttons left "Download CV"
-            alone on a second line under the other three. */}
+        {/* Two columns, three rows. As a wrapping row the buttons left one
+            alone on a line, so the count is kept even. */}
         <div className="grid content-end gap-3 sm:grid-cols-2 lg:col-span-5">
           <a href={`mailto:${profile.email}`} className="btn">
             Email me
+          </a>
+          <a href={profile.topmate} target="_blank" rel="noreferrer noopener" className="btn-ghost">
+            Book a free call ↗
           </a>
           <a href={profile.linkedin} target="_blank" rel="noreferrer noopener" className="btn-ghost">
             LinkedIn ↗
           </a>
           <a href={profile.github} target="_blank" rel="noreferrer noopener" className="btn-ghost">
             GitHub ↗
+          </a>
+          <a href={profile.medium} target="_blank" rel="noreferrer noopener" className="btn-ghost">
+            Medium ↗
           </a>
           <a href={asset(profile.resumePath)} download className="btn-ghost">
             Download CV

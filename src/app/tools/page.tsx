@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/dossier/PageHero";
+import { CollectionSchema } from "@/components/dossier/StructuredData";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Tools",
+  title: "Free GTM and AEO tools",
   description:
     "Two working tools: a ranked shortlist of the GTM agents worth building for your team, and a free written AEO audit of your site.",
   alternates: { canonical: "/tools" },
@@ -31,6 +33,12 @@ const tools = [
 export default function ToolsPage() {
   return (
     <article>
+      <CollectionSchema
+        path="/tools"
+        name="Free tools"
+        description="Two free tools by Shivam Goel: a GTM agent shortlist and a written AEO audit."
+        items={tools.map((t) => ({ name: t.title, url: `${SITE_URL}${t.href}` }))}
+      />
       <PageHero
         back={{ href: "/", label: "Home" }}
         kicker="Tools"

@@ -20,6 +20,8 @@ export const profile = {
   // Confirmed correct by Shivam; resume.json's /in/shivam-goel/ is stale.
   linkedin: "https://www.linkedin.com/in/shivam-goel-245ss/",
   github: "https://github.com/sshivam245",
+  topmate: "https://topmate.io/shivam_goel20",
+  medium: "https://medium.com/@shivam55.goel",
   resumePath: "/resume/shivam-goel-resume.pdf",
 
   /** Short human note. First person, plain language. */
@@ -194,3 +196,37 @@ export const beyond = [
       "Selected for the Harvard Project for Asian & International Relations, a conference on business, policy and innovation across Asia.",
   },
 ] as const;
+
+/**
+ * Questions people (and answer engines) actually ask about Shivam, answered
+ * in third person so a single answer can be lifted out and still make sense.
+ * Rendered visibly on /about and marked up as FAQPage from this same list,
+ * so the schema can never claim something the page does not show. Every
+ * figure here is one already published in a case study.
+ */
+export const faqs: { q: string; a: string }[] = [
+  {
+    q: "Who is Shivam Goel?",
+    a: "Shivam Goel is a marketing engineer working in growth and go-to-market (GTM). He builds acquisition systems: search programs that get a site found on Google and cited by AI answer engines, and lead pipelines that turn that traffic into booked calls. He is Growth & Strategy Executive at Cloudsheer Consulting and works remotely.",
+  },
+  {
+    q: "What results has Shivam Goel delivered?",
+    a: "At Cloudsheer Consulting he grew organic clicks 25× in four months, from 35 a month in May 2026 to 873 in September, grew search impressions 85×, and got the site named in Google's AI Overview for “salesforce partner miami”. As the first GTM hire at Nuvia AI he generated 100+ qualified leads in six months. He also launched Descipher OS from zero.",
+  },
+  {
+    q: "What are AEO and GEO, and how are they different from SEO?",
+    a: "SEO (search engine optimisation) earns a ranking in a list of results. AEO (answer engine optimisation) and GEO (generative engine optimisation) earn a citation inside the answer an AI engine writes, in Google AI Overviews, ChatGPT, Perplexity or Claude. Ranking still matters, because engines retrieve from pages that rank, but being quoted also takes short self-contained claims, clear attribution and structured data an engine can trust.",
+  },
+  {
+    q: "What does a marketing engineer do?",
+    a: "A marketing engineer builds the growth systems instead of only running campaigns: lead capture, enrichment, scoring, routing, outbound and reporting, wired together in tools like Clay, HubSpot, Apollo, Python and SQL so they run without someone pushing each step by hand.",
+  },
+  {
+    q: "Is Shivam Goel open to new roles?",
+    a: "Yes. He is looking for a founding-GTM or growth-engineering role, remote, at a company early enough that building the growth machine is the job.",
+  },
+  {
+    q: "How can I work with Shivam Goel?",
+    a: "Book one of two free 30-minute calls on Topmate (topmate.io/shivam_goel20), one on SEO, AEO and GEO and one on GTM and marketing; request a free written AEO audit at shivamgoel.me/tools/aeo-audit; or email shivam55.goel@gmail.com.",
+  },
+];

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AboutFaq from "@/components/dossier/AboutFaq";
 import { Experience, Capabilities } from "@/components/dossier/Track";
 import { About, Credentials } from "@/components/dossier/About";
 import { profile } from "@/content/profile";
@@ -6,9 +7,9 @@ import { AboutSchema } from "@/components/dossier/StructuredData";
 import PageHero from "@/components/dossier/PageHero";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: { absolute: "About Shivam Goel · Marketing Engineer, SEO & GTM" },
   description:
-    "Growth & GTM, two years, remote. Track record, capabilities, education and publications.",
+    "Who Shivam Goel is, what he has built and delivered in growth, GTM, SEO, AEO and GEO, the tools he uses, and how to work with him.",
   alternates: { canonical: "/about" },
 };
 
@@ -24,7 +25,7 @@ export default function AboutPage() {
       <AboutSchema />
       <PageHero
         kicker={`${profile.role} · ${profile.location}`}
-        title="The long version."
+        title="Shivam Goel, the long version."
         lede="The full track record, the toolbox, and where the work has been picked up by others."
       />
 
@@ -32,6 +33,7 @@ export default function AboutPage() {
       <Experience />
       <Capabilities />
       <Credentials />
+      <AboutFaq />
     </>
   );
 }

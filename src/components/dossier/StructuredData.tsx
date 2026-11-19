@@ -1,4 +1,4 @@
-import { profile, experience, education, skills, recognition } from "@/content/profile";
+import { profile, experience, education, skills, recognition, faqs } from "@/content/profile";
 import { caseStudies } from "@/content/caseStudies";
 import { publishedPosts } from "@/content/writing";
 import { CATEGORIES, CHECK_SPECS } from "@/lib/aeo/checks";
@@ -33,7 +33,17 @@ function Person() {
     // as one person.
     jobTitle: [profile.role, experience[0].role],
     description: profile.statement,
-    knowsAbout: skills.flatMap((g) => g.items),
+    // The disciplines spelled out as entities first, then the tool list.
+    // "AEO" alone is ambiguous to an engine; the full name is not.
+    knowsAbout: [
+      "Search Engine Optimization",
+      "Answer Engine Optimization",
+      "Generative Engine Optimization",
+      "Go-to-market strategy",
+      "Marketing automation",
+      "Lead generation",
+      ...skills.flatMap((g) => g.items),
+    ],
     worksFor: {
       "@type": "Organization",
       name: experience[0].company,
@@ -54,7 +64,9 @@ function Person() {
       name: r.title,
       url: r.href,
     })),
-    sameAs: [profile.linkedin, profile.github].filter(Boolean),
+    // Every profile that is the same person. This is how an engine joins
+    // "Shivam Goel" on LinkedIn, GitHub, Topmate and Medium into one entity.
+    sameAs: [profile.linkedin, profile.github, profile.topmate, profile.medium].filter(Boolean),
   };
   return <Script data={data} />;
 }
@@ -152,6 +164,8 @@ export function CaseStudySchema({ slug }: { slug: string }) {
      * "2024 – 2025" resolves to its end year rather than inventing a month.
      */
     datePublished: cs.timeframe.match(/\d{4}(?!.*\d{4})/)?.[0],
+    // Google wants an image on an Article; the share card is the real one.
+    image: url(`/og/work-${cs.id}.png`),
     dateModified: BUILD_DATE,
     about: cs.stack,
     articleSection: cs.tag,
@@ -167,7 +181,7 @@ export function CaseStudySchema({ slug }: { slug: string }) {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: url("/") },
-      { "@type": "ListItem", position: 2, name: "Work", item: url("/#work") },
+      { "@type": "ListItem", position: 2, name: "Work", item: url("/work") },
       { "@type": "ListItem", position: 3, name: cs.title, item: url(`/work/${cs.id}`) },
     ],
   };
@@ -182,6 +196,16 @@ export function CaseStudySchema({ slug }: { slug: string }) {
 
 /** The about page restates the Person with the full employment history. */
 export function AboutSchema() {
+  const faq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    url: url("/about"),
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
   const data = {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
@@ -201,6 +225,57 @@ export function AboutSchema() {
     <>
       <Person />
       <Script data={data} />
+      <Script data={faq} />
+    </>
+  );
+}
+
+/**
+ * The three index pages (/work, /tools, /writing) carried no JSON-LD at all.
+ * Each is a CollectionPage authored by the Person, listing what it links to,
+ * with a breadcrumb back home.
+ */
+export function CollectionSchema({
+  path,
+  name,
+  description,
+  items,
+}: {
+  path: string;
+  name: string;
+  description: string;
+  items: { name: string; url: string }[];
+}) {
+  const page = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name,
+    description,
+    url: url(path),
+    author: { "@id": PERSON_ID },
+    isPartOf: { "@type": "WebSite", name: SITE_NAME, url: url("/") },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: it.name,
+        url: it.url,
+      })),
+    },
+  };
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: url("/") },
+      { "@type": "ListItem", position: 2, name, item: url(path) },
+    ],
+  };
+  return (
+    <>
+      <Script data={page} />
+      <Script data={breadcrumb} />
     </>
   );
 }

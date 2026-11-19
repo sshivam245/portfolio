@@ -35,7 +35,10 @@ export function GET() {
   push(`- Email: ${profile.email}`);
   push(`- LinkedIn: ${profile.linkedin}`);
   push(`- GitHub: ${profile.github}`);
-  push(`- Site: ${url("/")}`, "");
+  push(`- Book a free call: ${profile.topmate}`);
+  push(`- Writing: ${profile.medium}`);
+  push(`- Site: ${url("/")}`);
+  push(`- Full case studies as text: ${url("/llms-full.txt")}`, "");
 
   push("## Headline results", "");
   for (const m of headlineMetrics) {
