@@ -57,7 +57,26 @@ export default function AgentFitPage() {
 
       <section className="rule-t">
         <div className="shell py-10">
-          <Link href="/tools/aeo-audit" className="group block">
+          <h2 className="label mb-4">Agents like these, built</h2>
+          {/* The proof behind the shortlist: two of the archetypes it
+              recommends, built for real in Clay. */}
+          <ul className="grid gap-6 sm:grid-cols-2">
+            <li>
+              <Link href="/work/gravitee-abm" className="group block">
+                <p className="t-subhead transition-colors duration-150 group-hover:text-ink-a group-focus-visible:text-ink-a">
+                  A 1:1 ABM engine for Gravitee, built in Clay
+                </p>
+              </Link>
+            </li>
+            <li>
+              <Link href="/work/investor-sourcing" className="group block">
+                <p className="t-subhead transition-colors duration-150 group-hover:text-ink-a group-focus-visible:text-ink-a">
+                  A Clay workflow that turns one profile into an investor pipeline
+                </p>
+              </Link>
+            </li>
+          </ul>
+          <Link href="/tools/aeo-audit" className="group mt-10 block">
             <h2 className="label mb-2">Also here</h2>
             <p className="t-heading transition-colors duration-150 group-hover:text-ink-a">
               A free AEO audit of your site, written by a person

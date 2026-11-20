@@ -1,4 +1,5 @@
 import Section from "./Section";
+import Link from "next/link";
 import { faqs } from "@/content/profile";
 
 /**
@@ -19,6 +20,11 @@ export default function AboutFaq() {
             {/* break-words: an answer can carry a bare URL, which has no
                 break point and pushed the page wide at 200% text. */}
             <p className="mt-3 max-w-prose break-words text-base leading-relaxed text-ink-muted">{f.a}</p>
+            {f.link ? (
+              <Link href={f.link.href} className="link mt-3 inline-block text-base font-semibold">
+                {f.link.label} →
+              </Link>
+            ) : null}
           </div>
         ))}
       </div>

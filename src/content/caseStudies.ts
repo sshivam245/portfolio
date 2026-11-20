@@ -51,6 +51,13 @@ export type CaseStudy = {
    * characters so it fits 60 with the " · Shivam Goel" suffix.
    */
   seoTitle?: string;
+  /**
+   * Internal links, chosen by hand rather than computed, so each one is a
+   * page a reader of this one would actually want next. `work` are case
+   * study ids, `posts` match a post slug prefix in writing.ts (Medium posts
+   * included), `tool` is a /tools route.
+   */
+  related?: { work: string[]; posts?: string[]; tool?: "/tools/aeo-audit" | "/tools/agent-fit" };
   tag: string;
   timeframe: string;
   org: string;
@@ -77,6 +84,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "aeo-geo",
     seoTitle: "AEO & SEO case study: 25× organic clicks",
+    related: { work: ["cloudsheer-conversion", "nuvia-engine"], tool: "/tools/aeo-audit" },
     verified: true,
     title: "25× organic clicks in four months",
     tag: "SEO / AEO / GEO",
@@ -145,6 +153,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "cloudsheer-conversion",
     seoTitle: "Lead capture pipeline: Sheets to Salesforce",
+    related: { work: ["aeo-geo", "nuvia-engine"], posts: ["ai-for-growth-marketing"], tool: "/tools/aeo-audit" },
     title: "A lead pipeline that cannot drop a lead",
     tag: "Conversion / RevOps",
     timeframe: "2026",
@@ -174,6 +183,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "mintnovalabs",
     seoTitle: "MintNovaLabs: a pay-per-result outbound agency",
+    related: { work: ["gravitee-abm", "descipher-os"], posts: ["clays-new-ai-agent"], tool: "/tools/agent-fit" },
     title: "MintNovaLabs, built from nothing",
     tag: "0 → 1 venture",
     timeframe: "2026",
@@ -215,6 +225,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "gravitee-abm",
     seoTitle: "Spec work: 1:1 ABM for Gravitee, built in Clay",
+    related: { work: ["investor-sourcing", "mintnovalabs"], posts: ["clays-new-ai-agent", "ai-for-growth-marketing"], tool: "/tools/agent-fit" },
     title: "I pitched Gravitee by building their outbound",
     // The org line renders as `{tag} · {org}, {timeframe}`, so "spec work"
     // belongs in one of them, not both.
@@ -267,6 +278,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "investor-sourcing",
     seoTitle: "Clay workflow for investor sourcing",
+    related: { work: ["gravitee-abm", "job-pipeline"], posts: ["clays-new-ai-agent", "ai-for-growth-marketing"], tool: "/tools/agent-fit" },
     title: "Fundraising as an outbound problem",
     tag: "Clay workflow",
     timeframe: "2026",
@@ -316,6 +328,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "descipher-os",
     seoTitle: "Descipher OS: a 0 to 1 brand and GTM launch",
+    related: { work: ["mintnovalabs", "aeo-geo"] },
     title: "Launching Descipher OS from zero",
     tag: "0 → 1",
     timeframe: "2025",
@@ -349,6 +362,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "nuvia-engine",
     seoTitle: "AI startup demand gen: 100+ qualified leads",
+    related: { work: ["cloudsheer-conversion", "job-pipeline"], posts: ["ai-for-growth-marketing"], tool: "/tools/agent-fit" },
     title: "An acquisition engine at an AI startup",
     tag: "Demand gen",
     timeframe: "2024 – 2025",
@@ -384,6 +398,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "job-pipeline",
     seoTitle: "AI job search pipeline with Claude and Python",
+    related: { work: ["investor-sourcing", "gravitee-abm"], posts: ["clays-new-ai-agent"], tool: "/tools/agent-fit" },
     title: "A GTM pipeline I built for myself",
     tag: "Automation",
     timeframe: "2025",

@@ -204,26 +204,31 @@ export const beyond = [
  * so the schema can never claim something the page does not show. Every
  * figure here is one already published in a case study.
  */
-export const faqs: { q: string; a: string }[] = [
+export const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "Who is Shivam Goel?",
     a: "Shivam Goel is a marketing engineer working in growth and go-to-market (GTM). He builds acquisition systems: search programs that get a site found on Google and cited by AI answer engines, and lead pipelines that turn that traffic into booked calls. He is Growth & Strategy Executive at Cloudsheer Consulting and works remotely.",
+    link: { href: "/work", label: "See all the case studies" },
   },
   {
     q: "What results has Shivam Goel delivered?",
     a: "At Cloudsheer Consulting he grew organic clicks 25× in four months, from 35 a month in May 2026 to 873 in September, grew search impressions 85×, and got the site named in Google's AI Overview for “salesforce partner miami”. As the first GTM hire at Nuvia AI he generated 100+ qualified leads in six months. He also launched Descipher OS from zero.",
+    link: { href: "/work/aeo-geo", label: "Read the AEO and SEO case study" },
   },
   {
     q: "What are AEO and GEO, and how are they different from SEO?",
     a: "SEO (search engine optimisation) earns a ranking in a list of results. AEO (answer engine optimisation) and GEO (generative engine optimisation) earn a citation inside the answer an AI engine writes, in Google AI Overviews, ChatGPT, Perplexity or Claude. Ranking still matters, because engines retrieve from pages that rank, but being quoted also takes short self-contained claims, clear attribution and structured data an engine can trust.",
+    link: { href: "/tools/aeo-audit", label: "Get a free AEO audit of your site" },
   },
   {
     q: "What does a marketing engineer do?",
     a: "A marketing engineer builds the growth systems instead of only running campaigns: lead capture, enrichment, scoring, routing, outbound and reporting, wired together in tools like Clay, HubSpot, Apollo, Python and SQL so they run without someone pushing each step by hand.",
+    link: { href: "/work/investor-sourcing", label: "An example: a Clay workflow for investor sourcing" },
   },
   {
     q: "Is Shivam Goel open to new roles?",
     a: "Yes. He is looking for a founding-GTM or growth-engineering role, remote, at a company early enough that building the growth machine is the job.",
+    link: { href: "/#contact", label: "Get in touch" },
   },
   {
     q: "How can I work with Shivam Goel?",

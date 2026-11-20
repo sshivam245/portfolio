@@ -10,6 +10,7 @@ import Ledger from "@/components/dossier/Ledger";
 import { caseStudies } from "@/content/caseStudies";
 import { asset } from "@/lib/basePath";
 import { CaseStudySchema } from "@/components/dossier/StructuredData";
+import RelatedLinks from "@/components/dossier/RelatedLinks";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.id }));
@@ -178,6 +179,7 @@ export default function CaseStudyPage({
             {shots.map((f) => (
               <Figure key={f.src} figure={f} />
             ))}
+            <RelatedLinks cs={cs} />
           </aside>
         </div>
       </section>

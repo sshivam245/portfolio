@@ -10,7 +10,9 @@ import { asset } from "@/lib/basePath";
  * toggle overflows a 375px viewport, and Work/Contact are what matter.
  */
 const nav = [
-  { label: "Work", href: "/#work" },
+  // /work, not /#work: the full index is the page that should collect the
+  // site-wide link, and it lists all eight rather than the homepage three.
+  { label: "Work", href: "/work" },
   { label: "Tools", href: "/tools" },
   { label: "Writing", href: "/writing", secondary: true },
   { label: "About", href: "/about", secondary: true },
