@@ -24,6 +24,8 @@
  * then drop the `draft: true` flag from the post you have rewritten.
  */
 
+import mediumFeed from "./medium.json";
+
 export type Post = {
   slug: string;
   title: string;
@@ -101,8 +103,18 @@ export const posts: Post[] = [
   },
 ];
 
+/**
+ * Medium posts, pulled from the feed before every build by
+ * scripts/medium-sync.mjs. A post also listed by hand above wins, so its
+ * hand-written blurb is kept; anything new on Medium appears on its own.
+ */
+const sameUrl = (u?: string) => (u ?? "").split("?")[0].replace(/\/+$/, "");
+const fromMedium: Post[] = (mediumFeed as Post[]).filter(
+  (m) => !posts.some((p) => p.href && sameUrl(p.href) === sameUrl(m.href)),
+);
+
 /** Published posts, newest first. */
-export const publishedPosts = posts
+export const publishedPosts = [...posts, ...fromMedium]
   .filter((p) => !p.draft)
   .sort((a, b) => b.date.localeCompare(a.date));
 
